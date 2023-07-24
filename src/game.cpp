@@ -23,7 +23,31 @@ void Game::setIcon() {
 }
 
 void Game::setUpScores() {
-    
+    if (!this->font.loadFromFile("fonts/arial.ttf")) {
+        std::cout << "Error loading font!" << std::endl;
+    }
+
+
+
+
+    this->p1ScoreText.setFont(font); // font is a sf::Font
+    this->p1ScoreText.setString("Hello world");
+    this->p1ScoreText.setCharacterSize(24); // in pixels, not points!
+    this->p1ScoreText.setFillColor(sf::Color::Red);
+    this->p1ScoreText.setStyle(sf::Text::Bold | sf::Text::Underlined);
+    this->p1ScoreText.setPosition(500,400);
+
+    float halfWidthp1 = this->p1ScoreText.getGlobalBounds().width/2;
+    float halfHeightp1 = this->p2ScoreText.getGlobalBounds().height/2;
+    this->p1ScoreText.setOrigin(halfWidthp1,halfHeightp1);
+    this->p1ScoreText.setPosition(window.getSize().x/2, window.getSize().y/2);
+
+    this->p2ScoreText.setFont(font); // font is a sf::Font
+    this->p2ScoreText.setString("Hello world");
+    this->p2ScoreText.setCharacterSize(24); // in pixels, not points!
+    this->p2ScoreText.setFillColor(sf::Color::Red);
+    this->p2ScoreText.setStyle(sf::Text::Bold | sf::Text::Underlined);
+    this->p2ScoreText.setPosition(500,400);
 }
 
 void Game::setup() {
@@ -32,6 +56,7 @@ void Game::setup() {
 
 void Game::start() {
     setIcon();
+    setUpScores();
     this->window.setFramerateLimit(60);
 
     sf::Font font;
@@ -83,10 +108,12 @@ void Game::start() {
         ball.draw(this->window);
         ball.move(dt, 60);
 
+        window.draw(this->p1ScoreText);
+
         this->window.display();
 
         //framerate
-        std::cout << "fps: " << dt << std::endl;
+        // std::cout << "fps: " << dt << std::endl;
 
     }
 }

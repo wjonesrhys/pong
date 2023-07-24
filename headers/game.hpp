@@ -5,6 +5,13 @@ class Game {
     private:
         sf::RenderWindow &window;
 
+        sf::Text p1ScoreText;
+        sf::Text p2ScoreText;
+        sf::Font font;
+
+        int p1Score;
+        int p2Score;
+
     public:
 
         Game(sf::RenderWindow &renderWindow);

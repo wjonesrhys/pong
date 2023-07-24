@@ -46,8 +46,6 @@ void Player::setStartingPosition() {
 
 void Player::move(float deltaTime, float multiplier)
 {
-    sf::Vector2f movement;
-
     this->deltaTime = deltaTime;
     this->multiplier = multiplier;
 

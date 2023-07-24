@@ -1,11 +1,13 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "collision.hpp"
 
 class Ball {
     private:
         
         sf::CircleShape circle;
         sf::Texture texture;
+        Collision collision;
 
         double speed;
         sf::Vector2f direction;
