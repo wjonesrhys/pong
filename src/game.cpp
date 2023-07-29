@@ -22,32 +22,33 @@ void Game::setIcon() {
     this->window.setIcon(32,32,icon.getPixelsPtr());
 }
 
-void Game::setUpScores() {
+sf::Text Game::setUpText() {
+    sf::Text text;
+
     if (!this->font.loadFromFile("fonts/arial.ttf")) {
         std::cout << "Error loading font!" << std::endl;
     }
 
+    text.setFont(font); // font is a sf::Font
+    text.setString("0");
+    text.setCharacterSize(72); // in pixels, not points!
+    text.setFillColor(sf::Color::Green);
+    text.setStyle(sf::Text::Bold);
+    text.setOrigin(text.getGlobalBounds().width/2,text.getGlobalBounds().height/2);
+    
+    return text;
+}
 
-
-
-    this->p1ScoreText.setFont(font); // font is a sf::Font
-    this->p1ScoreText.setString("Hello world");
-    this->p1ScoreText.setCharacterSize(24); // in pixels, not points!
-    this->p1ScoreText.setFillColor(sf::Color::Red);
-    this->p1ScoreText.setStyle(sf::Text::Bold | sf::Text::Underlined);
-    this->p1ScoreText.setPosition(500,400);
-
-    float halfWidthp1 = this->p1ScoreText.getGlobalBounds().width/2;
-    float halfHeightp1 = this->p2ScoreText.getGlobalBounds().height/2;
-    this->p1ScoreText.setOrigin(halfWidthp1,halfHeightp1);
-    this->p1ScoreText.setPosition(window.getSize().x/2, window.getSize().y/2);
-
-    this->p2ScoreText.setFont(font); // font is a sf::Font
-    this->p2ScoreText.setString("Hello world");
-    this->p2ScoreText.setCharacterSize(24); // in pixels, not points!
-    this->p2ScoreText.setFillColor(sf::Color::Red);
-    this->p2ScoreText.setStyle(sf::Text::Bold | sf::Text::Underlined);
-    this->p2ScoreText.setPosition(500,400);
+void Game::increaseScore(int playerNum) {
+    if (playerNum==1) {
+        this->p1Score += 1;
+        std::string scoreToDisplay = std::to_string(this->p1Score);
+        this->p1ScoreText.setString(scoreToDisplay);
+    } else {
+        this->p2Score += 1;
+        std::string scoreToDisplay = std::to_string(this->p2Score);
+        this->p2ScoreText.setString(scoreToDisplay);
+    }
 }
 
 void Game::setup() {
@@ -56,14 +57,15 @@ void Game::setup() {
 
 void Game::start() {
     setIcon();
-    setUpScores();
+    p1ScoreText = setUpText();
+    p2ScoreText = setUpText();
+
+    sf::Vector2u windowSize = window.getSize();
+
+    p1ScoreText.setPosition(window.getSize().x/2 - p1ScoreText.getGlobalBounds().width, p1ScoreText.getGlobalBounds().width);
+    p2ScoreText.setPosition(window.getSize().x/2 + p1ScoreText.getGlobalBounds().width, p1ScoreText.getGlobalBounds().width);
+
     this->window.setFramerateLimit(60);
-
-    sf::Font font;
-    if (font.loadFromFile("fonts/arial.ttf")) {
-        std::cout << "Font Loaded!" << std::endl;
-    }
-
     Collision collision = Collision();
 
     //framerate independent calculations
@@ -71,18 +73,17 @@ void Game::start() {
     float multiplier = 60.f;
     float dt;
 
-    Player player1 = Player(1, "images/cuppatea.png", window);
-    Player player2 = Player(2, "images/cuppatea.png", window);
+    // Player player1 = Player(1, "images/cuppatea.png", window);
+    // Player player2 = Player(2, "images/cuppatea.png", window);
+
+    Player player1 = Player(1, window);
+    Player player2 = Player(2, window);
 
     player1.setStartingPosition();
     player2.setStartingPosition();
 
-    Ball ball = Ball();
-    ball.setStartingPosition(window);
-
-    bool ballMoving = false;
-
-
+    Ball ball = Ball(window);
+    ball.setStartingPosition();
 
     while (this->window.isOpen())
     {
@@ -105,10 +106,21 @@ void Game::start() {
         player2.move(dt, 60);
 
         //ball
-        ball.draw(this->window);
+        ball.draw();
         ball.move(dt, 60);
 
+        if (collision.intersectsLeft(ball.getBounds())) {
+            ball.resetPosition();
+            increaseScore(2);
+        }
+
+        if (collision.intersectsRight(ball.getBounds(), windowSize.x)) {
+            ball.resetPosition();
+            increaseScore(1);
+        }
+
         window.draw(this->p1ScoreText);
+        window.draw(this->p2ScoreText);
 
         this->window.display();
 

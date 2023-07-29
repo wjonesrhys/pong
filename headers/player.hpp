@@ -6,21 +6,23 @@ class Player {
     private:
         sf::Sprite sprite;
         sf::Texture texture;
+
+        sf::RectangleShape rect;
+        
         sf::RenderWindow &window;
         Collision collision;
 
-        int playerNum;
         sf::Vector2f velocity;
+        int playerNum;
         float deltaTime;
         float multiplier;
  
     public:
         Player();
-        Player(int playerNum, std::string imgPath, sf::RenderWindow &renderWindow);
-
         ~Player();
 
-        sf::Sprite getSprite();
+        Player(int playerNum, std::string imgPath, sf::RenderWindow &renderWindow);
+        Player(int playerNum, sf::RenderWindow& renderWindow);
 
         void move(float deltaTime, float multiplier);
         void draw();

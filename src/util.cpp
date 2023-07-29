@@ -5,4 +5,6 @@ Util::Util() {
     
 }
 
-
+void Util::print(std::string msg) {
+    std::cout << msg << std::endl;
+}

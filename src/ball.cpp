@@ -1,11 +1,11 @@
 #include <iostream>
 #include "ball.hpp"
 
-Ball::Ball() {
-    this->circle = sf::CircleShape(25.f);
+Ball::Ball(sf::RenderWindow &renderWindow) : window(renderWindow) {
+    this->circle = sf::CircleShape(20.f);
     this->circle.setFillColor(sf::Color::Blue);
 
-    this->speed = 10.0f;
+    this->speed = 5.0f;
     this->direction = sf::Vector2f(1, 0);
 }
 
@@ -13,7 +13,7 @@ Ball::~Ball() {
     std::cout << "Ball destroyed!" << std::endl;
 }
 
-void Ball::setStartingPosition(sf::RenderWindow &window) {
+void Ball::setStartingPosition() {
     sf::Vector2u windowSize = window.getSize();
     float circleSize = this->circle.getRadius();
     this->circle.setOrigin(sf::Vector2f(circleSize, circleSize));
@@ -24,6 +24,18 @@ void Ball::move(float deltaTime, float multiplier) {
     this->circle.move(speed*direction.x * deltaTime * multiplier, speed*direction.y * deltaTime * multiplier);
 }
 
-void Ball::draw(sf::RenderWindow &window) {
+bool Ball::checkScored() {
+    return false;
+}
+
+void Ball::resetPosition() {
+    setStartingPosition();
+}
+
+sf::FloatRect Ball::getBounds() {
+    return this->circle.getGlobalBounds();
+}
+
+void Ball::draw() {
     window.draw(this->circle);
 }

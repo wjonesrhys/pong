@@ -7,5 +7,5 @@ class Util {
     public:
         Util();
 
-        void print();
+        void print(std::string msg);
 };

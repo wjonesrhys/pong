@@ -18,7 +18,8 @@ class Game {
         ~Game();
 
         void setIcon();
-        void setUpScores();
+        sf::Text setUpText();
+        void increaseScore(int playerNum);
         
         void setup();
         void start();
