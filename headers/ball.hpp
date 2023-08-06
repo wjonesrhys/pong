@@ -28,4 +28,6 @@ class Ball {
         bool checkScored();
         void startPosition();
         void resetPosition();
+        sf::Vector2f setRandomDirection();
+        float numberBetween(int lower, int higher);
 };

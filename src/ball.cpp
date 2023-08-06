@@ -6,7 +6,7 @@ Ball::Ball(sf::RenderWindow &renderWindow) : window(renderWindow) {
     this->circle.setFillColor(sf::Color::Blue);
 
     this->speed = 5.0f;
-    this->direction = sf::Vector2f(1, 0);
+    this->direction=setRandomDirection();
 
     std::cout << "Ball created!" << std::endl;
 }
@@ -39,6 +39,7 @@ void Ball::reflect() {
 
 void Ball::startPosition() {
     setStartingPosition();
+    this->direction=setRandomDirection();
 }
 
 void Ball::resetPosition() {
@@ -51,4 +52,45 @@ sf::FloatRect Ball::getBounds() {
 
 void Ball::draw() {
     window.draw(this->circle);
+}
+
+sf::Vector2f Ball::setRandomDirection() {
+    return sf::Vector2f(numberBetween(-1,1),numberBetween(-1,1));
+}
+
+float Ball::numberBetween(int lower, int higher) {
+    bool wasMinus = false;
+    int temp=0;
+
+    if ((lower < 0) && (higher < 0)) {
+        wasMinus =true;
+        if (lower < higher) {
+            temp=lower*-1;
+        } else {
+            temp=higher*-1;
+        }
+        lower+=temp;
+        higher+=temp;
+    }
+
+    if ((lower >= 0) && (higher < 0)) {
+        temp=higher;
+        higher=lower;
+        lower=temp;
+    }
+
+    if ((lower < 0) && (higher >= 0)) {
+        temp=lower*-1;
+        higher+=temp;
+        lower+=temp;
+        wasMinus=true;
+    }
+
+    int range = higher - lower;
+    float randNum = (float) rand() / (float) RAND_MAX;
+
+    if (wasMinus) {
+        return (randNum * range) - temp;
+    }
+    return (randNum * range) + lower;
 }

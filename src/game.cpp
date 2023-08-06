@@ -78,6 +78,7 @@ void Game::setup() {
 
 void Game::start() {
     setIcon();
+
     
     p1ScoreText = setUpText();
     p2ScoreText = setUpText();
@@ -157,11 +158,13 @@ void Game::start() {
         if (collision.intersects(player2.getRect(), ball.getBounds()) || collision.intersects(player1.getRect(), ball.getBounds())){
             ball.resetPosition();
             ball.reflect();
-        } else {
-            std::cout << "not colliding!" << std::endl;
-        }
+        } 
 
-        //
+        //check for collisions for all balls
+        //reset the position to the point before collision
+        //calculate the position and velocity 
+        //draw
+
         //collision.checkForCollisions(players, balls);
         ball.draw();
 
