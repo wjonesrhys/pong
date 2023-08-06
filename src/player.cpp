@@ -147,5 +147,8 @@ bool Player::isCollidingWithWall() {
     return false;
 }
 
+sf::FloatRect Player::getRect(){
+    return this->rect.getGlobalBounds();
+}
 
 

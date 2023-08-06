@@ -45,16 +45,19 @@ bool Collision::intersectsRight(sf::FloatRect rect, int width) {
     return false;
 }
 
-bool Collision::intersects(sf::FloatRect rect1, sf::FloatRect rect2) {
-    return false;
-}
-
 bool Collision::intersects(sf::RectangleShape rect1, sf::RectangleShape rect2) {
-    return true;
+    return false;
 }
 
 bool Collision::intersects(sf::CircleShape circle1, sf::CircleShape circle2) {
     return true;
+}
+
+bool Collision::intersects(sf::FloatRect rect, sf::FloatRect circle) {
+    if (rect.intersects(circle)) {
+        return true;
+    }
+    return false;
 }
 
 bool Collision::intersects(sf::RectangleShape rect, sf::CircleShape circle) {

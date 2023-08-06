@@ -39,7 +39,28 @@ sf::Text Game::setUpText() {
     return text;
 }
 
-void Game::increaseScore(int playerNum) {
+void Game::setUpEntities() {
+    Player* player1 = new Player(1, window); 
+    Player* player2 = new Player(2, window); 
+
+    this->players.push_back(player1);
+    this->players.push_back(player2);
+
+    Ball* ball = new Ball(window); 
+    this->balls.push_back(ball);
+}
+
+void Game::destroyEntities() {
+    for (Player *player : this->players) {
+        player->~Player();
+    }
+
+    for (Ball *ball : this->balls) {
+        ball->~Ball();
+    }
+}
+
+void Game::increaseScoreForPlayer(int playerNum) {
     if (playerNum==1) {
         this->p1Score += 1;
         std::string scoreToDisplay = std::to_string(this->p1Score);
@@ -57,13 +78,17 @@ void Game::setup() {
 
 void Game::start() {
     setIcon();
+    
     p1ScoreText = setUpText();
     p2ScoreText = setUpText();
+
+    setUpEntities();
+    destroyEntities();
 
     sf::Vector2u windowSize = window.getSize();
 
     p1ScoreText.setPosition(window.getSize().x/2 - p1ScoreText.getGlobalBounds().width, p1ScoreText.getGlobalBounds().width);
-    p2ScoreText.setPosition(window.getSize().x/2 + p1ScoreText.getGlobalBounds().width, p1ScoreText.getGlobalBounds().width);
+    p2ScoreText.setPosition(window.getSize().x/2 + p2ScoreText.getGlobalBounds().width, p2ScoreText.getGlobalBounds().width);
 
     this->window.setFramerateLimit(60);
     Collision collision = Collision();
@@ -76,8 +101,15 @@ void Game::start() {
     // Player player1 = Player(1, "images/cuppatea.png", window);
     // Player player2 = Player(2, "images/cuppatea.png", window);
 
-    Player player1 = Player(1, window);
-    Player player2 = Player(2, window);
+    Player player1 = Player(1, window); 
+    Player player2 = Player(2, window); 
+
+    // Player* player = players[0];
+    // int delta = 0;
+    // int multiplier = 0;
+    // player->move(delta, multiplier);
+
+
 
     player1.setStartingPosition();
     player2.setStartingPosition();
@@ -92,6 +124,10 @@ void Game::start() {
         {
             if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 this->window.close();
+
+            if (this->p1Score == 10 || this->p2Score == 10) {
+                this->window.close();
+            }
         }
 
         dt = clock.restart().asSeconds();
@@ -106,18 +142,26 @@ void Game::start() {
         player2.move(dt, 60);
 
         //ball
-        ball.draw();
         ball.move(dt, 60);
 
         if (collision.intersectsLeft(ball.getBounds())) {
             ball.resetPosition();
-            increaseScore(2);
+            increaseScoreForPlayer(2);
         }
 
         if (collision.intersectsRight(ball.getBounds(), windowSize.x)) {
             ball.resetPosition();
-            increaseScore(1);
+            increaseScoreForPlayer(1);
         }
+
+        if (collision.intersects(player2.getRect(), ball.getBounds()) || collision.intersects(player1.getRect(), ball.getBounds())){
+            ball.reflect();
+        } else {
+            std::cout << "not colliding!" << std::endl;
+        }
+
+        //collision.checkForCollisions(players, balls);
+        ball.draw();
 
         window.draw(this->p1ScoreText);
         window.draw(this->p2ScoreText);

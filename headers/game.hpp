@@ -1,6 +1,10 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 
+#include "player.hpp"
+#include "ball.hpp"
+
+
 class Game {
     private:
         sf::RenderWindow &window;
@@ -8,6 +12,9 @@ class Game {
         sf::Text p1ScoreText;
         sf::Text p2ScoreText;
         sf::Font font;
+
+        std::vector<Player*> players;
+        std::vector<Ball*> balls;
 
         int p1Score;
         int p2Score;
@@ -17,9 +24,13 @@ class Game {
         Game(sf::RenderWindow &renderWindow);
         ~Game();
 
-        void setIcon();
+        void setUpEntities();
+        void destroyEntities();
+
         sf::Text setUpText();
-        void increaseScore(int playerNum);
+
+        void setIcon();
+        void increaseScoreForPlayer(int playerNum);
         
         void setup();
         void start();

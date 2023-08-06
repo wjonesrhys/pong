@@ -18,6 +18,7 @@ class Ball {
         ~Ball();
 
         void move(float deltaTime, float multiplier);
+        void reflect();
         void draw();
         void setStartingPosition();
 

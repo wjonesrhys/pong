@@ -7,6 +7,8 @@ Ball::Ball(sf::RenderWindow &renderWindow) : window(renderWindow) {
 
     this->speed = 5.0f;
     this->direction = sf::Vector2f(1, 0);
+
+    std::cout << "Ball created!" << std::endl;
 }
 
 Ball::~Ball() {
@@ -26,6 +28,12 @@ void Ball::move(float deltaTime, float multiplier) {
 
 bool Ball::checkScored() {
     return false;
+}
+
+void Ball::reflect() {
+    std::cout << "reflected" << std::endl;
+    this->direction.x *= -1;
+    this->direction.y *= -1;
 }
 
 void Ball::resetPosition() {
