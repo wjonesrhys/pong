@@ -145,21 +145,23 @@ void Game::start() {
         ball.move(dt, 60);
 
         if (collision.intersectsLeft(ball.getBounds())) {
-            ball.resetPosition();
+            ball.startPosition();
             increaseScoreForPlayer(2);
         }
 
         if (collision.intersectsRight(ball.getBounds(), windowSize.x)) {
-            ball.resetPosition();
+            ball.startPosition();
             increaseScoreForPlayer(1);
         }
 
         if (collision.intersects(player2.getRect(), ball.getBounds()) || collision.intersects(player1.getRect(), ball.getBounds())){
+            ball.resetPosition();
             ball.reflect();
         } else {
             std::cout << "not colliding!" << std::endl;
         }
 
+        //
         //collision.checkForCollisions(players, balls);
         ball.draw();
 

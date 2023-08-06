@@ -9,6 +9,8 @@ class Ball {
         sf::CircleShape circle;
         sf::Texture texture;
         Collision collision;
+
+        sf::Vector2f prevPosition;
         
         double speed;
         sf::Vector2f direction;
@@ -24,5 +26,6 @@ class Ball {
 
         sf::FloatRect getBounds();
         bool checkScored();
+        void startPosition();
         void resetPosition();
 };

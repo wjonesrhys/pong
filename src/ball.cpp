@@ -23,6 +23,7 @@ void Ball::setStartingPosition() {
 }
 
 void Ball::move(float deltaTime, float multiplier) {
+    this->prevPosition = this->circle.getPosition();
     this->circle.move(speed*direction.x * deltaTime * multiplier, speed*direction.y * deltaTime * multiplier);
 }
 
@@ -36,8 +37,12 @@ void Ball::reflect() {
     this->direction.y *= -1;
 }
 
-void Ball::resetPosition() {
+void Ball::startPosition() {
     setStartingPosition();
+}
+
+void Ball::resetPosition() {
+    this->circle.setPosition(this->prevPosition);
 }
 
 sf::FloatRect Ball::getBounds() {
