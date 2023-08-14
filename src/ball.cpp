@@ -55,10 +55,21 @@ void Ball::draw() {
 }
 
 sf::Vector2f Ball::setRandomDirection() {
-    return sf::Vector2f(numberBetween(-1,1),numberBetween(-1,1));
+    return sf::Vector2f(leftOrRight(),randomHeight());
 }
 
-float Ball::numberBetween(int lower, int higher) {
+int Ball::leftOrRight() {
+    int randNum = rand() * 2 / RAND_MAX;
+    std::cout << randNum << std::endl;
+
+    if (randNum == 0) {
+        return -1;
+    } 
+
+    return 1;
+}
+
+float Ball::floatBetweenInts(int lower, int higher) {
     bool wasMinus = false;
     int temp=0;
 
@@ -93,4 +104,24 @@ float Ball::numberBetween(int lower, int higher) {
         return (randNum * range) - temp;
     }
     return (randNum * range) + lower;
+}
+
+
+float Ball::randomHeight() {
+    int randNum = rand() * 2 / RAND_MAX;
+    std::cout << randNum << std::endl;
+
+    sf::Vector2u windowSize = this->window.getSize();
+    float ballRadius = circle.getRadius();
+    
+
+    //calculate the y component of screen vector to the corner - considering radius
+    float yScreenComponent = (windowSize.y/2 - ballRadius/2)/(windowSize.x/2 - ballRadius);
+
+    std::cout << "yscreen: " << yScreenComponent << std::endl;
+    if (randNum == 0) {
+        return rand() * yScreenComponent / RAND_MAX;
+    } 
+
+    return rand() * yScreenComponent * -1 / RAND_MAX;
 }
