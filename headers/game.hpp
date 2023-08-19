@@ -25,6 +25,7 @@ class Game {
         Game(sf::RenderWindow &renderWindow);
         ~Game();
 
+        void resetScore();
         void setUpEntities();
         void destroyEntities();
 

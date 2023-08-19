@@ -9,11 +9,16 @@
 #include <SFML/Graphics.hpp>
 
 Game::Game(sf::RenderWindow& renderWindow) : window(renderWindow) {
-
+    resetScore();
 }
 
 Game::~Game() {
     std::cout << "Game Closed";
+}
+
+void Game::resetScore() {
+    this->p1Score=0;
+    this->p2Score=0;
 }
 
 void Game::setIcon() {
