@@ -83,7 +83,6 @@ void Game::setup() {
 
 void Game::start() {
     setIcon();
-
     
     p1ScoreText = setUpText();
     p2ScoreText = setUpText();

@@ -69,8 +69,4 @@
         "iomanip": "cpp",
         "set": "cpp"
     }
-    // "files.exclude": {
-    //     "**/*.o": true,
-    //     "**/*.exe": true
-    // }
 }

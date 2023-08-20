@@ -1,0 +1,11 @@
+TODO:
+- add ball to wall collision
+- create scenes, game finishing
+- add enemy ai movement
+- add multiple balls
+- add ball to ball collision
+- refactor collision once working
+
+FIXME:
+- clean up code
+- add a utils class - logs, randomness etc
