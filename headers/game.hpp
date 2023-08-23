@@ -10,13 +10,14 @@ class Game {
 
         sf::Text p1ScoreText;
         sf::Text p2ScoreText;
+
+        int p1Score;
+        int p2Score;
+
         sf::Font font;
 
         std::vector<Player*> players;
         std::vector<Ball*> balls;
-
-        int p1Score;
-        int p2Score;
 
     public:
 

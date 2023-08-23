@@ -118,7 +118,6 @@ void Player::moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down) {
 
 void Player::correctVerticalPosition() {
     sf::Vector2f rectSize = this->rect.getSize();
-    std::cout << "this velocity: " << this->velocity.y << std::endl;
 
     if (this->velocity.y < 0) { // object came from the top
         this->rect.setPosition(this->rect.getPosition().x, rectSize.y/2);

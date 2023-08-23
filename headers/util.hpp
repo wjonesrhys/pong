@@ -7,5 +7,6 @@ class Util {
     public:
         Util();
 
-        void print(std::string msg);
+        static void print(std::string msg);
+        static void 
 };

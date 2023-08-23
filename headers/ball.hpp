@@ -20,7 +20,9 @@ class Ball {
         ~Ball();
 
         void move(float deltaTime, float multiplier);
-        void reflect();
+        void reflectOnPaddle();
+        void reflectOnWall();
+        
         void draw();
         void setStartingPosition();
 

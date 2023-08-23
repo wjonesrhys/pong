@@ -15,7 +15,6 @@ Collision::~Collision() {
 
 bool Collision::intersectsTop(sf::FloatRect rect) {
     if (rect.top < 0) {
-        // std::cout << "intersects top" << std::endl;
         return true;
     }
     return false;
@@ -23,7 +22,6 @@ bool Collision::intersectsTop(sf::FloatRect rect) {
 
 bool Collision::intersectsBottom(sf::FloatRect rect, int height) {
     if (rect.top + rect.height > height) {
-        // std::cout << "intersects bottom" << std::endl;
         return true;
     }
     return false;
@@ -31,7 +29,6 @@ bool Collision::intersectsBottom(sf::FloatRect rect, int height) {
 
 bool Collision::intersectsLeft(sf::FloatRect rect) {
     if (rect.left < rect.width/2) {
-        // std::cout << "intersects bottom" << std::endl;
         return true;
     }
     return false;
@@ -39,7 +36,6 @@ bool Collision::intersectsLeft(sf::FloatRect rect) {
 
 bool Collision::intersectsRight(sf::FloatRect rect, int width) {
     if (rect.left+rect.width > width-rect.width/2) {
-        // std::cout << "intersects bottom" << std::endl;
         return true;
     }
     return false;

@@ -31,10 +31,12 @@ bool Ball::checkScored() {
     return false;
 }
 
-void Ball::reflect() {
-    std::cout << "reflected" << std::endl;
-    this->direction.x *= -1;
+void Ball::reflectOnWall() {
     this->direction.y *= -1;
+}
+
+void Ball::reflectOnPaddle() {
+    this->direction.x *= -1;
 }
 
 void Ball::startPosition() {
@@ -60,7 +62,6 @@ sf::Vector2f Ball::setRandomDirection() {
 
 int Ball::leftOrRight() {
     int randNum = rand() * 2 / RAND_MAX;
-    std::cout << randNum << std::endl;
 
     if (randNum == 0) {
         return -1;
@@ -107,7 +108,7 @@ float Ball::floatBetweenInts(int lower, int higher) {
 }
 
 
-float Ball::randomHeight() {
+float Ball::randomHeight(sf::Vector2u height) {
     int randNum = rand() * 2 / RAND_MAX;
     std::cout << randNum << std::endl;
 
@@ -118,7 +119,6 @@ float Ball::randomHeight() {
     //calculate the y component of screen vector to the corner - considering radius
     float yScreenComponent = (windowSize.y/2 - ballRadius/2)/(windowSize.x/2 - ballRadius);
 
-    std::cout << "yscreen: " << yScreenComponent << std::endl;
     if (randNum == 0) {
         return rand() * yScreenComponent / RAND_MAX;
     } 

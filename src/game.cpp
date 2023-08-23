@@ -148,6 +148,7 @@ void Game::start() {
 
         //ball
         ball.move(dt, 60);
+        Util::print("hi");
 
         if (collision.intersectsLeft(ball.getBounds())) {
             ball.startPosition();
@@ -161,8 +162,12 @@ void Game::start() {
 
         if (collision.intersects(player2.getRect(), ball.getBounds()) || collision.intersects(player1.getRect(), ball.getBounds())){
             ball.resetPosition();
-            ball.reflect();
+            ball.reflectOnPaddle();
         } 
+
+        if (collision.intersectsTop(ball.getBounds()) || collision.intersectsBottom(ball.getBounds(), windowSize.y)) {
+            ball.reflectOnWall();
+        }
 
         //check for collisions for all balls
         //reset the position to the point before collision
@@ -178,7 +183,7 @@ void Game::start() {
         this->window.display();
 
         //framerate
-        // std::cout << "fps: " << dt << std::endl;
+        std::cout << "fps: " << dt << std::endl;
 
     }
 }
