@@ -13,6 +13,10 @@ Collision::~Collision() {
 
 }
 
+void Collision::checkForCollisions() {
+    
+}
+
 bool Collision::intersectsTop(sf::FloatRect rect) {
     if (rect.top < 0) {
         return true;

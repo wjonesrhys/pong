@@ -108,7 +108,7 @@ float Ball::floatBetweenInts(int lower, int higher) {
 }
 
 
-float Ball::randomHeight(sf::Vector2u height) {
+float Ball::randomHeight() {
     int randNum = rand() * 2 / RAND_MAX;
     std::cout << randNum << std::endl;
 

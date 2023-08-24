@@ -8,5 +8,4 @@ class Util {
         Util();
 
         static void print(std::string msg);
-        static void 
 };

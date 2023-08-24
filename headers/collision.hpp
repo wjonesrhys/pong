@@ -1,16 +1,9 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 
-#include "player.hpp"
-#include "ball.hpp"
-
 class Collision {
-    private:
-        std::vector<Player*> players;
-        std::vector<Ball*> balls;
-
     public:
-        Collision(std::vector<Player*> players, std::vector<Ball*> balls);
+        Collision();
         ~Collision();
 
         static void checkForCollisions();

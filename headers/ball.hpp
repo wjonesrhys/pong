@@ -1,6 +1,5 @@
 #pragma once
 #include "SFML/Graphics.hpp"
-#include "collision.hpp"
 
 class Ball {
     private:
@@ -8,7 +7,6 @@ class Ball {
 
         sf::CircleShape circle;
         sf::Texture texture;
-        Collision collision;
 
         sf::Vector2f prevPosition;
         

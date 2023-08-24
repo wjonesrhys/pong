@@ -53,8 +53,6 @@ void Game::setUpEntities() {
 
     Ball* ball = new Ball(window); 
     this->balls.push_back(ball);
-
-    this->collision = Collision(players, balls);
 }
 
 void Game::destroyEntities() {
@@ -98,7 +96,7 @@ void Game::start() {
     p2ScoreText.setPosition(window.getSize().x/2 + p2ScoreText.getGlobalBounds().width, p2ScoreText.getGlobalBounds().width);
 
     this->window.setFramerateLimit(60);
-    
+
     //framerate independent calculations
     sf::Clock clock;
     float multiplier = 60.f;
@@ -122,6 +120,8 @@ void Game::start() {
 
     Ball ball = Ball(window);
     ball.setStartingPosition();
+
+    Collision collision = Collision();
 
     while (this->window.isOpen())
     {
@@ -149,9 +149,6 @@ void Game::start() {
 
         //ball
         ball.move(dt, 60);
-        Util::print("hi");
-
-        Collision::checkForCollisions();
 
         if (collision.intersectsLeft(ball.getBounds())) {
             ball.startPosition();
@@ -170,7 +167,7 @@ void Game::start() {
 
         if (collision.intersectsTop(ball.getBounds()) || collision.intersectsBottom(ball.getBounds(), windowSize.y)) {
             ball.reflectOnWall();
-        }
+        } 
 
         //check for collisions for all balls
         //reset the position to the point before collision
@@ -186,7 +183,7 @@ void Game::start() {
         this->window.display();
 
         //framerate
-        std::cout << "fps: " << dt << std::endl;
+        // std::cout << "fps: " << dt << std::endl;
 
     }
 }

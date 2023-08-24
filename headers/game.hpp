@@ -7,9 +7,7 @@
 class Game {
     private:
         sf::RenderWindow &window;
-
-        Collision collision;
-
+        
         sf::Text p1ScoreText;
         sf::Text p2ScoreText;
 
