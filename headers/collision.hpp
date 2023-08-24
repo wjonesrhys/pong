@@ -1,12 +1,19 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 
+#include "player.hpp"
+#include "ball.hpp"
+
 class Collision {
     private:
+        std::vector<Player*> players;
+        std::vector<Ball*> balls;
 
     public:
-        Collision();
+        Collision(std::vector<Player*> players, std::vector<Ball*> balls);
         ~Collision();
+
+        static void checkForCollisions();
 
         bool intersectsTop(sf::FloatRect rect);
         bool intersectsBottom(sf::FloatRect rect, int height);
