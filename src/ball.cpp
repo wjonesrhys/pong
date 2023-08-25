@@ -1,5 +1,6 @@
 #include <iostream>
 #include "ball.hpp"
+#include "util.hpp"
 
 Ball::Ball(sf::RenderWindow &renderWindow) : window(renderWindow) {
     this->circle = sf::CircleShape(20.f);
@@ -57,67 +58,18 @@ void Ball::draw() {
 }
 
 sf::Vector2f Ball::setRandomDirection() {
-    return sf::Vector2f(leftOrRight(),randomHeight());
+    return sf::Vector2f(Util::zeroOrOne(), randHeight());
 }
 
-int Ball::leftOrRight() {
-    int randNum = rand() * 2 / RAND_MAX;
-
-    if (randNum == 0) {
-        return -1;
-    } 
-
-    return 1;
-}
-
-float Ball::floatBetweenInts(int lower, int higher) {
-    bool wasMinus = false;
-    int temp=0;
-
-    if ((lower < 0) && (higher < 0)) {
-        wasMinus =true;
-        if (lower < higher) {
-            temp=lower*-1;
-        } else {
-            temp=higher*-1;
-        }
-        lower+=temp;
-        higher+=temp;
-    }
-
-    if ((lower >= 0) && (higher < 0)) {
-        temp=higher;
-        higher=lower;
-        lower=temp;
-    }
-
-    if ((lower < 0) && (higher >= 0)) {
-        temp=lower*-1;
-        higher+=temp;
-        lower+=temp;
-        wasMinus=true;
-    }
-
-    int range = higher - lower;
-    float randNum = (float) rand() / (float) RAND_MAX;
-
-    if (wasMinus) {
-        return (randNum * range) - temp;
-    }
-    return (randNum * range) + lower;
-}
-
-
-float Ball::randomHeight() {
+float Ball::randHeight() {
     int randNum = rand() * 2 / RAND_MAX;
     std::cout << randNum << std::endl;
 
     sf::Vector2u windowSize = this->window.getSize();
     float ballRadius = circle.getRadius();
     
-
     //calculate the y component of screen vector to the corner - considering radius
-    float yScreenComponent = (windowSize.y/2 - ballRadius/2)/(windowSize.x/2 - ballRadius);
+    float yScreenComponent = (windowSize.y/2 - ballRadius/2) / (windowSize.x/2 - ballRadius);
 
     if (randNum == 0) {
         return rand() * yScreenComponent / RAND_MAX;

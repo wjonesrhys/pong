@@ -25,11 +25,10 @@ class Ball {
         void setStartingPosition();
 
         sf::FloatRect getBounds();
+
+        float randHeight();
         bool checkScored();
         void startPosition();
         void resetPosition();
-        int leftOrRight();
         sf::Vector2f setRandomDirection();
-        float floatBetweenInts(int lower, int higher);
-        float randomHeight();
 };

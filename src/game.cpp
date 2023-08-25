@@ -5,6 +5,7 @@
 #include "player.hpp"
 #include "ball.hpp"
 #include "collision.hpp"
+#include "util.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -113,7 +114,7 @@ void Game::start() {
     // int multiplier = 0;
     // player->move(delta, multiplier);
 
-
+    Util::print("hello");
 
     player1.setStartingPosition();
     player2.setStartingPosition();
@@ -181,6 +182,8 @@ void Game::start() {
         window.draw(this->p2ScoreText);
 
         this->window.display();
+
+        
 
         //framerate
         // std::cout << "fps: " << dt << std::endl;
