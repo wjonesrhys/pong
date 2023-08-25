@@ -6,7 +6,27 @@ class Collision {
         Collision();
         ~Collision();
 
+        // ball:
+        // ball -> top and bottom
+        // ball -> left and right
+        // ball -> ball
+        // ball -> paddle
+
+        // paddle
+        // to top and bottom
+
+
+
         static void checkForCollisions();
+
+        bool ballCollideBall();
+        bool ballCollideWall();
+        bool ballCollidePaddle();
+
+        bool ballHittingTopBottom();
+        bool ballHittingLeftRight();
+
+        bool paddleCollideWall();
 
         bool intersectsTop(sf::FloatRect rect);
         bool intersectsBottom(sf::FloatRect rect, int height);

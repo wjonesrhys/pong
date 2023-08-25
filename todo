@@ -5,6 +5,7 @@ TODO:
 - add multiple balls
 - add ball to ball collision
 - refactor collision once working
+- fix the scoreboard so there's a minimum distance between the two scores  
 
 FIXME:
 - clean up code

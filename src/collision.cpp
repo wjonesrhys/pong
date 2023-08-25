@@ -17,6 +17,30 @@ void Collision::checkForCollisions() {
     
 }
 
+bool Collision::ballCollideBall() {
+    return true;
+}
+
+bool Collision::ballCollideWall() {
+    return true;
+}
+
+bool Collision::ballCollidePaddle() {
+    return true;
+}
+
+bool Collision::ballHittingTopBottom() {
+    return true;
+}
+
+bool Collision::ballHittingLeftRight() {
+    return true;
+}
+
+bool Collision::paddleCollideWall() {
+    return true;
+}
+
 bool Collision::intersectsTop(sf::FloatRect rect) {
     if (rect.top < 0) {
         return true;
