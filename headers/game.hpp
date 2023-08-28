@@ -28,11 +28,11 @@ class Game {
         void setUpEntities();
         void destroyEntities();
 
-        sf::Text setUpText();
-
         void setIcon();
+        void loadFont();
+        sf::Text setUpText(int playerNum);
         void increaseScoreForPlayer(int playerNum);
         
-        void setup();
-        void start();
+        void setupGame();
+        void startGame();
 };

@@ -6,7 +6,9 @@ TODO:
 - add ball to ball collision
 - refactor collision once working
 - fix the scoreboard so there's a minimum distance between the two scores  
+- add audio to the game
+- add window options and game settings - framerate, window size, borderless etc, difficulty, power up choices? score, speed, modes etc
+- clean up class separation
 
 FIXME:
 - clean up code
-- add a utils class - logs, randomness etc

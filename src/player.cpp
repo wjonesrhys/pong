@@ -25,6 +25,7 @@ Player::Player(int playerNum, sf::RenderWindow& renderWindow) : window(renderWin
 
     this->rect.setFillColor(sf::Color::Green);
     this->rect.setSize(sf::Vector2f(20, 50));
+    setStartingPosition();
 }
 
 Player::~Player() {

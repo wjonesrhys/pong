@@ -8,6 +8,7 @@ Ball::Ball(sf::RenderWindow &renderWindow) : window(renderWindow) {
 
     this->speed = 5.0f;
     this->direction=setRandomDirection();
+    setStartingPosition();
 
     std::cout << "Ball created!" << std::endl;
 }

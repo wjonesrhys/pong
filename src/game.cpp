@@ -28,12 +28,16 @@ void Game::setIcon() {
     this->window.setIcon(32,32,icon.getPixelsPtr());
 }
 
-sf::Text Game::setUpText() {
-    sf::Text text;
-
+void Game::loadFont() {
+    //load the font
     if (!this->font.loadFromFile("fonts/arial.ttf")) {
         std::cout << "Error loading font!" << std::endl;
     }
+}
+
+sf::Text Game::setUpText(int playerNum) {
+    //create text object
+    sf::Text text;
 
     text.setFont(font); // font is a sf::Font
     text.setString("0");
@@ -41,7 +45,11 @@ sf::Text Game::setUpText() {
     text.setFillColor(sf::Color::Green);
     text.setStyle(sf::Text::Bold);
     text.setOrigin(text.getGlobalBounds().width/2,text.getGlobalBounds().height/2);
-    
+
+    float xCoord = window.getSize().x/2;
+    playerNum == 1 ? xCoord += text.getGlobalBounds().width : xCoord -= text.getGlobalBounds().width;
+    text.setPosition(xCoord, text.getGlobalBounds().width);
+
     return text;
 }
 
@@ -78,51 +86,37 @@ void Game::increaseScoreForPlayer(int playerNum) {
     }
 }
 
-void Game::setup() {
-
-}
-
-void Game::start() {
+void Game::setupGame() {
+    //set up game icon
     setIcon();
+    loadFont();
     
-    p1ScoreText = setUpText();
-    p2ScoreText = setUpText();
+    //set up the ui
+    p1ScoreText = setUpText(1);
+    p2ScoreText = setUpText(2);
 
+    //set up the entities
     setUpEntities();
     destroyEntities();
 
-    sf::Vector2u windowSize = window.getSize();
+}
 
-    p1ScoreText.setPosition(window.getSize().x/2 - p1ScoreText.getGlobalBounds().width, p1ScoreText.getGlobalBounds().width);
-    p2ScoreText.setPosition(window.getSize().x/2 + p2ScoreText.getGlobalBounds().width, p2ScoreText.getGlobalBounds().width);
+void Game::startGame() {
 
-    this->window.setFramerateLimit(60);
+    setupGame();
 
     //framerate independent calculations
+    this->window.setFramerateLimit(60);
     sf::Clock clock;
     float multiplier = 60.f;
     float dt;
 
-    // Player player1 = Player(1, "images/cuppatea.png", window);
-    // Player player2 = Player(2, "images/cuppatea.png", window);
-
-    Player player1 = Player(1, window); 
-    Player player2 = Player(2, window); 
-
-    // Player* player = players[0];
-    // int delta = 0;
-    // int multiplier = 0;
-    // player->move(delta, multiplier);
-
-    Util::print("hello");
-
-    player1.setStartingPosition();
-    player2.setStartingPosition();
-
-    Ball ball = Ball(window);
-    ball.setStartingPosition();
-
     Collision collision = Collision();
+    Player player1 = Player(1, window); 
+    Player player2 = Player(2, window);
+    Ball ball = Ball(window);
+
+
 
     while (this->window.isOpen())
     {
@@ -156,7 +150,7 @@ void Game::start() {
             increaseScoreForPlayer(2);
         }
 
-        if (collision.intersectsRight(ball.getBounds(), windowSize.x)) {
+        if (collision.intersectsRight(ball.getBounds(), window.getSize().x)) {
             ball.startPosition();
             increaseScoreForPlayer(1);
         }
@@ -166,27 +160,16 @@ void Game::start() {
             ball.reflectOnPaddle();
         } 
 
-        if (collision.intersectsTop(ball.getBounds()) || collision.intersectsBottom(ball.getBounds(), windowSize.y)) {
+        if (collision.intersectsTop(ball.getBounds()) || collision.intersectsBottom(ball.getBounds(), window.getSize().y)) {
             ball.reflectOnWall();
-        } 
+        }
 
-        //check for collisions for all balls
-        //reset the position to the point before collision
-        //calculate the position and velocity 
-        //draw
-
-        //collision.checkForCollisions(players, balls);
         ball.draw();
 
         window.draw(this->p1ScoreText);
         window.draw(this->p2ScoreText);
 
         this->window.display();
-
-        
-
-        //framerate
-        // std::cout << "fps: " << dt << std::endl;
 
     }
 }
