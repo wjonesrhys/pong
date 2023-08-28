@@ -9,7 +9,7 @@ int main()
     srand(time(nullptr));
 
     Game game = Game(window);
-    game.start();
+    game.startGame();
 
     return 0;
 }
