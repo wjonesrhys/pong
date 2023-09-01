@@ -4,7 +4,7 @@
 #include "util.hpp"
 
 Player::Player(int playerNum, std::string imgPath, sf::RenderWindow& renderWindow) : window(renderWindow) {
-    this->collision = Collision();
+    // this->collision = Collision();
 
     std::cout << "Player created!" << std::endl;
     this->playerNum = playerNum;
@@ -18,7 +18,7 @@ Player::Player(int playerNum, std::string imgPath, sf::RenderWindow& renderWindo
 }
 
 Player::Player(int playerNum, sf::RenderWindow& renderWindow) : window(renderWindow) {
-    this->collision = Collision();
+    // this->collision = Collision();
 
     std::cout << "Player created!" << std::endl;
     this->playerNum = playerNum;
@@ -35,6 +35,10 @@ Player::~Player() {
 void Player::draw() {
     // window.draw(this->sprite);
     window.draw(this->rect);
+}
+
+void Player::setPosition(sf::Vector2f newPosition) { 
+    this->rect.setPosition(newPosition);
 }
 
 void Player::setStartingPosition() {
@@ -80,11 +84,11 @@ void Player::move(float deltaTime, float multiplier)
         moveVertical(sf::Keyboard::W, sf::Keyboard::S);
     }
 
-    //if its stepping over border
-    if(isCollidingWithWall()) {
-        //reset to be up against the wall
-        correctVerticalPosition();
-    }
+    // //if its stepping over border
+    // if(isCollidingWithWall()) {
+    //     //reset to be up against the wall
+    //     correctVerticalPosition();
+    // }
     
 }
 
@@ -133,19 +137,19 @@ void Player::correctVerticalPosition() {
     }
 }
 
-bool Player::isCollidingWithWall() {
-    // bool isCollisionTop = collision.intersectsTop(this->sprite.getGlobalBounds());
-    // bool isCollisionBottom = collision.intersectsBottom(this->sprite.getGlobalBounds(),window.getSize().y);    
+// bool Player::isCollidingWithWall() {
+//     // bool isCollisionTop = collision.intersectsTop(this->sprite.getGlobalBounds());
+//     // bool isCollisionBottom = collision.intersectsBottom(this->sprite.getGlobalBounds(),window.getSize().y);    
     
-    bool isCollisionTop = collision.intersectsTop(this->rect.getGlobalBounds());
-    bool isCollisionBottom = collision.intersectsBottom(this->rect.getGlobalBounds(),window.getSize().y);
+//     bool isCollisionTop = collision.intersectsTop(this->rect.getGlobalBounds());
+//     bool isCollisionBottom = collision.intersectsBottom(this->rect.getGlobalBounds(),window.getSize().y);
 
-    if (isCollisionBottom || isCollisionTop) {
-        return true;
-    } 
+//     if (isCollisionBottom || isCollisionTop) {
+//         return true;
+//     } 
 
-    return false;
-}
+//     return false;
+// }
 
 sf::FloatRect Player::getRect(){
     return this->rect.getGlobalBounds();

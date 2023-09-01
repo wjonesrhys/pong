@@ -1,7 +1,9 @@
 #include <iostream>
+#include <vector>
 #include <string>
 
-#include "collision.hpp"
+#include <collision.hpp>
+#include <player.hpp>
 
 #include <SFML/Graphics.hpp>
 
@@ -12,6 +14,21 @@ Collision::Collision() {
 Collision::~Collision() {
 
 }
+
+void Collision::setPlayers(std::vector<Player*> players) {
+    this->players=players;
+}
+
+void Collision::printPlayers() {
+    sf::Vector2f position;
+    int count = 1;
+    for (Player* player : this->players) {
+        position = player->getRect().getPosition();
+        std::cout << "Player: " << count << ", x: " << position.x << ", y: " << position.y << std::endl;
+        count++;
+    }
+}
+
 
 void Collision::checkForCollisions() {
     

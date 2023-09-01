@@ -1,13 +1,14 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
-#include "game.hpp"
-#include "player.hpp"
-#include "ball.hpp"
-#include "collision.hpp"
-#include "util.hpp"
+#include <game.hpp>
+#include <player.hpp>
+#include <ball.hpp>
+#include <collision.hpp>
+#include <util.hpp>
 
-#include <SFML/Graphics.hpp>
+#include "SFML/Graphics.hpp"
 
 Game::Game(sf::RenderWindow& renderWindow) : window(renderWindow) {
     resetScore();
@@ -57,17 +58,17 @@ void Game::setUpEntities() {
     Player* player1 = new Player(1, window); 
     Player* player2 = new Player(2, window); 
 
-    this->players.push_back(player1);
-    this->players.push_back(player2);
+    players.push_back(player1);
+    players.push_back(player2);
 
     Ball* ball = new Ball(window); 
     this->balls.push_back(ball);
 }
 
 void Game::destroyEntities() {
-    for (Player *player : this->players) {
-        player->~Player();
-    }
+    // for (Player *player : this->players) {
+    //     player->~Player();
+    // }
 
     for (Ball *ball : this->balls) {
         ball->~Ball();
@@ -111,12 +112,27 @@ void Game::startGame() {
     float multiplier = 60.f;
     float dt;
 
-    Collision collision = Collision();
     Player player1 = Player(1, window); 
     Player player2 = Player(2, window);
     Ball ball = Ball(window);
 
+    std::vector<Player*> players;
 
+    Player* player3 = new Player(2, window);
+    player3->setPosition(sf::Vector2f(550, 450));
+    Player* player4 = new Player(2, window);
+    player4->setPosition(sf::Vector2f(500, 450));
+    Player* player5 = new Player(2, window);
+    player5->setPosition(sf::Vector2f(450, 450));
+    Player* player6 = new Player(2, window);
+    player6->setPosition(sf::Vector2f(400, 450));
+
+    players.push_back(player3);
+    players.push_back(player4);
+    players.push_back(player5);
+    players.push_back(player6);
+
+    Collision collision = Collision();
 
     while (this->window.isOpen())
     {
@@ -141,6 +157,14 @@ void Game::startGame() {
 
         player2.draw();
         player2.move(dt, 60);
+
+        player3->draw();
+        player4->draw();
+        player5->draw();
+        player6->draw();
+
+        collision.setPlayers(this->players);
+        collision.printPlayers();
 
         //ball
         ball.move(dt, 60);

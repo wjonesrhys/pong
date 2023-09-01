@@ -1,7 +1,13 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 
+#include <player.hpp>
+#include <vector>
+
 class Collision {
+    private:
+        std::vector<Player*> players;
+
     public:
         Collision();
         ~Collision();
@@ -15,8 +21,8 @@ class Collision {
         // paddle
         // to top and bottom
 
-
-
+        void setPlayers(std::vector<Player*> players);
+        void printPlayers();
         static void checkForCollisions();
 
         bool ballCollideBall();

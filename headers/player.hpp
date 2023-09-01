@@ -1,6 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
-#include "collision.hpp"
+// #include "collision.hpp"
 
 class Player {
     private:
@@ -10,7 +10,7 @@ class Player {
         sf::RectangleShape rect;
         
         sf::RenderWindow &window;
-        Collision collision;
+        // Collision collision;
 
         sf::Vector2f velocity;
         int playerNum;
@@ -31,7 +31,8 @@ class Player {
         void moveHorizontal(sf::Keyboard::Key left, sf::Keyboard::Key right);
 
         sf::FloatRect getRect();
+        void setPosition(sf::Vector2f position);
         void setStartingPosition();
         void correctVerticalPosition();
-        bool isCollidingWithWall();
+        // bool isCollidingWithWall();
 };
