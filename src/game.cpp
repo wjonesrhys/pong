@@ -62,7 +62,21 @@ void Game::setUpEntities() {
     players.push_back(player2);
 
     Ball* ball = new Ball(window); 
+    Ball* ball2 = new Ball(window); 
+    Ball* ball3 = new Ball(window); 
+    Ball* ball4 = new Ball(window); 
+    Ball* ball5 = new Ball(window); 
+    Ball* ball6 = new Ball(window); 
+    Ball* ball7 = new Ball(window); 
+    Ball* ball8 = new Ball(window); 
     this->balls.push_back(ball);
+    this->balls.push_back(ball2);
+    this->balls.push_back(ball3);
+    this->balls.push_back(ball4);
+    this->balls.push_back(ball5);
+    this->balls.push_back(ball6);
+    this->balls.push_back(ball7);
+    this->balls.push_back(ball8);
 }
 
 void Game::destroyEntities() {
@@ -111,27 +125,7 @@ void Game::startGame() {
     sf::Clock clock;
     float multiplier = 60.f;
     float dt;
-
-    Player player1 = Player(1, window); 
-    Player player2 = Player(2, window);
-    Ball ball = Ball(window);
-
-    std::vector<Player*> players;
-
-    Player* player3 = new Player(2, window);
-    player3->setPosition(sf::Vector2f(550, 450));
-    Player* player4 = new Player(2, window);
-    player4->setPosition(sf::Vector2f(500, 450));
-    Player* player5 = new Player(2, window);
-    player5->setPosition(sf::Vector2f(450, 450));
-    Player* player6 = new Player(2, window);
-    player6->setPosition(sf::Vector2f(400, 450));
-
-    players.push_back(player3);
-    players.push_back(player4);
-    players.push_back(player5);
-    players.push_back(player6);
-
+    
     Collision collision = Collision();
 
     while (this->window.isOpen())
@@ -140,11 +134,11 @@ void Game::startGame() {
         while (this->window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                destroyEntities();
+                // destroyEntities();
                 this->window.close();
 
             if (this->p1Score == 10 || this->p2Score == 10) {
-                destroyEntities();
+                // destroyEntities();
                 this->window.close();
             }
         }
@@ -154,43 +148,16 @@ void Game::startGame() {
         this->window.clear();
 
         //players
-        player1.draw();
-        player1.move(dt, 60);
-
-        player2.draw();
-        player2.move(dt, 60);
-
-        player3->draw();
-        player4->draw();
-        player5->draw();
-        player6->draw();
-
-        collision.setPlayers(this->players);
-        collision.printPlayers();
-
-        //ball
-        ball.move(dt, 60);
-
-        if (collision.intersectsLeft(ball.getBounds())) {
-            ball.startPosition();
-            increaseScoreForPlayer(2);
+        for (Player* player : players) {
+            player->move(dt, 60);
+            player->draw();
         }
 
-        if (collision.intersectsRight(ball.getBounds(), window.getSize().x)) {
-            ball.startPosition();
-            increaseScoreForPlayer(1);
+        //balls
+        for (Ball* ball : balls) {
+            ball->move(dt, 60);
+            ball->draw();
         }
-
-        if (collision.intersects(player2.getRect(), ball.getBounds()) || collision.intersects(player1.getRect(), ball.getBounds())){
-            ball.resetPosition();
-            ball.reflectOnPaddle();
-        } 
-
-        if (collision.intersectsTop(ball.getBounds()) || collision.intersectsBottom(ball.getBounds(), window.getSize().y)) {
-            ball.reflectOnWall();
-        }
-
-        ball.draw();
 
         window.draw(this->p1ScoreText);
         window.draw(this->p2ScoreText);

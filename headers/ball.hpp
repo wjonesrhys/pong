@@ -25,6 +25,7 @@ class Ball {
         void setStartingPosition();
 
         sf::FloatRect getBounds();
+        sf::Vector2f getPosition();
 
         float randHeight();
         bool checkScored();

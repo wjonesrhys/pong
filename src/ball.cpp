@@ -54,6 +54,10 @@ sf::FloatRect Ball::getBounds() {
     return this->circle.getGlobalBounds();
 }
 
+sf::Vector2f Ball::getPosition() {
+    return this->circle.getPosition();
+}
+
 void Ball::draw() {
     window.draw(this->circle);
 }

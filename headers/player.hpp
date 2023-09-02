@@ -18,21 +18,21 @@ class Player {
         float multiplier;
  
     public:
-        Player();
-        ~Player();
 
         Player(int playerNum, std::string imgPath, sf::RenderWindow &renderWindow);
         Player(int playerNum, sf::RenderWindow& renderWindow);
+
+        ~Player();
 
         void move(float deltaTime, float multiplier);
         void draw();
 
         void moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down);
-        void moveHorizontal(sf::Keyboard::Key left, sf::Keyboard::Key right);
+        // void moveHorizontal(sf::Keyboard::Key left, sf::Keyboard::Key right);
 
         sf::FloatRect getRect();
         void setPosition(sf::Vector2f position);
+        sf::Vector2f getPosition();
         void setStartingPosition();
-        void correctVerticalPosition();
-        // bool isCollidingWithWall();
+
 };

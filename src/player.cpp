@@ -41,20 +41,11 @@ void Player::setPosition(sf::Vector2f newPosition) {
     this->rect.setPosition(newPosition);
 }
 
+sf::Vector2f Player::getPosition() {
+    return this->rect.getPosition();
+}
+
 void Player::setStartingPosition() {
-    // -- CUPPATEA -- //
-    // sf::Vector2u textureSize = this->texture.getSize();
-    // this->sprite.setOrigin(sf::Vector2f(textureSize.x/2,textureSize.y/2));
-
-    // sf::Vector2u windowSize = window.getSize();
-
-    // if (this->playerNum==1) {
-    //     this->sprite.setPosition(textureSize.x, windowSize.y/2);
-    // }
-
-    // if (this->playerNum==2) {
-    //     this->sprite.setPosition(windowSize.x - textureSize.x,windowSize.y/2);
-    // }
 
     sf::Vector2f rectSize = this->rect.getSize();
     this->rect.setOrigin(sf::Vector2f(rectSize.x/2,rectSize.y/2));
@@ -68,6 +59,7 @@ void Player::setStartingPosition() {
     if (this->playerNum==2) {
         this->rect.setPosition(windowSize.x - rectSize.x,windowSize.y/2);
     }
+
 }
 
 void Player::move(float deltaTime, float multiplier)
@@ -76,35 +68,24 @@ void Player::move(float deltaTime, float multiplier)
     this->multiplier = multiplier;
 
     if (this->playerNum==1) {
-        // moveHorizontal(sf::Keyboard::Left, sf::Keyboard::Right);
         moveVertical(sf::Keyboard::Up, sf::Keyboard::Down);
     }
     if (this->playerNum==2) {
-        // moveHorizontal(sf::Keyboard::A, sf::Keyboard::D);
         moveVertical(sf::Keyboard::W, sf::Keyboard::S);
     }
 
     // //if its stepping over border
-    // if(isCollidingWithWall()) {
+    // if(collidingWithWall()) {
     //     //reset to be up against the wall
     //     correctVerticalPosition();
     // }
     
 }
 
-void Player::moveHorizontal(sf::Keyboard::Key left, sf::Keyboard::Key right) {
-    if (sf::Keyboard::isKeyPressed(left)) {
-        this->velocity=sf::Vector2f(-5.f,0);
-        // sprite.move(sf::Vector2f(-5.f * deltaTime * multiplier, 0.0f));
-        rect.move(sf::Vector2f(-5.f * deltaTime * multiplier, 0.0f));
-    }
-
-    if (sf::Keyboard::isKeyPressed(right)) {
-        this->velocity=sf::Vector2f(5.f,0);
-        // sprite.move(sf::Vector2f(5.f * deltaTime * multiplier, 0.0f));
-        rect.move(sf::Vector2f(5.f * deltaTime * multiplier, 0.0f));
-    }
+sf::FloatRect Player::getRect(){
+    return this->rect.getGlobalBounds();
 }
+
 
 void Player::moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down) {
     // --- Vertical Movement --- //=
@@ -121,21 +102,21 @@ void Player::moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down) {
     }
 }
 
-void Player::correctVerticalPosition() {
-    sf::Vector2f rectSize = this->rect.getSize();
+// void Player::correctVerticalPosition() {
+//     sf::Vector2f rectSize = this->rect.getSize();
 
-    if (this->velocity.y < 0) { // object came from the top
-        this->rect.setPosition(this->rect.getPosition().x, rectSize.y/2);
-        // this->sprite.setPosition(this->sprite.getPosition().x, textureSize.x/2);
-        // std::cout << "x: " << this->sprite.getPosition().x << ", y: " << rectSize.x/2 << std::endl;
-    }
+//     if (this->velocity.y < 0) { // object came from the top
+//         this->rect.setPosition(this->rect.getPosition().x, rectSize.y/2);
+//         // this->sprite.setPosition(this->sprite.getPosition().x, textureSize.x/2);
+//         // std::cout << "x: " << this->sprite.getPosition().x << ", y: " << rectSize.x/2 << std::endl;
+//     }
 
-    if (this->velocity.y > 0) {// object came from the bottom
-        this->rect.setPosition(this->rect.getPosition().x, this->window.getSize().y-rectSize.y/2);
-        // this->sprite.setPosition(this->sprite.getPosition().x, this->window.getSize().y-textureSize.x/2);
-        // std::cout << "x: " << this->sprite.getPosition().x << ", y: " << this->window.getSize().y-rectSize.x/2 << std::endl;
-    }
-}
+//     if (this->velocity.y > 0) {// object came from the bottom
+//         this->rect.setPosition(this->rect.getPosition().x, this->window.getSize().y-rectSize.y/2);
+//         // this->sprite.setPosition(this->sprite.getPosition().x, this->window.getSize().y-textureSize.x/2);
+//         // std::cout << "x: " << this->sprite.getPosition().x << ", y: " << this->window.getSize().y-rectSize.x/2 << std::endl;
+//     }
+// }
 
 // bool Player::isCollidingWithWall() {
 //     // bool isCollisionTop = collision.intersectsTop(this->sprite.getGlobalBounds());
@@ -150,9 +131,3 @@ void Player::correctVerticalPosition() {
 
 //     return false;
 // }
-
-sf::FloatRect Player::getRect(){
-    return this->rect.getGlobalBounds();
-}
-
-
