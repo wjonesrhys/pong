@@ -66,9 +66,9 @@ void Game::setUpEntities() {
 }
 
 void Game::destroyEntities() {
-    // for (Player *player : this->players) {
-    //     player->~Player();
-    // }
+    for (Player *player : this->players) {
+        player->~Player();
+    }
 
     for (Ball *ball : this->balls) {
         ball->~Ball();
@@ -98,7 +98,7 @@ void Game::setupGame() {
 
     //set up the entities
     setUpEntities();
-    destroyEntities();
+    // destroyEntities();
 
 }
 
@@ -140,9 +140,11 @@ void Game::startGame() {
         while (this->window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                destroyEntities();
                 this->window.close();
 
             if (this->p1Score == 10 || this->p2Score == 10) {
+                destroyEntities();
                 this->window.close();
             }
         }

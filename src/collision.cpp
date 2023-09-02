@@ -1,6 +1,4 @@
 #include <iostream>
-#include <vector>
-#include <string>
 
 #include <collision.hpp>
 #include <player.hpp>
@@ -24,7 +22,7 @@ void Collision::printPlayers() {
     int count = 1;
     for (Player* player : this->players) {
         position = player->getRect().getPosition();
-        std::cout << "Player: " << count << ", x: " << position.x << ", y: " << position.y << std::endl;
+        // std::cout << "Player: " << count << ", x: " << position.x << ", y: " << position.y << std::endl;
         count++;
     }
 }

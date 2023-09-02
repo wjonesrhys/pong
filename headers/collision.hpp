@@ -2,7 +2,6 @@
 #include "SFML/Graphics.hpp"
 
 #include <player.hpp>
-#include <vector>
 
 class Collision {
     private:

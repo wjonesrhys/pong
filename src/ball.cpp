@@ -59,7 +59,7 @@ void Ball::draw() {
 }
 
 sf::Vector2f Ball::setRandomDirection() {
-    return sf::Vector2f(Util::zeroOrOne(), randHeight());
+    return sf::Vector2f(zeroOrOne(), randHeight());
 }
 
 float Ball::randHeight() {
