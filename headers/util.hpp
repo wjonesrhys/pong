@@ -5,6 +5,8 @@ void print(std::string msg);
 void print(int number);
 void print(float number);
 void print(double number);
+
+void printCoords(sf::Vector2f coords);
         
 float randFloatBetween(int lower, int higher);
 int zeroOrOne();

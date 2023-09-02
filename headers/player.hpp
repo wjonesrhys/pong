@@ -30,9 +30,13 @@ class Player {
         void moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down);
         // void moveHorizontal(sf::Keyboard::Key left, sf::Keyboard::Key right);
 
-        sf::FloatRect getRect();
-        void setPosition(sf::Vector2f position);
+        sf::FloatRect getBounds();
+        sf::RectangleShape getRect();
+        
+        void setPosition(float x_coord, float y_coord);
         sf::Vector2f getPosition();
         void setStartingPosition();
+
+        sf::Vector2f getVelocity();
 
 };

@@ -37,8 +37,8 @@ void Player::draw() {
     window.draw(this->rect);
 }
 
-void Player::setPosition(sf::Vector2f newPosition) { 
-    this->rect.setPosition(newPosition);
+void Player::setPosition(float x_coord, float y_coord) { 
+    this->rect.setPosition(sf::Vector2f(x_coord, y_coord));
 }
 
 sf::Vector2f Player::getPosition() {
@@ -82,9 +82,14 @@ void Player::move(float deltaTime, float multiplier)
     
 }
 
-sf::FloatRect Player::getRect(){
+sf::FloatRect Player::getBounds(){
     return this->rect.getGlobalBounds();
 }
+
+sf::RectangleShape Player::getRect(){
+    return this->rect;
+}
+
 
 
 void Player::moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down) {
@@ -102,32 +107,6 @@ void Player::moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down) {
     }
 }
 
-// void Player::correctVerticalPosition() {
-//     sf::Vector2f rectSize = this->rect.getSize();
-
-//     if (this->velocity.y < 0) { // object came from the top
-//         this->rect.setPosition(this->rect.getPosition().x, rectSize.y/2);
-//         // this->sprite.setPosition(this->sprite.getPosition().x, textureSize.x/2);
-//         // std::cout << "x: " << this->sprite.getPosition().x << ", y: " << rectSize.x/2 << std::endl;
-//     }
-
-//     if (this->velocity.y > 0) {// object came from the bottom
-//         this->rect.setPosition(this->rect.getPosition().x, this->window.getSize().y-rectSize.y/2);
-//         // this->sprite.setPosition(this->sprite.getPosition().x, this->window.getSize().y-textureSize.x/2);
-//         // std::cout << "x: " << this->sprite.getPosition().x << ", y: " << this->window.getSize().y-rectSize.x/2 << std::endl;
-//     }
-// }
-
-// bool Player::isCollidingWithWall() {
-//     // bool isCollisionTop = collision.intersectsTop(this->sprite.getGlobalBounds());
-//     // bool isCollisionBottom = collision.intersectsBottom(this->sprite.getGlobalBounds(),window.getSize().y);    
-    
-//     bool isCollisionTop = collision.intersectsTop(this->rect.getGlobalBounds());
-//     bool isCollisionBottom = collision.intersectsBottom(this->rect.getGlobalBounds(),window.getSize().y);
-
-//     if (isCollisionBottom || isCollisionTop) {
-//         return true;
-//     } 
-
-//     return false;
-// }
+sf::Vector2f Player::getVelocity() {
+    return this->velocity;
+}

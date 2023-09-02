@@ -18,6 +18,10 @@ void print(double number) {
     std::cout << number << std::endl;
 }
 
+void printCoords(sf::Vector2f coords) {
+    std::cout << "coords... x: " << coords.x << " y: " << coords.y << std::endl;  
+}
+
 float randFloatBetween(int lower, int higher) {
     return 0;
 }

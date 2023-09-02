@@ -9,8 +9,10 @@ class Collision {
         std::vector<Player*> players;
         std::vector<Ball*> balls;
 
+        sf::RenderWindow &window;
+
     public:
-        Collision();
+        Collision(sf::RenderWindow& window);
         ~Collision();
 
         void setPlayers(std::vector<Player*> players);
@@ -19,7 +21,7 @@ class Collision {
         void setBalls(std::vector<Ball*> balls);
         void printBalls();
         
-        static void checkForCollisions();
+        void checkForCollisions();
 
         bool ballCollidingBall();
         bool ballCollidingWall();
@@ -28,7 +30,8 @@ class Collision {
         bool ballHittingTopBottom();
         bool ballHittingLeftRight();
 
-        bool paddleCollidingWall();
+        void paddleCollidingWall();
+        void correctVerticalPosition(Player* player);
 
         bool intersectsTop(sf::FloatRect rect);
         bool intersectsBottom(sf::FloatRect rect, int height);

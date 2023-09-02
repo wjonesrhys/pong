@@ -58,25 +58,11 @@ void Game::setUpEntities() {
     Player* player1 = new Player(1, window); 
     Player* player2 = new Player(2, window); 
 
-    players.push_back(player1);
-    players.push_back(player2);
+    this->players.push_back(player1);
+    this->players.push_back(player2);
 
-    Ball* ball = new Ball(window); 
-    Ball* ball2 = new Ball(window); 
-    Ball* ball3 = new Ball(window); 
-    Ball* ball4 = new Ball(window); 
-    Ball* ball5 = new Ball(window); 
-    Ball* ball6 = new Ball(window); 
-    Ball* ball7 = new Ball(window); 
-    Ball* ball8 = new Ball(window); 
+    Ball* ball = new Ball(window);
     this->balls.push_back(ball);
-    this->balls.push_back(ball2);
-    this->balls.push_back(ball3);
-    this->balls.push_back(ball4);
-    this->balls.push_back(ball5);
-    this->balls.push_back(ball6);
-    this->balls.push_back(ball7);
-    this->balls.push_back(ball8);
 }
 
 void Game::destroyEntities() {
@@ -120,13 +106,15 @@ void Game::startGame() {
 
     setupGame();
 
+    Collision collision = Collision(window);
+    collision.setPlayers(this->players);
+    collision.setBalls(this->balls);
+
     //framerate independent calculations
     this->window.setFramerateLimit(60);
     sf::Clock clock;
     float multiplier = 60.f;
     float dt;
-    
-    Collision collision = Collision();
 
     while (this->window.isOpen())
     {
@@ -147,9 +135,11 @@ void Game::startGame() {
 
         this->window.clear();
 
+
         //players
         for (Player* player : players) {
             player->move(dt, 60);
+            collision.checkForCollisions();
             player->draw();
         }
 
