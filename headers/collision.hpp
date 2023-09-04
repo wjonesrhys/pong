@@ -33,11 +33,8 @@ class Collision {
         void paddleCollidingWall();
         void correctVerticalPosition(Player* player);
 
-        bool intersectsTop(sf::FloatRect rect);
-        bool intersectsBottom(sf::FloatRect rect, int height);
+        bool intersectsTopWall(sf::FloatRect rect);
+        bool intersectsBottomWall(sf::FloatRect rect, int height);
 
-        bool intersectsLeft(sf::FloatRect circle);
-        bool intersectsRight(sf::FloatRect circle, int width);
-
-        bool intersects(sf::FloatRect rect1, sf::FloatRect rect2);
+        float distanceBetweenPoints(sf::Vector2f p1, sf::Vector2f p2);
 };

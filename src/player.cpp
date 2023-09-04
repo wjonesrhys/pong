@@ -37,14 +37,6 @@ void Player::draw() {
     window.draw(this->rect);
 }
 
-void Player::setPosition(float x_coord, float y_coord) { 
-    this->rect.setPosition(sf::Vector2f(x_coord, y_coord));
-}
-
-sf::Vector2f Player::getPosition() {
-    return this->rect.getPosition();
-}
-
 void Player::setStartingPosition() {
 
     sf::Vector2f rectSize = this->rect.getSize();
@@ -73,13 +65,27 @@ void Player::move(float deltaTime, float multiplier)
     if (this->playerNum==2) {
         moveVertical(sf::Keyboard::W, sf::Keyboard::S);
     }
+}
 
-    // //if its stepping over border
-    // if(collidingWithWall()) {
-    //     //reset to be up against the wall
-    //     correctVerticalPosition();
-    // }
-    
+void Player::moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down) {
+    // --- Vertical Movement --- //
+    if (sf::Keyboard::isKeyPressed(up)) {
+        this->velocity=sf::Vector2f(0,-5.f);
+        rect.move(sf::Vector2f(0.f,-5.0f * deltaTime * multiplier));
+    }
+
+    if (sf::Keyboard::isKeyPressed(down)) {
+        this->velocity=sf::Vector2f(0,5.f);
+        rect.move(sf::Vector2f(0.f,5.0f * deltaTime * multiplier));
+    }
+}
+
+void Player::setPosition(float x_coord, float y_coord) { 
+    this->rect.setPosition(sf::Vector2f(x_coord, y_coord));
+}
+
+sf::Vector2f Player::getPosition() {
+    return this->rect.getPosition();
 }
 
 sf::FloatRect Player::getBounds(){
@@ -88,23 +94,6 @@ sf::FloatRect Player::getBounds(){
 
 sf::RectangleShape Player::getRect(){
     return this->rect;
-}
-
-
-
-void Player::moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down) {
-    // --- Vertical Movement --- //=
-    if (sf::Keyboard::isKeyPressed(up)) {
-        this->velocity=sf::Vector2f(0,-5.f);
-        // sprite.move(sf::Vector2f(0.f,-5.0f * deltaTime * multiplier));
-        rect.move(sf::Vector2f(0.f,-5.0f * deltaTime * multiplier));
-    }
-
-    if (sf::Keyboard::isKeyPressed(down)) {
-        this->velocity=sf::Vector2f(0,5.f);
-        // sprite.move(sf::Vector2f(0.f,5.0f * deltaTime * multiplier));
-        rect.move(sf::Vector2f(0.f,5.0f * deltaTime * multiplier));
-    }
 }
 
 sf::Vector2f Player::getVelocity() {

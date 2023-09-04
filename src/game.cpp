@@ -91,6 +91,8 @@ void Game::setupGame() {
     //set up game icon
     setIcon();
     loadFont();
+
+    resetScore();
     
     //set up the ui
     p1ScoreText = setUpText(1);
@@ -98,8 +100,30 @@ void Game::setupGame() {
 
     //set up the entities
     setUpEntities();
-    // destroyEntities();
+}
 
+void Game::moveEntities(float dt) {
+    //players
+    for (Player* player : players) {
+        player->move(dt, 60);
+    }
+
+    //balls
+    for (Ball* ball : balls) {
+        ball->move(dt, 60);
+    }
+}
+
+void Game::drawEntities() {
+    //players
+    for (Player* player : players) {
+        player->draw();
+    }
+
+    //balls
+    for (Ball* ball : balls) {
+        ball->draw();
+    }
 }
 
 void Game::startGame() {
@@ -122,11 +146,9 @@ void Game::startGame() {
         while (this->window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                // destroyEntities();
                 this->window.close();
 
             if (this->p1Score == 10 || this->p2Score == 10) {
-                // destroyEntities();
                 this->window.close();
             }
         }
@@ -135,19 +157,9 @@ void Game::startGame() {
 
         this->window.clear();
 
-
-        //players
-        for (Player* player : players) {
-            player->move(dt, 60);
-            collision.checkForCollisions();
-            player->draw();
-        }
-
-        //balls
-        for (Ball* ball : balls) {
-            ball->move(dt, 60);
-            ball->draw();
-        }
+        moveEntities(dt);
+        collision.checkForCollisions();
+        drawEntities();
 
         window.draw(this->p1ScoreText);
         window.draw(this->p2ScoreText);
@@ -155,6 +167,8 @@ void Game::startGame() {
         this->window.display();
 
     }
+
+    destroyEntities();
 }
 
 

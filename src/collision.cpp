@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 #include <collision.hpp>
 #include <util.hpp>
@@ -42,18 +43,31 @@ void Collision::printBalls() {
 
 void Collision::checkForCollisions() {
     paddleCollidingWall();
+    ballCollidingPaddle();
 }
 
 bool Collision::ballCollidingBall() {
+    //speed calculation
+    //momentum calc?
+    //choose directions to send both in
     return true;
 }
 
 bool Collision::ballCollidingWall() {
+    //     ball.reflectOnWall();
     return true;
 }
 
 bool Collision::ballCollidingPaddle() {
-    return true;
+    for (Ball* ball : balls) {
+        for (Player* player : players) {
+            if (distanceBetweenPoints(player->getPosition(), ball->getPosition()) < ball->getBounds().width/2) {
+                print(distanceBetweenPoints(player->getPosition(), ball->getPosition()));
+                ball->resetPosition();
+                ball->reflectOnPaddle();
+            }
+        }
+    }
 }
 
 bool Collision::ballHittingTopBottom() {
@@ -61,6 +75,11 @@ bool Collision::ballHittingTopBottom() {
 }
 
 bool Collision::ballHittingLeftRight() {
+        //     ball.startPosition();
+        //     increaseScoreForPlayer(2);
+
+                //     ball.startPosition();
+        //     increaseScoreForPlayer(1);
     return true;
 }
 
@@ -68,78 +87,32 @@ void Collision::paddleCollidingWall() {
     sf::FloatRect rect;
     for (Player* player : players) {
         rect = player->getBounds();
-        printCoords(player->getPosition());
-        if(intersectsBottom(rect,window.getSize().y) || intersectsTop(rect)) {
-            std::cout << "colliding" << std::endl;
+        if(intersectsBottomWall(rect,window.getSize().y) || intersectsTopWall(rect)) {
             correctVerticalPosition(player);
-        } else {
-            std::cout << "not colliding" << std::endl;
-        }
+        } 
     }
 }
 
-bool Collision::intersectsTop(sf::FloatRect rect) {
+bool Collision::intersectsTopWall(sf::FloatRect rect) {
     if (rect.top < 0) {
         return true;
     }
     return false;
 }
 
-bool Collision::intersectsBottom(sf::FloatRect rect, int height) {
+bool Collision::intersectsBottomWall(sf::FloatRect rect, int height) {
     if (rect.top + rect.height > height) {
         return true;
     }
     return false;
 }
 
-bool Collision::intersectsLeft(sf::FloatRect rect) {
-    if (rect.left < rect.width/2) {
-        return true;
-    }
-    return false;
-}
-
-bool Collision::intersectsRight(sf::FloatRect rect, int width) {
-    if (rect.left+rect.width > width-rect.width/2) {
-        return true;
-    }
-    return false;
-}
-
-bool Collision::intersects(sf::FloatRect rect, sf::FloatRect circle) {
-    if (rect.intersects(circle)) {
-        return true;
-    }
-    return false;
-}
-
-
-
-        // if (collision.intersectsLeft(ball.getBounds())) {
-        //     ball.startPosition();
-        //     increaseScoreForPlayer(2);
-        // }
-
-        // if (collision.intersectsRight(ball.getBounds(), window.getSize().x)) {
-        //     ball.startPosition();
-        //     increaseScoreForPlayer(1);
-        // }
-
-        // if (collision.intersects(player2.getRect(), ball.getBounds()) || collision.intersects(player1.getRect(), ball.getBounds())){
-        //     ball.resetPosition();
-        //     ball.reflectOnPaddle();
-        // } 
-
-        // if (collision.intersectsTop(ball.getBounds()) || collision.intersectsBottom(ball.getBounds(), window.getSize().y)) {
-        //     ball.reflectOnWall();
-        // }
-
 void Collision::correctVerticalPosition(Player* player) {
     sf::Vector2f position = player->getPosition();
     sf::Vector2f velocity = player->getVelocity();
 
     float height = player->getBounds().height;
-    printCoords(position);
+    // printCoords(position);
 
     if (velocity.y < 0) { // object came from the top
         player->setPosition(position.x, height/2);
@@ -148,4 +121,8 @@ void Collision::correctVerticalPosition(Player* player) {
     if (velocity.y > 0) {// object came from the bottom
         player->setPosition(position.x, this->window.getSize().y-height/2);
     }
+}
+
+float Collision::distanceBetweenPoints(sf::Vector2f p1, sf::Vector2f p2) {
+    return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2));
 }

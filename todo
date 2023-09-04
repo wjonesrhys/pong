@@ -1,7 +1,7 @@
 TODO:
 - add ball to wall collision
 - create scenes, game finishing
-- add enemy ai movement
+- add enemy ai movement - new enemy class with inheritance to a basic paddle class - make Player inherit this too
 - add multiple balls
 - add ball to ball collision
 - refactor collision once working

@@ -27,6 +27,8 @@ class Game {
 
         void resetScore();
         void setUpEntities();
+        void moveEntities(float dt);
+        void drawEntities();
         void destroyEntities();
 
         void setIcon();

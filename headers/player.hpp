@@ -28,7 +28,6 @@ class Player {
         void draw();
 
         void moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down);
-        // void moveHorizontal(sf::Keyboard::Key left, sf::Keyboard::Key right);
 
         sf::FloatRect getBounds();
         sf::RectangleShape getRect();
