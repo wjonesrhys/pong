@@ -126,6 +126,18 @@ void Game::drawEntities() {
     }
 }
 
+void Game::adjustScore(sf::Vector2i result) {
+    if (result.x == 1) {
+        this->p1Score += 1;
+        this->p1ScoreText.setString(std::to_string(this->p1Score));
+    }
+
+    if (result.y == 1) {
+        this->p2Score += 1;
+        this->p2ScoreText.setString(std::to_string(this->p2Score));
+    }
+}
+
 void Game::startGame() {
 
     setupGame();
@@ -162,6 +174,7 @@ void Game::startGame() {
 
         moveEntities(dt);
         collision.checkForCollisions();
+        adjustScore(collision.ballHittingLeftRight());
         drawEntities();
 
         window.draw(this->p1ScoreText);

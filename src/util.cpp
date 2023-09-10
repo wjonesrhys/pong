@@ -22,6 +22,10 @@ void printCoords(sf::Vector2f coords) {
     std::cout << "coords... x: " << coords.x << " y: " << coords.y << std::endl;  
 }
 
+void printCoords(sf::Vector2i coords) {
+    std::cout << "coords... x: " << coords.x << " y: " << coords.y << std::endl; 
+}
+
 float randFloatBetween(int lower, int higher) {
     return 0;
 }

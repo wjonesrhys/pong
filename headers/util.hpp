@@ -7,6 +7,7 @@ void print(float number);
 void print(double number);
 
 void printCoords(sf::Vector2f coords);
+void printCoords(sf::Vector2i coords);
         
 float randFloatBetween(int lower, int higher);
 int zeroOrOne();

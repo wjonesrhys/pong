@@ -23,12 +23,11 @@ class Collision {
         
         void checkForCollisions();
 
-        bool ballCollidingBall();
-        bool ballCollidingWall();
+        void ballCollidingBall();
         void ballCollidingPaddle();
 
-        bool ballHittingTopBottom();
-        bool ballHittingLeftRight();
+        void ballHittingTopBottom();
+        sf::Vector2i ballHittingLeftRight();
 
         void paddleCollidingWall();
         void correctVerticalPosition(Player* player);

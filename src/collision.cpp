@@ -44,18 +44,13 @@ void Collision::printBalls() {
 void Collision::checkForCollisions() {
     paddleCollidingWall();
     ballCollidingPaddle();
+    ballHittingTopBottom();
 }
 
-bool Collision::ballCollidingBall() {
+void Collision::ballCollidingBall() {
     //speed calculation
     //momentum calc?
     //choose directions to send both in
-    return true;
-}
-
-bool Collision::ballCollidingWall() {
-    //     ball.reflectOnWall();
-    return true;
 }
 
 void Collision::ballCollidingPaddle() {
@@ -75,7 +70,6 @@ void Collision::ballCollidingPaddle() {
             printCoords(sec_pt);
 
             if (distanceBetweenPoints(player->getPosition(), ball->getPosition()) < ball->getBounds().width/2) {
-                print(distanceBetweenPoints(player->getPosition(), ball->getPosition()));
                 ball->resetPosition();
                 ball->reflectOnPaddle();
             }
@@ -83,17 +77,35 @@ void Collision::ballCollidingPaddle() {
     }
 }
 
-bool Collision::ballHittingTopBottom() {
-    return true;
+void Collision::ballHittingTopBottom() {
+    sf::FloatRect ballRect;
+    for (Ball* ball : balls) {
+        ballRect = ball->getBounds();
+        if(intersectsBottomWall(ballRect,window.getSize().y) || intersectsTopWall(ballRect)) {
+            ball->resetPosition();
+            ball->reflectOnWall();
+        } 
+    }
 }
 
-bool Collision::ballHittingLeftRight() {
-        //     ball.startPosition();
-        //     increaseScoreForPlayer(2);
+sf::Vector2i Collision::ballHittingLeftRight() {
+    sf::FloatRect ballRect;
+    sf::Vector2i result = sf::Vector2i(0,0);
+    for (Ball* ball : balls) {
+        ballRect = ball->getBounds();
+        if (ballRect.left < ballRect.width) {
+            ball->startPosition();
+            result.x = 1;
+        } 
+        
+        if (ballRect.left + ballRect.width > 1000.0f) {
+            ball->startPosition();
+            result.y = 1;
+        }
+    }
 
-                //     ball.startPosition();
-        //     increaseScoreForPlayer(1);
-    return true;
+    printCoords(result);
+    return result;
 }
 
 void Collision::paddleCollidingWall() {  
@@ -125,8 +137,6 @@ void Collision::correctVerticalPosition(Player* player) {
     sf::Vector2f velocity = player->getVelocity();
 
     float height = player->getBounds().height;
-    // printCoords(position);
-
     if (velocity.y < 0) { // object came from the top
         player->setPosition(position.x, height/2);
     }
