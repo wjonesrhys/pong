@@ -58,9 +58,22 @@ bool Collision::ballCollidingWall() {
     return true;
 }
 
-bool Collision::ballCollidingPaddle() {
+void Collision::ballCollidingPaddle() {
     for (Ball* ball : balls) {
         for (Player* player : players) {
+            sf::Vector2f ballposition = ball->getPosition();
+            sf::FloatRect playerRect = player->getBounds();
+
+            sf::Vector2f first_pt = sf::Vector2f(playerRect.top, playerRect.left);
+            sf::Vector2f sec_pt = sf::Vector2f(playerRect.top-playerRect.height, playerRect.left+playerRect.width);
+
+            //check the ball point in one of the 9 areas
+            //check for collision by using AABB for cross areas +
+            //check for collision using a formula for diagonal areas ><
+
+            printCoords(first_pt);
+            printCoords(sec_pt);
+
             if (distanceBetweenPoints(player->getPosition(), ball->getPosition()) < ball->getBounds().width/2) {
                 print(distanceBetweenPoints(player->getPosition(), ball->getPosition()));
                 ball->resetPosition();

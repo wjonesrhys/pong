@@ -129,10 +129,12 @@ void Game::drawEntities() {
 void Game::startGame() {
 
     setupGame();
+    print("game set up");
 
     Collision collision = Collision(window);
     collision.setPlayers(this->players);
     collision.setBalls(this->balls);
+    print("collision set up");
 
     //framerate independent calculations
     this->window.setFramerateLimit(60);
@@ -140,6 +142,7 @@ void Game::startGame() {
     float multiplier = 60.f;
     float dt;
 
+    print("game about to start");
     while (this->window.isOpen())
     {
         sf::Event event;

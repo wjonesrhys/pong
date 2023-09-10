@@ -25,7 +25,7 @@ class Collision {
 
         bool ballCollidingBall();
         bool ballCollidingWall();
-        bool ballCollidingPaddle();
+        void ballCollidingPaddle();
 
         bool ballHittingTopBottom();
         bool ballHittingLeftRight();
