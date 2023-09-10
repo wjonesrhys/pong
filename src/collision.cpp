@@ -88,9 +88,10 @@ void Collision::ballHittingTopBottom() {
     }
 }
 
-sf::Vector2i Collision::ballHittingLeftRight() {
+std::vector<sf::Vector2i> Collision::ballsHittingLeftRight() {
     sf::FloatRect ballRect;
-    sf::Vector2i result = sf::Vector2i(0,0);
+    std::vector<sf::Vector2i> results;
+    sf::Vector2i result;
     for (Ball* ball : balls) {
         ballRect = ball->getBounds();
         if (ballRect.left < ballRect.width) {
@@ -102,10 +103,11 @@ sf::Vector2i Collision::ballHittingLeftRight() {
             ball->startPosition();
             result.y = 1;
         }
+        results.push_back(result);
+        result = sf::Vector2i(0,0);
     }
 
-    printCoords(result);
-    return result;
+    return results;
 }
 
 void Collision::paddleCollidingWall() {  

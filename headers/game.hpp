@@ -26,7 +26,7 @@ class Game {
         ~Game();
 
         void resetScore();
-        void adjustScore(sf::Vector2i result);
+        void adjustScore(std::vector<sf::Vector2i> results);
         void setUpEntities();
         void moveEntities(float dt);
         void drawEntities();

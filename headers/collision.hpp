@@ -27,7 +27,7 @@ class Collision {
         void ballCollidingPaddle();
 
         void ballHittingTopBottom();
-        sf::Vector2i ballHittingLeftRight();
+        std::vector<sf::Vector2i> ballsHittingLeftRight();
 
         void paddleCollidingWall();
         void correctVerticalPosition(Player* player);

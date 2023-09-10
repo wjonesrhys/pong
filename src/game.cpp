@@ -63,6 +63,10 @@ void Game::setUpEntities() {
 
     Ball* ball = new Ball(window);
     this->balls.push_back(ball);
+    Ball* ball2 = new Ball(window);
+    this->balls.push_back(ball2);
+    Ball* ball3 = new Ball(window);
+    this->balls.push_back(ball3);
 }
 
 void Game::destroyEntities() {
@@ -126,15 +130,17 @@ void Game::drawEntities() {
     }
 }
 
-void Game::adjustScore(sf::Vector2i result) {
-    if (result.x == 1) {
-        this->p1Score += 1;
-        this->p1ScoreText.setString(std::to_string(this->p1Score));
-    }
+void Game::adjustScore(std::vector<sf::Vector2i> results) {
+    for (sf::Vector2i result : results) {
+        if (result.x == 1) {
+            this->p1Score += 1;
+            this->p1ScoreText.setString(std::to_string(this->p1Score));
+        }
 
-    if (result.y == 1) {
-        this->p2Score += 1;
-        this->p2ScoreText.setString(std::to_string(this->p2Score));
+        if (result.y == 1) {
+            this->p2Score += 1;
+            this->p2ScoreText.setString(std::to_string(this->p2Score));
+        }
     }
 }
 
@@ -174,7 +180,7 @@ void Game::startGame() {
 
         moveEntities(dt);
         collision.checkForCollisions();
-        adjustScore(collision.ballHittingLeftRight());
+        adjustScore(collision.ballsHittingLeftRight());
         drawEntities();
 
         window.draw(this->p1ScoreText);
