@@ -47,11 +47,7 @@ sf::Text Game::setUpText(int playerNum) {
     text.setStyle(sf::Text::Bold);
     text.setOrigin(text.getGlobalBounds().width/2,text.getGlobalBounds().height/2);
 
-    float xCoord = window.getSize().x/2;
-    playerNum == 1 ? xCoord += text.getGlobalBounds().width : xCoord -= text.getGlobalBounds().width;
-    text.setPosition(xCoord, text.getGlobalBounds().width);
-
-    return text;
+    return updatePosition(playerNum, text);
 }
 
 void Game::setUpEntities() {
@@ -99,8 +95,8 @@ void Game::setupGame() {
     resetScore();
     
     //set up the ui
-    p1ScoreText = setUpText(1);
-    p2ScoreText = setUpText(2);
+    this->p1ScoreText = setUpText(1);
+    this->p2ScoreText = setUpText(2);
 
     //set up the entities
     setUpEntities();
@@ -118,6 +114,20 @@ void Game::moveEntities(float dt) {
     }
 }
 
+sf::Text Game::updatePosition(int playerNum, sf::Text text) {
+    printCoords(text.getPosition());
+    float xCoord = window.getSize().x/2;
+    playerNum == 1 ? xCoord += text.getGlobalBounds().width : xCoord -= text.getGlobalBounds().width;
+    text.setPosition(xCoord, text.getGlobalBounds().width);
+    printCoords(text.getPosition());
+    return text;
+}
+
+void Game::updateText() {
+    updatePosition(1, this->p1ScoreText);
+    updatePosition(2, this->p2ScoreText);
+}
+
 void Game::drawEntities() {
     //players
     for (Player* player : players) {
@@ -128,6 +138,9 @@ void Game::drawEntities() {
     for (Ball* ball : balls) {
         ball->draw();
     }
+    
+    window.draw(p1ScoreText);
+    window.draw(p2ScoreText);
 }
 
 void Game::adjustScore(std::vector<sf::Vector2i> results) {
@@ -154,8 +167,10 @@ void Game::startGame() {
     collision.setBalls(this->balls);
     print("collision set up");
 
+    collision.ballCollidingBall();
+
     //framerate independent calculations
-    this->window.setFramerateLimit(60);
+    this->window.setFramerateLimit(144);
     sf::Clock clock;
     float multiplier = 60.f;
     float dt;
@@ -169,18 +184,21 @@ void Game::startGame() {
             if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 this->window.close();
 
-            if (this->p1Score == 10 || this->p2Score == 10) {
-                this->window.close();
-            }
+            // if (this->p1Score == 10 || this->p2Score == 10) {
+            //     this->window.close();
+            // }
         }
 
         dt = clock.restart().asSeconds();
 
         this->window.clear();
 
+        updateText();
         moveEntities(dt);
+
         collision.checkForCollisions();
         adjustScore(collision.ballsHittingLeftRight());
+
         drawEntities();
 
         window.draw(this->p1ScoreText);

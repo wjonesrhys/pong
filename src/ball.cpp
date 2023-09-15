@@ -6,7 +6,7 @@ Ball::Ball(sf::RenderWindow &renderWindow) : window(renderWindow) {
     this->circle = sf::CircleShape(20.f);
     this->circle.setFillColor(sf::Color::Blue);
 
-    this->speed = 5.0f;
+    this->speed = 100.0f;
     this->direction=setRandomDirection();
     setStartingPosition();
 
@@ -57,6 +57,10 @@ sf::FloatRect Ball::getBounds() {
 
 sf::Vector2f Ball::getPosition() {
     return this->circle.getPosition();
+}
+
+float Ball::getRadius() {
+    return this->circle.getRadius();
 }
 
 void Ball::draw() {

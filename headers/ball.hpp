@@ -26,6 +26,7 @@ class Ball {
 
         sf::FloatRect getBounds();
         sf::Vector2f getPosition();
+        float getRadius();
 
         float randHeight();
         bool checkScored();

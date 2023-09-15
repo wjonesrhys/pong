@@ -45,9 +45,23 @@ void Collision::checkForCollisions() {
     paddleCollidingWall();
     ballCollidingPaddle();
     ballHittingTopBottom();
+    ballCollidingBall();
 }
 
 void Collision::ballCollidingBall() {
+    std::vector<Ball*> ballsCopy = this->balls;
+
+    print("start collision analysis");
+    for (Ball* ball : balls) {
+        ballsCopy.erase(ballsCopy.begin());
+        for (Ball* otherball : ballsCopy) {
+            if (distanceBetweenPoints(ball->getPosition(), otherball->getPosition()) < ball->getRadius()) {
+                print("colliding");
+            } else {
+                print ("not colliding");
+            }
+        }
+    }
     //speed calculation
     //momentum calc?
     //choose directions to send both in
@@ -66,8 +80,8 @@ void Collision::ballCollidingPaddle() {
             //check for collision by using AABB for cross areas +
             //check for collision using a formula for diagonal areas ><
 
-            printCoords(first_pt);
-            printCoords(sec_pt);
+            // printCoords(first_pt);
+            // printCoords(sec_pt);
 
             if (distanceBetweenPoints(player->getPosition(), ball->getPosition()) < ball->getBounds().width/2) {
                 ball->resetPosition();
@@ -94,12 +108,12 @@ std::vector<sf::Vector2i> Collision::ballsHittingLeftRight() {
     sf::Vector2i result;
     for (Ball* ball : balls) {
         ballRect = ball->getBounds();
-        if (ballRect.left < ballRect.width) {
+        if (ballRect.left < players.at(0)->getBounds().width) {
             ball->startPosition();
             result.x = 1;
         } 
         
-        if (ballRect.left + ballRect.width > 1000.0f) {
+        if (ballRect.left + ballRect.width > window.getSize().x - players.at(0)->getBounds().width) {
             ball->startPosition();
             result.y = 1;
         }
