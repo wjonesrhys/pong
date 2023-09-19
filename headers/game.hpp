@@ -4,19 +4,15 @@
 #include <vector>
 #include "player.hpp"
 #include "ball.hpp"
+#include "score.hpp"
 
 class Game {
     private:
         sf::RenderWindow &window;
-        
-        sf::Text p1ScoreText;
-        sf::Text p2ScoreText;
-
-        int p1Score;
-        int p2Score;
 
         sf::Font font;
 
+        std::vector<Score*> scores;
         std::vector<Player*> players;
         std::vector<Ball*> balls;
 
@@ -25,20 +21,16 @@ class Game {
         Game(sf::RenderWindow &renderWindow);
         ~Game();
 
-        void resetScore();
         void adjustScore(std::vector<sf::Vector2i> results);
-        sf::Text updatePosition(int playerNum, sf::Text text);
-        void updateText();
-        void setUpEntities();
+        
+        void setUpEntities();        
+        void setIcon();
+
         void moveEntities(float dt);
         void drawEntities();
         void destroyEntities();
 
-        void setIcon();
-        void loadFont();
-        sf::Text setUpText(int playerNum);
-        void increaseScoreForPlayer(int playerNum);
-        
+                
         void setupGame();
         void startGame();
 };

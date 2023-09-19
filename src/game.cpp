@@ -11,16 +11,11 @@
 #include "SFML/Graphics.hpp"
 
 Game::Game(sf::RenderWindow& renderWindow) : window(renderWindow) {
-    resetScore();
+
 }
 
 Game::~Game() {
     std::cout << "Game Closed";
-}
-
-void Game::resetScore() {
-    this->p1Score=0;
-    this->p2Score=0;
 }
 
 void Game::setIcon() {
@@ -29,28 +24,13 @@ void Game::setIcon() {
     this->window.setIcon(32,32,icon.getPixelsPtr());
 }
 
-void Game::loadFont() {
-    //load the font
-    if (!this->font.loadFromFile("fonts/arial.ttf")) {
-        std::cout << "Error loading font!" << std::endl;
-    }
-}
-
-sf::Text Game::setUpText(int playerNum) {
-    //create text object
-    sf::Text text;
-
-    text.setFont(font); // font is a sf::Font
-    text.setString("0");
-    text.setCharacterSize(72); // in pixels, not points!
-    text.setFillColor(sf::Color::Green);
-    text.setStyle(sf::Text::Bold);
-    text.setOrigin(text.getGlobalBounds().width/2,text.getGlobalBounds().height/2);
-
-    return updatePosition(playerNum, text);
-}
-
 void Game::setUpEntities() {
+    Score* score1 = new Score(1, window); 
+    Score* score2 = new Score(2, window); 
+
+    this->scores.push_back(score1);
+    this->scores.push_back(score2);
+
     Player* player1 = new Player(1, window); 
     Player* player2 = new Player(2, window); 
 
@@ -73,30 +53,15 @@ void Game::destroyEntities() {
     for (Ball *ball : this->balls) {
         ball->~Ball();
     }
-}
 
-void Game::increaseScoreForPlayer(int playerNum) {
-    if (playerNum==1) {
-        this->p1Score += 1;
-        std::string scoreToDisplay = std::to_string(this->p1Score);
-        this->p1ScoreText.setString(scoreToDisplay);
-    } else {
-        this->p2Score += 1;
-        std::string scoreToDisplay = std::to_string(this->p2Score);
-        this->p2ScoreText.setString(scoreToDisplay);
+    for (Score *score : this->scores) {
+        score->~Score();
     }
 }
 
 void Game::setupGame() {
     //set up game icon
     setIcon();
-    loadFont();
-
-    resetScore();
-    
-    //set up the ui
-    this->p1ScoreText = setUpText(1);
-    this->p2ScoreText = setUpText(2);
 
     //set up the entities
     setUpEntities();
@@ -114,20 +79,6 @@ void Game::moveEntities(float dt) {
     }
 }
 
-sf::Text Game::updatePosition(int playerNum, sf::Text text) {
-    printCoords(text.getPosition());
-    float xCoord = window.getSize().x/2;
-    playerNum == 1 ? xCoord += text.getGlobalBounds().width : xCoord -= text.getGlobalBounds().width;
-    text.setPosition(xCoord, text.getGlobalBounds().width);
-    printCoords(text.getPosition());
-    return text;
-}
-
-void Game::updateText() {
-    updatePosition(1, this->p1ScoreText);
-    updatePosition(2, this->p2ScoreText);
-}
-
 void Game::drawEntities() {
     //players
     for (Player* player : players) {
@@ -138,21 +89,20 @@ void Game::drawEntities() {
     for (Ball* ball : balls) {
         ball->draw();
     }
-    
-    window.draw(p1ScoreText);
-    window.draw(p2ScoreText);
+
+    //scores
+    for (Score* score : scores) {
+        score->draw();
+    }
 }
 
 void Game::adjustScore(std::vector<sf::Vector2i> results) {
     for (sf::Vector2i result : results) {
         if (result.x == 1) {
-            this->p1Score += 1;
-            this->p1ScoreText.setString(std::to_string(this->p1Score));
+            scores.at(0)->increaseScore();
         }
-
         if (result.y == 1) {
-            this->p2Score += 1;
-            this->p2ScoreText.setString(std::to_string(this->p2Score));
+            scores.at(1)->increaseScore();
         }
     }
 }
@@ -193,16 +143,12 @@ void Game::startGame() {
 
         this->window.clear();
 
-        updateText();
         moveEntities(dt);
 
         collision.checkForCollisions();
         adjustScore(collision.ballsHittingLeftRight());
 
         drawEntities();
-
-        window.draw(this->p1ScoreText);
-        window.draw(this->p2ScoreText);
 
         this->window.display();
 
