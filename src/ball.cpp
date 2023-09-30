@@ -73,7 +73,7 @@ sf::Vector2f Ball::setRandomDirection() {
 
 float Ball::randHeight() {
     int randNum = rand() * 2 / RAND_MAX;
-    std::cout << randNum << std::endl;
+    // std::cout << randNum << std::endl;
 
     sf::Vector2u windowSize = this->window.getSize();
     float ballRadius = circle.getRadius();

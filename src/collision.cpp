@@ -51,14 +51,14 @@ void Collision::checkForCollisions() {
 void Collision::ballCollidingBall() {
     std::vector<Ball*> ballsCopy = this->balls;
 
-    print("start collision analysis");
+    // print("start collision analysis");
     for (Ball* ball : balls) {
         ballsCopy.erase(ballsCopy.begin());
         for (Ball* otherball : ballsCopy) {
             if (distanceBetweenPoints(ball->getPosition(), otherball->getPosition()) < ball->getRadius()) {
-                print("colliding");
+                // print("colliding");
             } else {
-                print ("not colliding");
+                // print ("not colliding");
             }
         }
     }

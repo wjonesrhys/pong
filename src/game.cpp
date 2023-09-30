@@ -120,7 +120,7 @@ void Game::startGame() {
     collision.ballCollidingBall();
 
     //framerate independent calculations
-    this->window.setFramerateLimit(144);
+    this->window.setFramerateLimit(60);
     sf::Clock clock;
     float multiplier = 60.f;
     float dt;
