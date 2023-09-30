@@ -30,7 +30,6 @@ Score::Score(int playerNum, sf::RenderWindow& renderWindow) : window(renderWindo
 
     setOrigin();
     setPosition();
-
 }
 
 Score::~Score() {
@@ -38,24 +37,15 @@ Score::~Score() {
 
 }
 
-void Score::updatePosition() {
-    this->text.setPosition(calculatePosition());
-}
-
-sf::Vector2f Score::calculatePosition() {
-    sf::FloatRect textRect = text.getGlobalBounds();
-    float halfTextX = textRect.getSize().x/2;
-    float windowX = window.getSize().x/2;
-
-    playerNum == 1 ? windowX -= 20 : windowX += 20;
-    return sf::Vector2f(windowX, floor(textRect.getPosition().y));
-}
-
 void Score::resetScore() {
     this->score=0;
 }
 
 void Score::increaseScore() {
+    this->score += 1;
+    std::string newScore = std::to_string(this->score);
+    this->text.setString(newScore);
+
     switch(score) {
         case (ten):
             setOrigin();
@@ -70,9 +60,6 @@ void Score::increaseScore() {
             setPosition();
             break;
     }
-    this->score += 1;
-    std::string newScore = std::to_string(this->score);
-    this->text.setString(newScore);
 }
 
 void Score::setFont(sf::Font font) {

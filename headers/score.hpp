@@ -19,10 +19,8 @@ class Score {
         void loadFont();
         void setFont(sf::Font font);
 
-        void updatePosition();
         void setOrigin();
         void setPosition();
-        sf::Vector2f calculatePosition(); 
 
         void draw();
 };
