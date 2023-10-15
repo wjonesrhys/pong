@@ -7,6 +7,7 @@
 #include <ball.hpp>
 #include <collision.hpp>
 #include <util.hpp>
+#include <menu.hpp>
 
 #include "SFML/Graphics.hpp"
 
@@ -39,10 +40,10 @@ void Game::setUpEntities() {
 
     Ball* ball = new Ball(window);
     this->balls.push_back(ball);
-    Ball* ball2 = new Ball(window);
-    this->balls.push_back(ball2);
-    Ball* ball3 = new Ball(window);
-    this->balls.push_back(ball3);
+    // Ball* ball2 = new Ball(window);
+    // this->balls.push_back(ball2);
+    // Ball* ball3 = new Ball(window);
+    // this->balls.push_back(ball3);
 }
 
 void Game::destroyEntities() {
@@ -107,6 +108,13 @@ void Game::adjustScore(std::vector<sf::Vector2i> results) {
     }
 }
 
+void Game::updateGame(Collision collision, float dt) {
+    moveEntities(dt);
+    collision.checkForCollisions();
+    adjustScore(collision.ballsHittingLeftRight());
+    drawEntities();
+}
+
 void Game::startGame() {
 
     setupGame();
@@ -117,7 +125,6 @@ void Game::startGame() {
     collision.setBalls(this->balls);
     print("collision set up");
 
-    collision.ballCollidingBall();
 
     //framerate independent calculations
     this->window.setFramerateLimit(60);
@@ -125,36 +132,67 @@ void Game::startGame() {
     float multiplier = 60.f;
     float dt;
 
-    print("game about to start");
-    while (this->window.isOpen())
-    {
-        sf::Event event;
-        while (this->window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                this->window.close();
+    Menu mainMenu(window.getSize().x, window.getSize().y);
 
-            // if (this->p1Score == 10 || this->p2Score == 10) {
-            //     this->window.close();
-            // }
+    sf::RectangleShape background;
+    background.setSize(sf::Vector2f(960,720));
+    sf::Texture mainTexture;
+    mainTexture.loadFromFile("images/cuppatea.png");
+    background.setTexture(&mainTexture);
+    int screenNumber = -1;
+    bool inScreen = false;
+
+    while (this->window.isOpen()) {
+        sf::Event event;
+        while (this->window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                this->window.close();
+            }
+            if (event.type == sf::Event::KeyPressed) {
+                if (inScreen && event.key.code == sf::Keyboard::Escape) {
+                    inScreen = false;
+                    screenNumber = -1;
+                } else if (event.key.code == sf::Keyboard::Escape) {
+                    this->window.close();
+                }
+            }
+            if (event.type == sf::Event::KeyReleased && !inScreen) {
+                if (event.key.code == sf::Keyboard::Up) {
+                    mainMenu.MoveUp();
+                    break;
+                }
+                if (event.key.code == sf::Keyboard::Down) {
+                    mainMenu.MoveDown();
+                    break;
+                }
+                if (event.key.code == sf::Keyboard::Return) {
+                    screenNumber = mainMenu.MenuPressed();
+                    inScreen = true;
+                    print(screenNumber);
+                }
+            }
         }
 
-        dt = clock.restart().asSeconds();
-
         this->window.clear();
-
-        moveEntities(dt);
-
-        collision.checkForCollisions();
-        adjustScore(collision.ballsHittingLeftRight());
-
-        drawEntities();
-
+        print(screenNumber);
+        switch (screenNumber) {
+            case 0:
+                dt = clock.restart().asSeconds();
+                updateGame(collision, dt);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                this->window.draw(background);
+                mainMenu.draw(this->window);
+                break;
+        }
         this->window.display();
-
     }
 
     destroyEntities();
 }
-
-

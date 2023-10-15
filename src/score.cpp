@@ -11,19 +11,15 @@ enum digits
     thousand = 1000
 };
 
-//create a score with a playernumber
-//when creating set origin to the 
-
 Score::Score(int playerNum, sf::RenderWindow& renderWindow) : window(renderWindow) {
-    this->playerNum = playerNum;
-
     loadFont();
-
     float xCoord = window.getSize().x/2;
+
+    this->playerNum = playerNum;
     this->score=0;
 
-    this->text.setFont(font); 
-    this->text.setString("0");
+    this->text.setFont(this->font); 
+    this->text.setString(std::to_string(this->score));
     this->text.setCharacterSize(72); 
     this->text.setFillColor(sf::Color::Green);
     this->text.setStyle(sf::Text::Bold);    
@@ -46,24 +42,10 @@ void Score::increaseScore() {
     std::string newScore = std::to_string(this->score);
     this->text.setString(newScore);
 
-    switch(score) {
-        case (ten):
-            setOrigin();
-            setPosition();
-            break;
-        case (hundred):
-            setOrigin();
-            setPosition();
-            break;
-        case (thousand):
-            setOrigin();
-            setPosition();
-            break;
+    if (score == ten || score == hundred || score == thousand) {
+        setOrigin();
+        setPosition();
     }
-}
-
-void Score::setFont(sf::Font font) {
-    this->font=font;
 }
 
 void Score::setOrigin() {

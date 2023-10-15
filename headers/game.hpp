@@ -5,6 +5,7 @@
 #include "player.hpp"
 #include "ball.hpp"
 #include "score.hpp"
+#include "collision.hpp"
 
 class Game {
     private:
@@ -30,7 +31,7 @@ class Game {
         void drawEntities();
         void destroyEntities();
 
-                
         void setupGame();
+        void updateGame(Collision collision, float dt);
         void startGame();
 };

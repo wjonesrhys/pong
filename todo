@@ -1,5 +1,5 @@
 TODO:
-- add ball to wall collision
+<!-- - add ball to wall collision -->
 - create scenes, game finishing
 - add enemy ai movement - new enemy class with inheritance to a basic paddle class - make Player inherit this too
 - add multiple balls
@@ -9,7 +9,6 @@ TODO:
 - add audio to the game
 - add window options and game settings - framerate, window size, borderless etc, difficulty, power up choices? score, speed, modes etc
 - clean up class separation
-- add a score class to handle all of the text, updating, drawing, checking the last score and whether its become double digits, if it has, check the size for all 0's so that there's no crossover, and update separately
 
 FIXME:
 - clean up code
@@ -21,3 +20,6 @@ that have different elemental balls
 and outfits
 and there could be a game mode
 called mystery swap
+
+DONE:
+- add a score class to handle all of the text, updating, drawing, checking the last score and whether its become double digits, if it has, check the size for all 0's so that there's no crossover, and update separately
