@@ -7,7 +7,8 @@
 #include <ball.hpp>
 #include <collision.hpp>
 #include <util.hpp>
-#include <menu.hpp>
+#include <mainmenu.hpp>
+#include <pausemenu.hpp>
 
 #include "SFML/Graphics.hpp"
 
@@ -132,7 +133,9 @@ void Game::startGame() {
     float multiplier = 60.f;
     float dt;
 
-    Menu mainMenu(window.getSize().x, window.getSize().y);
+    Menu menu(this->window, 4);
+    MainMenu mainMenu(this->window, 4);
+    PauseMenu pauseMenu(this->window, 4);
 
     sf::RectangleShape background;
     background.setSize(sf::Vector2f(960,720));
@@ -141,6 +144,7 @@ void Game::startGame() {
     background.setTexture(&mainTexture);
     int screenNumber = -1;
     bool inScreen = false;
+    bool paused = false;
 
     while (this->window.isOpen()) {
         sf::Event event;
@@ -149,8 +153,12 @@ void Game::startGame() {
                 this->window.close();
             }
             if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::P) {
+                    paused == true ? paused = false : paused = true;
+                }
                 if (inScreen && event.key.code == sf::Keyboard::Escape) {
                     inScreen = false;
+                    paused = false;
                     screenNumber = -1;
                 } else if (event.key.code == sf::Keyboard::Escape) {
                     this->window.close();
@@ -167,20 +175,27 @@ void Game::startGame() {
                 }
                 if (event.key.code == sf::Keyboard::Return) {
                     screenNumber = mainMenu.MenuPressed();
+                    if (screenNumber == 3) {
+                        this->window.close();
+                    }
                     inScreen = true;
-                    print(screenNumber);
                 }
             }
         }
 
         this->window.clear();
-        print(screenNumber);
+        dt = clock.restart().asSeconds();
         switch (screenNumber) {
             case 0:
-                dt = clock.restart().asSeconds();
-                updateGame(collision, dt);
+                if (!paused) {
+                    updateGame(collision, dt);
+                } else {
+                    drawEntities();
+                    pauseMenu.draw();
+                }
                 break;
             case 1:
+                pauseMenu.draw();
                 break;
             case 2:
                 break;
