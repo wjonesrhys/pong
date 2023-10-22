@@ -3,12 +3,11 @@
 #include <vector>
 
 #include <game.hpp>
+#include <menuselector.hpp>
 #include <player.hpp>
 #include <ball.hpp>
 #include <collision.hpp>
 #include <util.hpp>
-#include <mainmenu.hpp>
-#include <pausemenu.hpp>
 
 #include "SFML/Graphics.hpp"
 
@@ -25,6 +24,14 @@ void Game::setIcon() {
     icon.loadFromFile("images/cuppatea.png");
     this->window.setIcon(32,32,icon.getPixelsPtr());
 }
+
+// void Game::setUpMenus() {
+//     Menu newMenu("hi");
+//     addItem("Play", true, sf::Vector2f(300, 300));
+//     addItem("About", false, sf::Vector2f(300, 350));
+//     addItem("Options", false, sf::Vector2f(300, 400));
+//     addItem("Exit", false, sf::Vector2f(300, 450));
+// }
 
 void Game::setUpEntities() {
     Score* score1 = new Score(1, window); 
@@ -133,15 +140,11 @@ void Game::startGame() {
     float multiplier = 60.f;
     float dt;
 
-    Menu menu(this->window, 4);
-    MainMenu mainMenu(this->window, 4);
-    PauseMenu pauseMenu(this->window, 4);
+    MenuSelector mainMenu(this->window, "main");
+    MenuSelector pauseMenu(this->window, "pause");
+    MenuSelector optionsMenu(this->window, "options");
+    MenuSelector aboutMenu(this->window, "about");
 
-    sf::RectangleShape background;
-    background.setSize(sf::Vector2f(960,720));
-    sf::Texture mainTexture;
-    mainTexture.loadFromFile("images/cuppatea.png");
-    background.setTexture(&mainTexture);
     int screenNumber = -1;
     bool inScreen = false;
     bool paused = false;
@@ -166,15 +169,15 @@ void Game::startGame() {
             }
             if (event.type == sf::Event::KeyReleased && !inScreen) {
                 if (event.key.code == sf::Keyboard::Up) {
-                    mainMenu.MoveUp();
+                    mainMenu.menu.moveUp();
                     break;
                 }
                 if (event.key.code == sf::Keyboard::Down) {
-                    mainMenu.MoveDown();
+                    mainMenu.menu.moveDown();
                     break;
                 }
                 if (event.key.code == sf::Keyboard::Return) {
-                    screenNumber = mainMenu.MenuPressed();
+                    screenNumber = mainMenu.menu.menuPressed();
                     if (screenNumber == 3) {
                         this->window.close();
                     }
@@ -195,15 +198,16 @@ void Game::startGame() {
                 }
                 break;
             case 1:
-                pauseMenu.draw();
+                optionsMenu.draw();
                 break;
             case 2:
+                aboutMenu.draw();
                 break;
             case 3:
+                print("exiting");
                 break;
             default:
-                this->window.draw(background);
-                mainMenu.draw(this->window);
+                mainMenu.draw();
                 break;
         }
         this->window.display();

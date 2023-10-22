@@ -68,6 +68,7 @@
         "xutility": "cpp",
         "iomanip": "cpp",
         "set": "cpp",
-        "numbers": "cpp"
+        "numbers": "cpp",
+        "list": "cpp"
     }
 }

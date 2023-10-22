@@ -5,24 +5,20 @@
 
 class Menu {
     private:
-        int menuSelected;
-        int maxItems;
         sf::Font font;
+        int menuSelected;        
         std::vector<sf::Text> menuItems;
 
     public:
-        sf::RenderWindow &window;
-
-
-        Menu(sf::RenderWindow &window, int maxItems);
+        Menu();
         ~Menu();
 
-        void draw(sf::RenderWindow& window);
+        std::vector<sf::Text> getItems();
         void addItem(std::string text, bool isOn, sf::Vector2f position);
 
-        void MoveUp();
-        void MoveDown();
+        void moveUp();
+        void moveDown();
 
-        int MenuPressed();
-        void SetMenuSelected(int index); 
+        int menuPressed();
+        void setMenuSelected(int index); 
 };

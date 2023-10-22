@@ -24,6 +24,7 @@ class Game {
 
         void adjustScore(std::vector<sf::Vector2i> results);
         
+        void setUpMenus();
         void setUpEntities();        
         void setIcon();
 

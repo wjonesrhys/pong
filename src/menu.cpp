@@ -1,20 +1,19 @@
 #include <menu.hpp>
 #include <util.hpp>
 
-Menu::Menu(sf::RenderWindow &window, int maxItems) : window(window) {
+Menu::Menu() {
     if (!font.loadFromFile("fonts/arial.ttf")) {
         std::cout << "not loaded";
     }
+    setMenuSelected(-1);
 }
 
 Menu::~Menu() {
 
 }
 
-void Menu::draw(sf::RenderWindow& window) {
-    for (int i=0; i<menuItems.size(); ++i) {
-        window.draw(menuItems.at(i));
-    }
+std::vector<sf::Text> Menu::getItems() {
+    return this->menuItems;
 }
 
 void Menu::addItem(std::string text, bool isOn, sf::Vector2f position) {
@@ -27,7 +26,7 @@ void Menu::addItem(std::string text, bool isOn, sf::Vector2f position) {
     menuItems.push_back(menuText);
 }
 
-void Menu::MoveUp() {
+void Menu::moveUp() {
     if (menuSelected - 1 >=-1) {
         menuItems.at(menuSelected).setFillColor(sf::Color::White);
     }
@@ -39,7 +38,7 @@ void Menu::MoveUp() {
     menuItems.at(menuSelected).setFillColor(sf::Color::Blue);
 }
 
-void Menu::MoveDown() {
+void Menu::moveDown() {
     if (menuSelected + 1 <=4) {
         menuItems.at(menuSelected).setFillColor(sf::Color::White);
     }    
@@ -50,10 +49,10 @@ void Menu::MoveDown() {
     menuItems.at(menuSelected).setFillColor(sf::Color::Blue);
 }
 
-int Menu::MenuPressed() {
+int Menu::menuPressed() {
     return menuSelected;
 }
 
-void Menu::SetMenuSelected(int index) {
+void Menu::setMenuSelected(int index) {
     menuSelected = 0;
 }
