@@ -1,16 +1,27 @@
 TODO:
-<!-- - add ball to wall collision -->
-- create scenes, game finishing
-- add enemy ai movement - new enemy class with inheritance to a basic paddle class - make Player inherit this too
-- add multiple balls
-- add ball to ball collision
-- refactor collision once working
+- create a gamestate, mainstate, pausestate, state manager - look into book if it's not intuitive
+- make sure the game finishes and loops expectedly
+- fix the collision between paddle and ball - rect and circle collision
+- create Paddle, Player and Enemy Classes using inheritance
+- add enemy ai movement 
 - add audio to the game
-- add window options and game settings - framerate, window size, borderless etc, difficulty, power up choices? score, speed, modes etc
-- clean up class separation
+
+- add options page - framerate, window size, borderless etc
+- add game settings page - difficulty, power up choices, score, speed, modes etc
+- add an about page - author etc.
+
+- create a shop menu
+- add a score calculator by playing against an enemy
+- give credits to the player based on score 
+- allow to purchase characters, skins, new power ups, stats?
+- different wizard dudes to buy
+
+- add power ups - split a ball into two - random direction?
+- add multiple ball collisions
+
+- add networking for PvP?
 
 FIXME:
-- clean up code
 
 OTHER:
 can buy different types of balls that do different things
