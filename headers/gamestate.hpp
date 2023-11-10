@@ -1,12 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <state.hpp>
 
 #include <iostream>
 #include <vector>
 
 class GameState : public State {
-private:
-
 public:
     GameState() {
         setStateName("State B");
