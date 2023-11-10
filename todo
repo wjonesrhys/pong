@@ -5,23 +5,11 @@ TODO:
 - create Paddle, Player and Enemy Classes using inheritance
 - add enemy ai movement 
 - add audio to the game
-
-- add options page - framerate, window size, borderless etc
-- add game settings page - difficulty, power up choices, score, speed, modes etc
-- add an about page - author etc.
-
-- create a shop menu
-- add a score calculator by playing against an enemy
-- give credits to the player based on score 
-- allow to purchase characters, skins, new power ups, stats?
-- different wizard dudes to buy
-
-- add power ups - split a ball into two - random direction?
-- add multiple ball collisions
-
-- add networking for PvP?
+- add window options and game settings - framerate, window size, borderless etc, difficulty, power up choices? score, speed, modes etc
+- clean up class separation
 
 FIXME:
+- clean up code
 
 OTHER:
 can buy different types of balls that do different things
