@@ -15,6 +15,11 @@ Game::~Game() {
     std::cout << "Game Closed";
 }
 
+void Game::changeState(State* state) {
+    currentState = new GameState();
+}
+
+
 void Game::drawGame() {
     sf::CircleShape shape(100.f);
     shape.setPosition(window.getSize().x/2, window.getSize().y/2);
