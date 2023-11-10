@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+<<<<<<< HEAD
 #include <state.hpp>
 
 #include <iostream>
@@ -25,4 +26,15 @@ public:
         State::update();
         // Additional actions when updating State B
     }
+=======
+#include <iostream>
+#include <vector>
+
+class GameState {
+    private:
+
+    public:
+        void update();
+
+>>>>>>> a6da76c (fix issues?)
 };
