@@ -16,7 +16,7 @@ Game::Game(sf::RenderWindow& renderWindow) : window(renderWindow) {
 }
 
 Game::~Game() {
-    std::cout << "Game Closed";
+    std::cout << "Game closed" << std::endl;
 }
 
 void Game::setIcon() {
