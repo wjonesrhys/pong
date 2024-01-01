@@ -8,11 +8,11 @@ class Collision {
     private:
         std::vector<Player*> players;
         std::vector<Ball*> balls;
-
-        sf::RenderWindow &window;
+        sf::Vector2u windowSize;
 
     public:
-        Collision(sf::RenderWindow& window);
+        Collision(sf::Vector2u windowSize);
+        Collision() = default;
         ~Collision();
 
         void setPlayers(std::vector<Player*> players);

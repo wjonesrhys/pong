@@ -11,7 +11,8 @@ class StateMachine {
     private:
         unordered_map<string, State*> states;    
         string currentState;
-        
+        string previousState;
+
     public:
         StateMachine();
         ~StateMachine();

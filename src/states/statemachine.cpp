@@ -3,7 +3,8 @@
 
 StateMachine::StateMachine() {
     print("State Machine created.");
-    currentState = "";
+    currentState = "mainmenu";
+    previousState = "";
 }
 
 StateMachine::~StateMachine() {
@@ -27,7 +28,11 @@ void StateMachine::render() {
 void StateMachine::change(std::string stateName) {
     try {
         states.at(stateName);
+        previousState = currentState;
         currentState = stateName;
+        
+        states.at(previousState)->onExit();
+        states.at(currentState)->onEnter();
         print("state swapped to " + stateName);
     } catch (std::out_of_range) {
         print("no state of that name loaded in the state machine");

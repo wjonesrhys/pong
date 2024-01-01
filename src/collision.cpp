@@ -5,8 +5,8 @@
 #include <util.hpp>
 #include <SFML/Graphics.hpp>
 
-Collision::Collision(sf::RenderWindow& window) : window(window) {
-
+Collision::Collision(sf::Vector2u windowSize) {
+    this->windowSize = windowSize;
 }
 
 Collision::~Collision() {
@@ -95,7 +95,7 @@ void Collision::ballHittingTopBottom() {
     sf::FloatRect ballRect;
     for (Ball* ball : balls) {
         ballRect = ball->getBounds();
-        if(intersectsBottomWall(ballRect,window.getSize().y) || intersectsTopWall(ballRect)) {
+        if(intersectsBottomWall(ballRect,windowSize.y) || intersectsTopWall(ballRect)) {
             ball->resetPosition();
             ball->reflectOnWall();
         } 
@@ -113,7 +113,7 @@ std::vector<sf::Vector2i> Collision::ballsHittingLeftRight() {
             result.x = 1;
         } 
         
-        if (ballRect.left + ballRect.width > window.getSize().x - players.at(0)->getBounds().width) {
+        if (ballRect.left + ballRect.width > windowSize.x - players.at(0)->getBounds().width) {
             ball->startPosition();
             result.y = 1;
         }
@@ -128,7 +128,7 @@ void Collision::paddleCollidingWall() {
     sf::FloatRect rect;
     for (Player* player : players) {
         rect = player->getBounds();
-        if(intersectsBottomWall(rect,window.getSize().y) || intersectsTopWall(rect)) {
+        if(intersectsBottomWall(rect,windowSize.y) || intersectsTopWall(rect)) {
             correctVerticalPosition(player);
         } 
     }
@@ -158,7 +158,7 @@ void Collision::correctVerticalPosition(Player* player) {
     }
 
     if (velocity.y > 0) {// object came from the bottom
-        player->setPosition(position.x, this->window.getSize().y-height/2);
+        player->setPosition(position.x, this->windowSize.y-height/2);
     }
 }
 
