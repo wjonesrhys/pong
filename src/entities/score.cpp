@@ -66,7 +66,7 @@ void Score::draw() {
 }
 
 void Score::loadFont() {
-    if (!this->font.loadFromFile("fonts/arial.ttf")) {
+    if (!this->font.loadFromFile("resources/fonts/arial.ttf")) {
         std::cout << "Error loading font!" << std::endl;
     }
 }

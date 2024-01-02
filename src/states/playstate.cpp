@@ -97,7 +97,7 @@ void PlayState::render() {
 
 void PlayState::setIcon() {
     sf::Image icon;
-    icon.loadFromFile("images/cuppatea.png");
+    icon.loadFromFile("resources/images/cuppatea.png");
     this->window.setIcon(32,32,icon.getPixelsPtr());
 }
 
