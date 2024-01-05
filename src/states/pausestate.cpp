@@ -1,8 +1,8 @@
-#include <mainmenustate.hpp>
+#include <pausestate.hpp>
 
-// int MainMenuState::count = 0;
+// int PauseState::count = 0;
 
-MainMenuState::MainMenuState(sf::RenderWindow& renderWindow, StateMachine& stateMachine) : window(renderWindow), stateMachine(stateMachine){
+PauseState::PauseState(sf::RenderWindow& renderWindow, StateMachine& stateMachine) : window(renderWindow), stateMachine(stateMachine){
     menu.addItem("Play", true, sf::Vector2f(300, 250));
     menu.addItem("About", false, sf::Vector2f(300, 350));
     menu.addItem("Options", false, sf::Vector2f(300, 450));
@@ -11,20 +11,20 @@ MainMenuState::MainMenuState(sf::RenderWindow& renderWindow, StateMachine& state
     // count++;
 }
 
-MainMenuState::~MainMenuState() {
+PauseState::~PauseState() {
     print("Main menu destroyed!");
     // count--;
 }
 
-void MainMenuState::onEnter() {
+void PauseState::onEnter() {
     print("Main menu loaded!");
 }
 
-void MainMenuState::onExit() {
+void PauseState::onExit() {
     print("Main menu exited!");
 }
 
-void MainMenuState::update() {
+void PauseState::update() {
     sf::Event event;
     while (this->window.pollEvent(event))
     {
@@ -60,12 +60,12 @@ void MainMenuState::update() {
 
 }
 
-void MainMenuState::render() {
+void PauseState::render() {
     for (sf::Text text : menu.getItems()) {
         window.draw(text);
     }
 }
 
-// int MainMenuState::getCounter() {
+// int PauseState::getCounter() {
 //     return count;
 // }
