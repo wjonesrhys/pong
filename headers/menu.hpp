@@ -7,7 +7,8 @@ class Menu {
     private:
         sf::Font font;
         int menuSelected;        
-        std::vector<sf::Text> menuItems;
+        std::vector<sf::Text> texts;
+        std::vector<sf::Shape*> shapes;
 
     public:
         Menu();

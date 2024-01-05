@@ -147,7 +147,6 @@ void PlayState::moveEntities(float dt) {
 
 void PlayState::drawEntities() {
     //players
-    print("drawing");
     for (Player* player : players) {
         player->draw();
     }
