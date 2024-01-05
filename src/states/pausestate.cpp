@@ -7,21 +7,21 @@ PauseState::PauseState(sf::RenderWindow& renderWindow, StateMachine& stateMachin
     menu.addItem("About", false, sf::Vector2f(300, 350));
     menu.addItem("Options", false, sf::Vector2f(300, 450));
     menu.addItem("Exit", false, sf::Vector2f(300, 550));
-    print("Main menu state created!");
+    print("Pause state state created!");
     // count++;
 }
 
 PauseState::~PauseState() {
-    print("Main menu destroyed!");
+    print("Pause state destroyed!");
     // count--;
 }
 
 void PauseState::onEnter() {
-    print("Main menu loaded!");
+    print("Pause state loaded!");
 }
 
 void PauseState::onExit() {
-    print("Main menu exited!");
+    print("Pause state exited!");
 }
 
 void PauseState::update() {
@@ -61,7 +61,11 @@ void PauseState::update() {
 }
 
 void PauseState::render() {
-    for (sf::Text text : menu.getItems()) {
+    for (sf::Shape* shape : menu.getShapes()) {
+        window.draw(*shape);
+    }
+
+    for (sf::Text text : menu.getTexts()) {
         window.draw(text);
     }
 }

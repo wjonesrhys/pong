@@ -14,7 +14,10 @@ class Menu {
         Menu();
         ~Menu();
 
-        std::vector<sf::Text> getItems();
+        std::vector<sf::Text> getTexts();
+        std::vector<sf::Shape*> getShapes();
+
+        void addShape(sf::Shape* shape);
         void addItem(std::string text, bool isOn, sf::Vector2f position);
 
         void moveUp();

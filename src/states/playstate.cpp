@@ -59,7 +59,7 @@ void PlayState::update() {
         
         if (event.type == sf::Event::KeyPressed) {
             if (event.key.code == sf::Keyboard::Escape) {
-                this->window.close();
+                
                 break;
             }
             if (event.key.code == sf::Keyboard::Up) {

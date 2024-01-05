@@ -9,11 +9,22 @@ Menu::Menu() {
 }
 
 Menu::~Menu() {
-
+    for (sf::Shape* shape : shapes) {
+        shape->~Shape();
+    }
 }
 
-std::vector<sf::Text> Menu::getItems() {
+std::vector<sf::Shape*> Menu::getShapes() {
+    return this->shapes;
+}
+
+
+std::vector<sf::Text> Menu::getTexts() {
     return this->texts;
+}
+
+void Menu::addShape(sf::Shape* shape) {
+    this->shapes.push_back(shape);
 }
 
 void Menu::addItem(std::string text, bool isOn, sf::Vector2f position) {
