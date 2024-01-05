@@ -48,11 +48,8 @@ void PlayState::onExit() {
 }
 
 void PlayState::update() {
-    print("in update");
     dt = clock.restart().asSeconds();
-    print("updating game");
     updateGame(dt);
-    print("game updated");
 
     sf::Event event;
     while (this->window.pollEvent(event))
@@ -150,6 +147,7 @@ void PlayState::moveEntities(float dt) {
 
 void PlayState::drawEntities() {
     //players
+    print("drawing");
     for (Player* player : players) {
         player->draw();
     }
@@ -177,11 +175,7 @@ void PlayState::adjustScore(std::vector<sf::Vector2i> results) {
 }
 
 void PlayState::updateGame(float dt) {
-    print("updating game");
     moveEntities(dt);
-    print("moved entities");
     collision.checkForCollisions();
-    print("checked for collisions");
     adjustScore(collision.ballsHittingLeftRight());
-    print("adjusted score");
 }

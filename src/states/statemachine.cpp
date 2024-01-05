@@ -1,10 +1,7 @@
 #include "statemachine.hpp"
-#include "state.hpp"
 
 StateMachine::StateMachine() {
     print("State Machine created.");
-    currentState = "mainmenu";
-    previousState = "";
 }
 
 StateMachine::~StateMachine() {
@@ -25,12 +22,20 @@ void StateMachine::render() {
     states.at(currentState)->render();
 }
 
+void StateMachine::updateStack() {
+    stacked_states.top()->update();
+}
+
+void StateMachine::renderStack() {
+    stacked_states.top()->render();
+}
+
 void StateMachine::change(std::string stateName) {
     try {
         states.at(stateName);
         previousState = currentState;
         currentState = stateName;
-        
+
         states.at(previousState)->onExit();
         states.at(currentState)->onEnter();
         print("state swapped to " + stateName);
@@ -43,6 +48,19 @@ void StateMachine::change(std::string stateName) {
 void StateMachine::add(string name, State* state) {
     print("added " + name + " to array of states");
     states[name] = state;
+}
+
+void StateMachine::push(State* state) {
+    stacked_states.push(state);
+    state->onEnter();
+}
+
+void StateMachine::pop() {
+    if (!stacked_states.empty()) {
+        stacked_states.top()->onExit();
+        stacked_states.pop();
+        stacked_states.top()->onEnter();
+    }
 }
 
 void StateMachine::printStates() {

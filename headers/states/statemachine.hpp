@@ -1,17 +1,21 @@
 #pragma once
 #include <iostream>
-#include <unordered_map>
 #include <util.hpp>
 #include <state.hpp>
 
+#include <stack>
+
 using std::string;
 using std::unordered_map;
+using std::stack;
 
 class StateMachine {
     private:
         unordered_map<string, State*> states;    
-        string currentState;
+        stack<State*> stacked_states;
+
         string previousState;
+        string currentState;
 
     public:
         StateMachine();
@@ -19,8 +23,17 @@ class StateMachine {
 
         void update();
         void render();
-        void change(std::string stateName);
+
+        void updateStack();
+        void renderStack();
+
+        /* Normal */
+        void change(string stateName);
         void add(string name, State* state);
+
+        /* Stack */
+        void push(State* state);
+        void pop();
 
         void printStates();
 };
