@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <state.hpp>
-#include <statemachine.hpp>
+#include <gameengine.hpp>
 #include <menu.hpp>
 #include <player.hpp>
 #include <ball.hpp>
@@ -12,8 +12,7 @@
 
 class PlayState : public State {
     private:
-        StateMachine& stateMachine;
-        sf::RenderWindow& window;
+        GameEngine* gameEngine;
         Menu menu;
 
         Collision collision;
@@ -26,13 +25,19 @@ class PlayState : public State {
         std::vector<Ball*> balls;
 
     public:
-        PlayState(sf::RenderWindow& renderWindow, StateMachine& stateMachine);
+        PlayState(GameEngine* gameEngine);
         ~PlayState();
-        
+
         void onEnter() override;
-        void onExit() override;
+
+        void handleEvents() override;
         void update() override;
         void render() override;
+
+        void pause() override;
+        void resume() override;
+
+        void onExit() override; 
 
         void adjustScore(std::vector<sf::Vector2i> results);
 

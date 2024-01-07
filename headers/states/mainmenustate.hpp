@@ -3,22 +3,26 @@
 #include <SFML/Graphics.hpp>
 #include <state.hpp>
 #include <menu.hpp>
-#include <statemachine.hpp>
+#include <gameengine.hpp>
 
 class MainMenuState : public State {
     private:
-        StateMachine& stateMachine;
-        sf::RenderWindow& window;
         Menu menu;
-        // static int count;
 
     public:
-        MainMenuState(sf::RenderWindow& renderWindow, StateMachine& stateMachine);
+        GameEngine* gameEngine;
+
+        MainMenuState(GameEngine* gameEngine);
         ~MainMenuState();
         
         void onEnter() override;
-        void onExit() override;
+
+        void handleEvents() override;
         void update() override;
         void render() override;
-        // static int getCounter();
+
+        void pause() override;
+        void resume() override;
+
+        void onExit() override; 
 };

@@ -3,22 +3,25 @@
 #include <SFML/Graphics.hpp>
 #include <state.hpp>
 #include <menu.hpp>
-#include <statemachine.hpp>
+#include <gameengine.hpp>
 
 class PauseState : public State {
     private:
-        StateMachine& stateMachine;
-        sf::RenderWindow& window;
+        GameEngine* gameEngine;
         Menu menu;
-        // static int count;
 
     public:
-        PauseState(sf::RenderWindow& renderWindow, StateMachine& stateMachine);
+        PauseState(GameEngine* gameEngine);
         ~PauseState();
         
         void onEnter() override;
-        void onExit() override;
+
+        void handleEvents() override;
         void update() override;
         void render() override;
-        // static int getCounter();
+
+        void pause() override;
+        void resume() override;
+
+        void onExit() override; 
 };

@@ -1,41 +1,39 @@
 #include <mainmenustate.hpp>
+#include <playstate.hpp>
 
-// int MainMenuState::count = 0;
-
-MainMenuState::MainMenuState(sf::RenderWindow& renderWindow, StateMachine& stateMachine) : window(renderWindow), stateMachine(stateMachine){
-    menu.addShape(new sf::RectangleShape(sf::Vector2f(20,20)));
-    
+MainMenuState::MainMenuState(GameEngine* gameEngine) : State("mainmenu"), gameEngine(gameEngine) {    
     menu.addItem("Play", true, sf::Vector2f(300, 250));
     menu.addItem("About", false, sf::Vector2f(300, 350));
     menu.addItem("Options", false, sf::Vector2f(300, 450));
     menu.addItem("Exit", false, sf::Vector2f(300, 550));
     print("Main menu state created!");
-    // count++;
 }
 
 MainMenuState::~MainMenuState() {
     print("Main menu destroyed!");
-    // count--;
 }
 
 void MainMenuState::onEnter() {
     print("Main menu loaded!");
 }
 
-void MainMenuState::onExit() {
-    print("Main menu exited!");
+void MainMenuState::handleEvents() {
+
 }
 
 void MainMenuState::update() {
     sf::Event event;
-    while (this->window.pollEvent(event))
+    print("here");
+    while (gameEngine->window.pollEvent(event))
     {
+        print("next here");
         if (event.type == sf::Event::Closed)
-            this->window.close();
+            gameEngine->window.close();
         
         if (event.type == sf::Event::KeyPressed) {
             if (event.key.code == sf::Keyboard::Escape) {
-                this->window.close();
+                gameEngine->close();
+                gameEngine->window.close();
                 break;
             }
             if (event.key.code == sf::Keyboard::Up) {
@@ -50,7 +48,7 @@ void MainMenuState::update() {
                 print(menu.menuPressed());
                 switch (menu.menuPressed()) {
                     case 0:
-                        stateMachine.change("play");
+                        gameEngine->push(new PlayState(gameEngine));
                         break;
                     default:
                         print("nothing happened");
@@ -58,20 +56,25 @@ void MainMenuState::update() {
             }
         }
     }
-
-
 }
 
 void MainMenuState::render() {
-    for (sf::Shape* shape : menu.getShapes()) {
-        window.draw(*shape);
-    }
-
+    print("not even there yet");
     for (sf::Text text : menu.getTexts()) {
-        window.draw(text);
+        print("before");
+        gameEngine->window.draw(text);
+        print("after");
     }
 }
 
-// int MainMenuState::getCounter() {
-//     return count;
-// }
+void MainMenuState::pause() {
+
+}
+
+void MainMenuState::resume() {
+
+}
+
+void MainMenuState::onExit() {
+    print("Main menu exited!");
+}

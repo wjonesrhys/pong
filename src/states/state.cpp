@@ -1,17 +1,42 @@
 #include "state.hpp"
 
-void State::onEnter() {
-    print("no function definition set up");
+State::State(std::string stateName) {
+    print("base constructor called");
+    this->stateName = stateName;
 }
 
-void State::onExit() {
-    print("no function definition set up");
+State::~State() {
+    print("base destructor called");
+}
+
+void State::onEnter() {
+    print("base on enter called");
+}
+
+void State::handleEvents() {
+    print("base handle events called");
 }
 
 void State::update() {
-    print("nice try");
+    print("base update called");
 }
 
 void State::render() {
-    print("no function definition set up");
+    print("base render called");
+}
+
+void State::pause() {
+    print("base pause called");
+}
+
+void State::resume() {
+    print("base resume called");
+}
+
+void State::onExit() {
+    print("base on exit called");
+}
+
+std::string State::getStateName() {
+    return this->stateName;
 }

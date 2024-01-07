@@ -1,24 +1,24 @@
 #include <playstate.hpp>
+#include <pausestate.hpp>
 #include <stdlib.h>
 
-PlayState::PlayState(sf::RenderWindow& renderWindow, StateMachine& stateMachine) : window(renderWindow), stateMachine(stateMachine) {
+PlayState::PlayState(GameEngine* gameEngine) : State("play"), gameEngine(gameEngine) {
     menu.addItem("other 1", true, sf::Vector2f(300, 250));
     menu.addItem("other 2", false, sf::Vector2f(300, 350));
     print("Game state created!");
 
-    //set up PlayState icon
-    setIcon();
+    //framerate independent calculations
+    float multiplier = 60.f;
 
-    clock.restart();
-    print("Game set up");
+    //set up the entities
+    setUpEntities();
+    print("Entities set up");
 
-    collision = Collision(window.getSize());
+    collision = Collision(gameEngine->window.getSize());
     collision.setBalls(this->balls);
     collision.setPlayers(this->players);
+    print("players and balls linked to collision detection");
 
-    //framerate independent calculations
-    this->window.setFramerateLimit(60);
-    float multiplier = 60.f;
 }
 
 PlayState::~PlayState() {
@@ -26,36 +26,20 @@ PlayState::~PlayState() {
 }
 
 void PlayState::onEnter() {
-    print("Game state loaded!");
+    print("Game state entered!");
     clock.restart();
-
-    //set up the entities
-    setUpEntities();
-    
-    print("Entities set up");
-
-    collision.setBalls(this->balls);
-    collision.setPlayers(this->players);
-    print("here");
 }
 
-void PlayState::onExit() {
-    print("Game state exited!");
-    destroyEntities();
-    this->balls.clear();
-    this->players.clear();
-    this->scores.clear();
+void PlayState::handleEvents() {
+
 }
 
 void PlayState::update() {
-    dt = clock.restart().asSeconds();
-    updateGame(dt);
-
     sf::Event event;
-    while (this->window.pollEvent(event))
+    while (gameEngine->window.pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
-            this->window.close();
+            gameEngine->window.close();
         
         if (event.type == sf::Event::KeyPressed) {
             if (event.key.code == sf::Keyboard::Escape) {
@@ -70,19 +54,26 @@ void PlayState::update() {
                 menu.moveDown();
                 break;
             }
+            if (event.key.code == sf::Keyboard::P || event.key.code == sf::Keyboard::Escape) {
+                pause();
+                // gameEngine.change("pause");
+                break;
+            }
+
             if (event.key.code == sf::Keyboard::Enter) {
                 print(menu.menuPressed());
                 switch (menu.menuPressed()) {
                     case 0:
-                        stateMachine.change("mainmenu");
+                        // gameEngine.change("mainmenu");
                         break;
                     default:
                         print("nothing happened");
                 }
             }
         }
-        
-    }          
+    }
+    dt = clock.restart().asSeconds();
+    updateGame(dt);       
 }
 
 void PlayState::render() {
@@ -92,31 +83,37 @@ void PlayState::render() {
     drawEntities();
 }
 
-void PlayState::setIcon() {
-    sf::Image icon;
-    icon.loadFromFile("resources/images/cuppatea.png");
-    this->window.setIcon(32,32,icon.getPixelsPtr());
+void PlayState::pause() {
+
+}
+
+void PlayState::resume() {
+
+}
+
+void PlayState::onExit() {
+    print("Game state exited!");
+    destroyEntities();
+    this->balls.clear();
+    this->players.clear();
+    this->scores.clear();
 }
 
 void PlayState::setUpEntities() {
-    Score* score1 = new Score(1, window); 
-    Score* score2 = new Score(2, window); 
+    Score* score1 = new Score(1, gameEngine->window); 
+    Score* score2 = new Score(2, gameEngine->window); 
 
     this->scores.push_back(score1);
     this->scores.push_back(score2);
 
-    Player* player1 = new Player(1, window); 
-    Player* player2 = new Player(2, window); 
+    Player* player1 = new Player(1, gameEngine->window); 
+    Player* player2 = new Player(2, gameEngine->window); 
 
     this->players.push_back(player1);
     this->players.push_back(player2);
 
-    Ball* ball = new Ball(window);
+    Ball* ball = new Ball(gameEngine->window);
     this->balls.push_back(ball);
-    // Ball* ball2 = new Ball(window);
-    // this->balls.push_back(ball2);
-    // Ball* ball3 = new Ball(window);
-    // this->balls.push_back(ball3);
 }
 
 void PlayState::destroyEntities() {

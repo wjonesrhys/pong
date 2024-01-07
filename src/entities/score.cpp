@@ -11,9 +11,8 @@ enum digits
     thousand = 1000
 };
 
-Score::Score(int playerNum, sf::RenderWindow& renderWindow) : window(renderWindow) {
+Score::Score(int playerNum, sf::RenderWindow& window) : window(window) {
     loadFont();
-    float xCoord = window.getSize().x/2;
 
     this->playerNum = playerNum;
     this->score=0;

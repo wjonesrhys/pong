@@ -1,39 +1,39 @@
 #include <pausestate.hpp>
 
-// int PauseState::count = 0;
+PauseState::PauseState(GameEngine* gameEngine) : State("pause") {
+    sf::RectangleShape* background = new sf::RectangleShape(sf::Vector2f(1000,1000));
+    background->setOrigin(background->getSize().x/2, background->getSize().y/2);
+    background->setPosition(gameEngine->window.getSize().x/2, gameEngine->window.getSize().y/2);
+    menu.addShape(background);
 
-PauseState::PauseState(sf::RenderWindow& renderWindow, StateMachine& stateMachine) : window(renderWindow), stateMachine(stateMachine){
-    menu.addItem("Play", true, sf::Vector2f(300, 250));
-    menu.addItem("About", false, sf::Vector2f(300, 350));
-    menu.addItem("Options", false, sf::Vector2f(300, 450));
-    menu.addItem("Exit", false, sf::Vector2f(300, 550));
+    menu.addItem("Resume", true, sf::Vector2f(300, 250));
+    menu.addItem("Restart", false, sf::Vector2f(300, 350));
+    menu.addItem("Exit Game", false, sf::Vector2f(300, 450));
     print("Pause state state created!");
-    // count++;
 }
 
 PauseState::~PauseState() {
     print("Pause state destroyed!");
-    // count--;
 }
 
 void PauseState::onEnter() {
     print("Pause state loaded!");
 }
 
-void PauseState::onExit() {
-    print("Pause state exited!");
+void PauseState::handleEvents() {
+
 }
 
 void PauseState::update() {
     sf::Event event;
-    while (this->window.pollEvent(event))
+    while (gameEngine->window.pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
-            this->window.close();
+            gameEngine->window.close();
         
         if (event.type == sf::Event::KeyPressed) {
             if (event.key.code == sf::Keyboard::Escape) {
-                this->window.close();
+                gameEngine->window.close();
                 break;
             }
             if (event.key.code == sf::Keyboard::Up) {
@@ -45,10 +45,15 @@ void PauseState::update() {
                 break;
             }
             if (event.key.code == sf::Keyboard::Enter) {
-                print(menu.menuPressed());
                 switch (menu.menuPressed()) {
                     case 0:
-                        stateMachine.change("play");
+                        gameEngine->pop();
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        // gameEngine->changeState("mainmenu");
+                        gameEngine->clear();
                         break;
                     default:
                         print("nothing happened");
@@ -62,14 +67,22 @@ void PauseState::update() {
 
 void PauseState::render() {
     for (sf::Shape* shape : menu.getShapes()) {
-        window.draw(*shape);
+        gameEngine->window.draw(*shape);
     }
 
     for (sf::Text text : menu.getTexts()) {
-        window.draw(text);
+        gameEngine->window.draw(text);
     }
 }
 
-// int PauseState::getCounter() {
-//     return count;
-// }
+void PauseState::pause() {
+
+}
+
+void PauseState::resume() {
+
+}
+
+void PauseState::onExit() {
+    print("Pause state exited!");
+}
