@@ -14,6 +14,7 @@ class PlayState : public State {
     private:
         GameEngine* gameEngine;
         Menu menu;
+        bool paused;
 
         Collision collision;
         sf::Clock clock;

@@ -9,6 +9,7 @@ PlayState::PlayState(GameEngine* gameEngine) : State("play"), gameEngine(gameEng
 
     //framerate independent calculations
     float multiplier = 60.f;
+    paused = false;
 
     //set up the entities
     setUpEntities();
@@ -31,49 +32,36 @@ void PlayState::onEnter() {
 }
 
 void PlayState::handleEvents() {
-
-}
-
-void PlayState::update() {
     sf::Event event;
-    while (gameEngine->window.pollEvent(event))
-    {
-        if (event.type == sf::Event::Closed)
-            gameEngine->window.close();
-        
-        if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::Escape) {
-                
-                break;
+    while (gameEngine->window.pollEvent(event)) {
+        if (!paused) {
+            if (event.type == sf::Event::Closed) {
+                gameEngine->close();
+                gameEngine->window.close();
             }
-            if (event.key.code == sf::Keyboard::Up) {
-                menu.moveUp();
-                break;
-            }
-            if (event.key.code == sf::Keyboard::Down) {
-                menu.moveDown();
-                break;
-            }
-            if (event.key.code == sf::Keyboard::P || event.key.code == sf::Keyboard::Escape) {
-                pause();
-                // gameEngine.change("pause");
-                break;
-            }
-
-            if (event.key.code == sf::Keyboard::Enter) {
-                print(menu.menuPressed());
-                switch (menu.menuPressed()) {
-                    case 0:
-                        // gameEngine.change("mainmenu");
-                        break;
-                    default:
-                        print("nothing happened");
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::P || event.key.code == sf::Keyboard::Escape) {
+                    pause();
+                    gameEngine->pushWithoutPop(new PauseState(gameEngine));
+                }
+                if (event.key.code == sf::Keyboard::Enter) {
+                    switch (menu.menuPressed()) {
+                        case 0:
+                            break;
+                        default:
+                            print("nothing happened");
+                    }
                 }
             }
         }
     }
-    dt = clock.restart().asSeconds();
-    updateGame(dt);       
+}
+
+void PlayState::update() {
+    if (!paused) {
+        dt = clock.restart().asSeconds();
+        updateGame(dt);  
+    }        
 }
 
 void PlayState::render() {
@@ -84,7 +72,9 @@ void PlayState::render() {
 }
 
 void PlayState::pause() {
-
+    paused ? paused = false : paused = true;
+    // State::flipPause();
+    // print(State::isPaused());
 }
 
 void PlayState::resume() {

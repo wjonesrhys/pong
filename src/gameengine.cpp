@@ -17,7 +17,7 @@ GameEngine::~GameEngine() {
 }
 
 void GameEngine::handleEvents() {
-    print("handling events");
+    // print("handling events");
     for (State* state : stacked_states) {
         state->handleEvents();
     }
@@ -25,19 +25,27 @@ void GameEngine::handleEvents() {
 
 void GameEngine::render() {
     for (State* state : stacked_states) {
-        print("rendering " + state->getStateName());
+        // print("rendering " + state->getStateName());
         state->render();
     }
 }
 
 void GameEngine::update() {
     for (State* state : stacked_states) {
-        print("updating" + state->getStateName());
+        // print("updating" + state->getStateName());
         state->update();
     }
 }
 
+void GameEngine::pushWithoutPop(State* state) {
+    stacked_states.push_back(state);
+    state->onEnter();
+}
+
 void GameEngine::push(State* state) {
+    if (stacked_states.size() != 0) {
+        stacked_states.pop_back();
+    }
     stacked_states.push_back(state);
     state->onEnter();
 }
@@ -64,6 +72,7 @@ void GameEngine::printStates() {
 }
 
 void GameEngine::close() {
+    
     this->running = false;
 }
 

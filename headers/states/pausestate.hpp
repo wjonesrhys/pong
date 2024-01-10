@@ -9,6 +9,7 @@ class PauseState : public State {
     private:
         GameEngine* gameEngine;
         Menu menu;
+        bool isActive;
 
     public:
         PauseState(GameEngine* gameEngine);

@@ -12,6 +12,7 @@ class GameEngine {
 
     public:
         sf::RenderWindow& window;
+        sf::Event event;
 
         GameEngine(sf::RenderWindow& window);
         ~GameEngine();
@@ -20,6 +21,7 @@ class GameEngine {
         void update();
         void render();
 
+        void pushWithoutPop(State* state);
         void push(State* state);
         void pop();
 

@@ -1,10 +1,12 @@
 #include <pausestate.hpp>
 
-PauseState::PauseState(GameEngine* gameEngine) : State("pause") {
-    sf::RectangleShape* background = new sf::RectangleShape(sf::Vector2f(1000,1000));
+PauseState::PauseState(GameEngine* gameEngine) : State("pause"), gameEngine(gameEngine) {
+    sf::RectangleShape* background = new sf::RectangleShape(sf::Vector2f(500,500));
+    background->setFillColor(sf::Color::Red);
     background->setOrigin(background->getSize().x/2, background->getSize().y/2);
     background->setPosition(gameEngine->window.getSize().x/2, gameEngine->window.getSize().y/2);
     menu.addShape(background);
+    isActive = true;
 
     menu.addItem("Resume", true, sf::Vector2f(300, 250));
     menu.addItem("Restart", false, sf::Vector2f(300, 350));
@@ -21,39 +23,34 @@ void PauseState::onEnter() {
 }
 
 void PauseState::handleEvents() {
-
-}
-
-void PauseState::update() {
+    print("handle??");
     sf::Event event;
-    while (gameEngine->window.pollEvent(event))
-    {
-        if (event.type == sf::Event::Closed)
+    while (gameEngine->window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
             gameEngine->window.close();
-        
+        }
         if (event.type == sf::Event::KeyPressed) {
             if (event.key.code == sf::Keyboard::Escape) {
                 gameEngine->window.close();
-                break;
+            }
+            if (event.key.code == sf::Keyboard::P) {
+                gameEngine->pop();
+                isActive = false;
             }
             if (event.key.code == sf::Keyboard::Up) {
                 menu.moveUp();
-                break;
             }
             if (event.key.code == sf::Keyboard::Down) {
                 menu.moveDown();
-                break;
             }
             if (event.key.code == sf::Keyboard::Enter) {
                 switch (menu.menuPressed()) {
                     case 0:
-                        gameEngine->pop();
                         break;
                     case 1:
                         break;
                     case 2:
-                        // gameEngine->changeState("mainmenu");
-                        gameEngine->clear();
+                        gameEngine->close();
                         break;
                     default:
                         print("nothing happened");
@@ -61,17 +58,20 @@ void PauseState::update() {
             }
         }
     }
+}
 
-
+void PauseState::update() {
+    print("update?");
 }
 
 void PauseState::render() {
-    for (sf::Shape* shape : menu.getShapes()) {
-        gameEngine->window.draw(*shape);
-    }
-
-    for (sf::Text text : menu.getTexts()) {
-        gameEngine->window.draw(text);
+    if (isActive) {
+        for (sf::Shape* shape : menu.getShapes()) {
+            gameEngine->window.draw(*shape);
+        }
+        for (sf::Text text : menu.getTexts()) {
+            gameEngine->window.draw(text);
+        }
     }
 }
 

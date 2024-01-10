@@ -18,15 +18,8 @@ void MainMenuState::onEnter() {
 }
 
 void MainMenuState::handleEvents() {
-
-}
-
-void MainMenuState::update() {
     sf::Event event;
-    print("here");
-    while (gameEngine->window.pollEvent(event))
-    {
-        print("next here");
+    while (gameEngine->window.pollEvent(event)) {
         if (event.type == sf::Event::Closed)
             gameEngine->window.close();
         
@@ -34,18 +27,14 @@ void MainMenuState::update() {
             if (event.key.code == sf::Keyboard::Escape) {
                 gameEngine->close();
                 gameEngine->window.close();
-                break;
             }
             if (event.key.code == sf::Keyboard::Up) {
                 menu.moveUp();
-                break;
             }
             if (event.key.code == sf::Keyboard::Down) {
                 menu.moveDown();
-                break;
             }
             if (event.key.code == sf::Keyboard::Enter) {
-                print(menu.menuPressed());
                 switch (menu.menuPressed()) {
                     case 0:
                         gameEngine->push(new PlayState(gameEngine));
@@ -56,6 +45,10 @@ void MainMenuState::update() {
             }
         }
     }
+}
+
+void MainMenuState::update() {
+
 }
 
 void MainMenuState::render() {
