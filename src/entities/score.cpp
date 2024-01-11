@@ -11,9 +11,8 @@ enum digits
     thousand = 1000
 };
 
-Score::Score(int playerNum, sf::RenderWindow& renderWindow) : window(renderWindow) {
+Score::Score(int playerNum, sf::RenderWindow& window) : window(window) {
     loadFont();
-    float xCoord = window.getSize().x/2;
 
     this->playerNum = playerNum;
     this->score=0;
@@ -66,7 +65,7 @@ void Score::draw() {
 }
 
 void Score::loadFont() {
-    if (!this->font.loadFromFile("fonts/arial.ttf")) {
+    if (!this->font.loadFromFile("resources/fonts/arial.ttf")) {
         std::cout << "Error loading font!" << std::endl;
     }
 }

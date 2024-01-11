@@ -3,24 +3,24 @@ all: compile link
 test: compile link clean run 
 
 #linux
-# compile:
-# 	g++ -c main.cpp ./src/*.cpp -I./headers -I/usr/include/SFML -DSFML_STATIC
-# link:
-# 	g++ ./*.o -o main -L"/lib/x86_64-linux-gnu" -lsfml-graphics -lsfml-window -lsfml-system
-# clean:
-# 	find . -name '*.o' -delete
-# run:
-# 	./main
+compile:
+	g++ -g -c main.cpp ./src/*.cpp ./src/states/*.cpp ./src/entities/*.cpp -I./headers -I./headers/states -I./headers/entities -I/usr/include/SFML -DSFML_STATIC
+link:
+	g++ ./*.o -o main -L"/lib/x86_64-linux-gnu" -lsfml-graphics -lsfml-window -lsfml-system
+clean:
+	find . -name '*.o' -delete
+run:
+	./main
 
 #windows
-compile:
-	g++ -c main.cpp ./src/*.cpp -I./headers -IC:\SFML\include -DSFML_STATIC
-link:
-	g++ ./*.o -o main -LC:\SFML\lib -lsfml-main -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -static
-clean:
-	del *.o	
-run:
-	main.exe
+# compile:
+# 	g++ -g -c main.cpp ./src/*.cpp ./src/states/*.cpp ./src/entities/*.cpp -I./headers -I./headers/states -I./headers/entities -IC:\SFML\include -DSFML_STATIC
+# link:
+# 	g++ ./*.o -o main -LC:\SFML\lib -lsfml-main -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -lfreetype -static
+# clean:
+# 	del *.o	
+# run:
+# 	main.exe
 
 # READ
 # -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 needs this order to statically link SFML dependencies
