@@ -91,7 +91,6 @@ void GameEngine::printStates() {
 }
 
 void GameEngine::close() {
-    
     this->running = false;
 }
 

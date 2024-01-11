@@ -5,15 +5,15 @@
 #include <menu.hpp>
 #include <gameengine.hpp>
 
-class PauseState : public State {
+class AboutState : public State {
     private:
-        GameEngine* gameEngine;
         Menu menu;
-        bool isActive;
 
     public:
-        PauseState(GameEngine* gameEngine);
-        ~PauseState();
+        GameEngine* gameEngine;
+
+        AboutState(GameEngine* gameEngine);
+        ~AboutState();
         
         void onEnter() override;
 
@@ -25,6 +25,4 @@ class PauseState : public State {
         void resume() override;
 
         void onExit() override; 
-        
-        void returnToGame();
 };

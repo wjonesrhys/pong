@@ -3,8 +3,6 @@
 #include <stdlib.h>
 
 PlayState::PlayState(GameEngine* gameEngine) : State("play"), gameEngine(gameEngine) {
-    menu.addItem("other 1", true, sf::Vector2f(300, 250));
-    menu.addItem("other 2", false, sf::Vector2f(300, 350));
     print("Game state created!");
 
     //framerate independent calculations
@@ -44,20 +42,11 @@ void PlayState::handleEvents() {
     if (!paused) {
         if (gameEngine->event.type == sf::Event::Closed) {
             gameEngine->close();
-            gameEngine->window.close();
         }
         if (gameEngine->event.type == sf::Event::KeyPressed) {
             if (gameEngine->event.key.code == sf::Keyboard::P || gameEngine->event.key.code == sf::Keyboard::Escape) {
                 pause();
                 gameEngine->pushWithoutPop(new PauseState(gameEngine));
-            }
-            if (gameEngine->event.key.code == sf::Keyboard::Enter) {
-                switch (menu.menuPressed()) {
-                    case 0:
-                        break;
-                    default:
-                        print("nothing happened");
-                }
             }
         }
     }
@@ -71,9 +60,6 @@ void PlayState::update() {
 }
 
 void PlayState::render() {
-    // for (sf::Text text : menu.getItems()) {
-    //     window.draw(text);
-    // }
     drawEntities();
 }
 

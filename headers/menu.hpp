@@ -7,18 +7,21 @@ class Menu {
     private:
         sf::Font font;
         int menuSelected;        
-        std::vector<sf::Text> texts;
+        std::vector<sf::Text> optionTexts;
+        std::vector<sf::Text> staticTexts;
         std::vector<sf::Shape*> shapes;
+        
 
     public:
         Menu();
         ~Menu();
 
-        std::vector<sf::Text> getTexts();
+        std::vector<sf::Text> getOptionTexts();
+        std::vector<sf::Text> getStaticTexts();
         std::vector<sf::Shape*> getShapes();
 
         void addShape(sf::Shape* shape);
-        void addItem(std::string text, bool isOn, sf::Vector2f position);
+        void addText(std::string text, sf::Vector2f position, std::string vectorName);
 
         void moveUp();
         void moveDown();

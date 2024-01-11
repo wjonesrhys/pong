@@ -18,65 +18,75 @@ std::vector<sf::Shape*> Menu::getShapes() {
     return this->shapes;
 }
 
-
-std::vector<sf::Text> Menu::getTexts() {
-    return this->texts;
+std::vector<sf::Text> Menu::getOptionTexts() {
+    return this->optionTexts;
 }
 
-void Menu::addShape(sf::Shape* shape) {
-    this->shapes.push_back(shape);
+std::vector<sf::Text> Menu::getStaticTexts() {
+    return this->staticTexts;
 }
 
-void Menu::addItem(std::string text, bool isOn, sf::Vector2f position) {
+void Menu::addText(std::string text, sf::Vector2f position, std::string vectorName) {
     sf::Text textItem;
     textItem.setFont(font);
     textItem.setString(text);
     textItem.setCharacterSize(70);
     textItem.setPosition(position);
-    texts.push_back(textItem);
+
+    if (vectorName == "option") {
+        optionTexts.push_back(textItem);
+    } else if (vectorName == "static") {
+        staticTexts.push_back(textItem);
+    } else {
+        print("not a valid vector name to add to.");
+    }
 }
 
+void Menu::addShape(sf::Shape* shape) {
+    this->shapes.push_back(shape);
+}
 void Menu::moveUp() {
     if (menuSelected - 1 >=-1) {
-        texts.at(menuSelected).setFillColor(sf::Color::White);
+        optionTexts.at(menuSelected).setFillColor(sf::Color::White);
     }
     menuSelected--;
     if (menuSelected == -1) {
-        menuSelected=texts.size()-1;
-        texts.at(menuSelected).setFillColor(sf::Color::White);
+        menuSelected=optionTexts.size()-1;
+        optionTexts.at(menuSelected).setFillColor(sf::Color::White);
     }
-    texts.at(menuSelected).setFillColor(sf::Color::Blue);
+    optionTexts.at(menuSelected).setFillColor(sf::Color::Blue);
 }
 
 void Menu::moveDown() {
-    if (menuSelected + 1 <=texts.size()) {
-        texts.at(menuSelected).setFillColor(sf::Color::White);
+    if (menuSelected + 1 <=optionTexts.size()) {
+        optionTexts.at(menuSelected).setFillColor(sf::Color::White);
     }    
     menuSelected++;
-    if (menuSelected == texts.size()) {
+    if (menuSelected == optionTexts.size()) {
         menuSelected=0;
     }
-    texts.at(menuSelected).setFillColor(sf::Color::Blue);
+    optionTexts.at(menuSelected).setFillColor(sf::Color::Blue);
 }
 
 int Menu::menuPressed() {
-    print("menu number selected: " + menuSelected);
+    print("menu number selected: ");
+    print(menuSelected);
     return menuSelected;
 }
 
 void Menu::clearColouredText() {
-    for (sf::Text text : texts) {
+    for (sf::Text text : optionTexts) {
         text.setFillColor(sf::Color::White);
     }
 }
 
 void Menu::colourMenuSelected() {
-    this->texts.at(menuSelected).setFillColor(sf::Color::Blue);
+    this->optionTexts.at(menuSelected).setFillColor(sf::Color::Blue);
 }
 
 void Menu::setMenuSelected(int index) {
     menuSelected = index;
-    if (texts.size() > 0) {
+    if (optionTexts.size() > 0) {
         clearColouredText();    
         colourMenuSelected();   
     }

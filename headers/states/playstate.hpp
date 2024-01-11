@@ -43,7 +43,6 @@ class PlayState : public State {
         void adjustScore(std::vector<sf::Vector2i> results);
 
         void setUpEntities();        
-        void setIcon();
 
         void moveEntities(float dt);
         void drawEntities();

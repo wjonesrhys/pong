@@ -1,11 +1,12 @@
 #include <mainmenustate.hpp>
 #include <playstate.hpp>
+#include <aboutstate.hpp>
 
 MainMenuState::MainMenuState(GameEngine* gameEngine) : State("mainmenu"), gameEngine(gameEngine) {    
-    menu.addItem("Play", true, sf::Vector2f(300, 250));
-    menu.addItem("About", false, sf::Vector2f(300, 350));
-    menu.addItem("Options", false, sf::Vector2f(300, 450));
-    menu.addItem("Exit", false, sf::Vector2f(300, 550));
+    menu.addText("Play", sf::Vector2f(300, 250), "option");
+    menu.addText("About", sf::Vector2f(300, 350), "option");
+    menu.addText("Options", sf::Vector2f(300, 450), "option");
+    menu.addText("Exit", sf::Vector2f(300, 550), "option");
     print("Main menu state created!");
 }
 
@@ -37,6 +38,14 @@ void MainMenuState::handleEvents() {
                 case 0:
                     gameEngine->push(new PlayState(gameEngine));
                     break;
+                case 1:
+                    gameEngine->push(new AboutState(gameEngine));
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    gameEngine->close();
+                    break;
                 default:
                     print("nothing happened");
             }
@@ -49,11 +58,8 @@ void MainMenuState::update() {
 }
 
 void MainMenuState::render() {
-    print("not even there yet");
-    for (sf::Text text : menu.getTexts()) {
-        print("before");
+    for (sf::Text text : menu.getOptionTexts()) {
         gameEngine->window.draw(text);
-        print("after");
     }
 }
 
