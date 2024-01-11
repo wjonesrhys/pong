@@ -8,6 +8,8 @@ class State;
 class GameEngine {
     private:
         std::vector<State*> stacked_states;
+        State* previousState;
+        State* currentState;
         bool running;
 
     public:
@@ -24,6 +26,8 @@ class GameEngine {
         void pushWithoutPop(State* state);
         void push(State* state);
         void pop();
+
+        State* getPreviousState();
 
         void clear();
         void close(); 

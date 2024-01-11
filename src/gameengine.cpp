@@ -7,6 +7,9 @@ GameEngine::GameEngine(sf::RenderWindow& window) : window(window) {
     // set main menu as the start state
     push(new MainMenuState(this));
 
+    currentState = nullptr;
+    previousState = nullptr;
+
     // set the game to running
     this->running = true;
 }
@@ -18,8 +21,10 @@ GameEngine::~GameEngine() {
 
 void GameEngine::handleEvents() {
     // print("handling events");
-    for (State* state : stacked_states) {
-        state->handleEvents();
+    while (window.pollEvent(event)) {
+        for (State* state : stacked_states) {
+            state->handleEvents();
+        }
     }
 }
 
@@ -38,12 +43,17 @@ void GameEngine::update() {
 }
 
 void GameEngine::pushWithoutPop(State* state) {
+    previousState = stacked_states.back();
+    currentState = state;
+
     stacked_states.push_back(state);
     state->onEnter();
 }
 
 void GameEngine::push(State* state) {
     if (stacked_states.size() != 0) {
+        previousState = stacked_states.back();
+        currentState = state;
         stacked_states.pop_back();
     }
     stacked_states.push_back(state);
@@ -52,11 +62,20 @@ void GameEngine::push(State* state) {
 
 void GameEngine::pop() {
     if (!stacked_states.empty()) {
+        previousState = stacked_states.back();
         stacked_states.back()->onExit();
         stacked_states.pop_back();
+        if (!stacked_states.empty()) {
+            currentState = stacked_states.back();
+        }
         stacked_states.back()->onEnter();
     }
 }
+
+State* GameEngine::getPreviousState() {
+    return previousState;
+}
+
 
 void GameEngine::clear() {
     //loop over states and clear up memory issues

@@ -29,28 +29,34 @@ PlayState::~PlayState() {
 void PlayState::onEnter() {
     print("Game state entered!");
     clock.restart();
+
+    State* previousState = gameEngine->getPreviousState();
+
+    if (previousState != nullptr) {
+        if (previousState->getStateName() == "pause") {
+            print("well it was trying here");
+            pause();
+        }
+    }
 }
 
 void PlayState::handleEvents() {
-    sf::Event event;
-    while (gameEngine->window.pollEvent(event)) {
-        if (!paused) {
-            if (event.type == sf::Event::Closed) {
-                gameEngine->close();
-                gameEngine->window.close();
+    if (!paused) {
+        if (gameEngine->event.type == sf::Event::Closed) {
+            gameEngine->close();
+            gameEngine->window.close();
+        }
+        if (gameEngine->event.type == sf::Event::KeyPressed) {
+            if (gameEngine->event.key.code == sf::Keyboard::P || gameEngine->event.key.code == sf::Keyboard::Escape) {
+                pause();
+                gameEngine->pushWithoutPop(new PauseState(gameEngine));
             }
-            if (event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::P || event.key.code == sf::Keyboard::Escape) {
-                    pause();
-                    gameEngine->pushWithoutPop(new PauseState(gameEngine));
-                }
-                if (event.key.code == sf::Keyboard::Enter) {
-                    switch (menu.menuPressed()) {
-                        case 0:
-                            break;
-                        default:
-                            print("nothing happened");
-                    }
+            if (gameEngine->event.key.code == sf::Keyboard::Enter) {
+                switch (menu.menuPressed()) {
+                    case 0:
+                        break;
+                    default:
+                        print("nothing happened");
                 }
             }
         }
@@ -73,8 +79,6 @@ void PlayState::render() {
 
 void PlayState::pause() {
     paused ? paused = false : paused = true;
-    // State::flipPause();
-    // print(State::isPaused());
 }
 
 void PlayState::resume() {
