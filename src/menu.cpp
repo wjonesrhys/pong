@@ -1,5 +1,5 @@
+#include <iostream>
 #include <menu.hpp>
-#include <util.hpp>
 
 Menu::Menu() {
     if (!font.loadFromFile("resources/fonts/arial.ttf")) {
@@ -34,11 +34,14 @@ void Menu::addText(std::string text, sf::Vector2f position, std::string vectorNa
     textItem.setPosition(position);
 
     if (vectorName == "option") {
+        if (optionTexts.size() == 0) {
+            textItem.setFillColor(sf::Color::Blue);
+        }   
         optionTexts.push_back(textItem);
     } else if (vectorName == "static") {
         staticTexts.push_back(textItem);
     } else {
-        print("not a valid vector name to add to.");
+        std::cout << "not a valid vector name to add to." << std::endl;
     }
 }
 
@@ -69,8 +72,8 @@ void Menu::moveDown() {
 }
 
 int Menu::menuPressed() {
-    print("menu number selected: ");
-    print(menuSelected);
+    std::cout << "menu number selected: " << std::endl;
+    std::cout << menuSelected << std::endl;
     return menuSelected;
 }
 

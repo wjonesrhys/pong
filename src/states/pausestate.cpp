@@ -1,3 +1,4 @@
+#include <iostream>
 #include <pausestate.hpp>
 #include <mainmenustate.hpp>
 
@@ -6,23 +7,21 @@ PauseState::PauseState(GameEngine* gameEngine) : State("pause"), gameEngine(game
     background->setFillColor(sf::Color::Red);
     background->setOrigin(background->getSize().x/2, background->getSize().y/2);
     background->setPosition(gameEngine->window.getSize().x/2, gameEngine->window.getSize().y/2);
-
-
     menu.addShape(background);
     isActive = true;
 
     menu.addText("Resume", sf::Vector2f(300, 250), "option");
     menu.addText("Restart", sf::Vector2f(300, 350), "option");
     menu.addText("Exit Game", sf::Vector2f(300, 450), "option");
-    print("Pause state state created!");
+    std::cout << "Pause state state created!" << std::endl;
 }
 
 PauseState::~PauseState() {
-    print("Pause state destroyed!");
+    std::cout << "Pause state destroyed!" << std::endl;
 }
 
 void PauseState::onEnter() {
-    print("Pause state loaded!");
+    std::cout << "Pause state loaded!" << std::endl;
 }
 
 void PauseState::handleEvents() {
@@ -52,7 +51,7 @@ void PauseState::handleEvents() {
                     gameEngine->close();
                     break;
                 default:
-                    print("nothing happened");
+                    std::cout << "nothing happened" << std::endl;
             }
         }
     }
@@ -85,7 +84,7 @@ void PauseState::resume() {
 }
 
 void PauseState::onExit() {
-    print("Pause state exited!");
+    std::cout << "Pause state exited!" << std::endl;
 }
 
 void PauseState::returnToGame() {

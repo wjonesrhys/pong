@@ -1,9 +1,10 @@
-#pragma once
-#include <iostream>
-#include <SFML/Graphics.hpp>
+#ifndef PAUSESTATE_H
+#define PAUSESTATE_H
+
 #include <state.hpp>
 #include <menu.hpp>
-#include <gameengine.hpp>
+
+class GameEngine;
 
 class PauseState : public State {
     private:
@@ -28,3 +29,5 @@ class PauseState : public State {
         
         void returnToGame();
 };
+
+#endif

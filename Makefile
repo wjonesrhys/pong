@@ -1,6 +1,6 @@
 all: compile link
 
-test: compile link clean run 
+test: compile link clean run
 
 #linux
 compile:

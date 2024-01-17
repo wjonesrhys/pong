@@ -1,5 +1,8 @@
-#include <iostream>
 #include <gameengine.hpp>
+#include <SFML/Graphics.hpp>
+#include <vector>
+#include <iostream>
+
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(1280, 720), "Ping Pong");
@@ -8,9 +11,6 @@ int main() {
     sf::Image icon;
     icon.loadFromFile("resources/images/cuppatea.png");
     window.setIcon(32,32,icon.getPixelsPtr());
-
-    // create a random seed
-    srand(time(nullptr));
 
     // start the engine
     GameEngine game = GameEngine(window);

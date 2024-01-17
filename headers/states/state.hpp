@@ -1,12 +1,13 @@
-#pragma once
-#include <iostream>
-#include <util.hpp>
+#ifndef STATE_H
+#define STATE_H
+
 #include <gameengine.hpp>
+#include <string>
 
 class GameEngine;
 
 /**
- * A Virtual class used for contract purposes amongst the game states.
+ * A virtual class use for all game states.
 */
 class State {
     private:
@@ -32,3 +33,5 @@ class State {
         
         std::string getStateName();
 };
+
+#endif

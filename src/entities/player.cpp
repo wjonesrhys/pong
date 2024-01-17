@@ -1,7 +1,5 @@
 #include <iostream>
-
 #include <player.hpp>
-#include <util.hpp>
 
 Player::Player(int playerNum, std::string imgPath, sf::RenderWindow& renderWindow) : window(renderWindow) {
     // this->collision = Collision();

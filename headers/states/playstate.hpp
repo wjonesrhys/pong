@@ -1,14 +1,14 @@
-#pragma once
-#include <iostream>
-#include <SFML/Graphics.hpp>
+#ifndef PLAYSTATE_H
+#define PLAYSTATE_H
 
 #include <state.hpp>
-#include <gameengine.hpp>
 #include <menu.hpp>
 #include <player.hpp>
 #include <ball.hpp>
 #include <score.hpp>
 #include <collision.hpp>
+
+class GameEngine;
 
 class PlayState : public State {
     private:
@@ -50,3 +50,5 @@ class PlayState : public State {
 
         void updateGame(float dt);
 };
+
+#endif

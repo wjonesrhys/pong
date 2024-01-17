@@ -1,3 +1,4 @@
+#include <iostream>
 #include <aboutstate.hpp>
 #include <mainmenustate.hpp>
 
@@ -7,15 +8,15 @@ AboutState::AboutState(GameEngine* gameEngine) : State("about"), gameEngine(game
     menu.addText("    And    ", sf::Vector2f(300, 350), "static");
     menu.addText(" Ster Only ", sf::Vector2f(300, 450), "static");
     menu.addText("Back to main menu", sf::Vector2f(300, 550), "option");
-    print("About state created!");
+    std::cout << "About state created!" << std::endl;
 }
 
 AboutState::~AboutState() {
-    print("About state destroyed!");
+    std::cout << "About state destroyed!" << std::endl;
 }
 
 void AboutState::onEnter() {
-    print("About state loaded!");
+    std::cout << "About state loaded!" << std::endl;
 }
 
 void AboutState::handleEvents() {
@@ -35,7 +36,7 @@ void AboutState::handleEvents() {
                     gameEngine->push(new MainMenuState(gameEngine));
                     break;
                 default:
-                    print("nothing happened");
+                    std::cout << "nothing happened" << std::endl;
             }
         }
     }
@@ -63,5 +64,5 @@ void AboutState::resume() {
 }
 
 void AboutState::onExit() {
-    print("About state exited!");
+    std::cout << "About state exited!" << std::endl;
 }

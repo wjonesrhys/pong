@@ -1,8 +1,9 @@
+#include <iostream>
 #include "gameengine.hpp"
 #include "mainmenustate.hpp"
 
 GameEngine::GameEngine(sf::RenderWindow& window) : window(window) {
-    print("game engine started!");
+    std:: cout << "game engine started!" << std::endl;
 
     // set main menu as the start state
     push(new MainMenuState(this));
@@ -16,11 +17,11 @@ GameEngine::GameEngine(sf::RenderWindow& window) : window(window) {
 
 GameEngine::~GameEngine() {
     //delete all states here?
-    print("game engine ended!");
+    std:: cout << "game engine ended!" << std::endl;
 }
 
 void GameEngine::handleEvents() {
-    // print("handling events");
+    // std::cout << "handling events");
     while (window.pollEvent(event)) {
         for (State* state : stacked_states) {
             state->handleEvents();
@@ -30,14 +31,14 @@ void GameEngine::handleEvents() {
 
 void GameEngine::render() {
     for (State* state : stacked_states) {
-        // print("rendering " + state->getStateName());
+        // std::cout << "rendering " + state->getStateName());
         state->render();
     }
 }
 
 void GameEngine::update() {
     for (State* state : stacked_states) {
-        // print("updating" + state->getStateName());
+        // std::cout << "updating" + state->getStateName());
         state->update();
     }
 }
@@ -83,11 +84,11 @@ void GameEngine::clear() {
 }
 
 void GameEngine::printStates() {
-    print("------ states loaded: ------");
+    std:: cout << "------ states loaded: ------" << std::endl;
     for (State* state : stacked_states) {
-        print(state->getStateName());
+        std:: cout << state->getStateName()<< std::endl;
     }
-    print("----------------------------");
+    std:: cout << "----------------------------" << std::endl;
 }
 
 void GameEngine::close() {

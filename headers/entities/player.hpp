@@ -1,6 +1,7 @@
-#pragma once
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include "SFML/Graphics.hpp"
-// #include "collision.hpp"
 
 class Player {
     private:
@@ -39,3 +40,5 @@ class Player {
         sf::Vector2f getVelocity();
 
 };
+
+#endif

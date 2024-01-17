@@ -1,9 +1,10 @@
-#pragma once
-#include <iostream>
-#include <SFML/Graphics.hpp>
+#ifndef MAINMENUSTATE_H
+#define MAINMENUSTATE_H
+
 #include <state.hpp>
 #include <menu.hpp>
-#include <gameengine.hpp>
+
+class GameEngine;
 
 class MainMenuState : public State {
     private:
@@ -26,3 +27,5 @@ class MainMenuState : public State {
 
         void onExit() override; 
 };
+
+#endif

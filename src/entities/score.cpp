@@ -1,8 +1,6 @@
 #include <iostream>
 #include <cmath>
-
 #include <score.hpp>
-#include <util.hpp>
 
 enum digits 
 {   

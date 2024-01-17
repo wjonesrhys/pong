@@ -1,8 +1,6 @@
-#include <iostream>
 #include <cmath>
 
 #include <collision.hpp>
-#include <util.hpp>
 #include <SFML/Graphics.hpp>
 
 Collision::Collision(sf::Vector2u windowSize) {
@@ -51,12 +49,13 @@ void Collision::checkForCollisions() {
 void Collision::ballCollidingBall() {
     std::vector<Ball*> ballsCopy = this->balls;
 
-    // print("start collision analysis");
+    // std::cout << "start collision analysis");#include <stdlib.h>
+
     for (Ball* ball : balls) {
         ballsCopy.erase(ballsCopy.begin());
         for (Ball* otherball : ballsCopy) {
             if (distanceBetweenPoints(ball->getPosition(), otherball->getPosition()) < ball->getRadius()) {
-                // print("colliding");
+                // std::cout << "colliding");
             } else {
                 // print ("not colliding");
             }

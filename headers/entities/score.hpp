@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SCORE_H
+#define SCORE_H
+
 #include "SFML/Graphics.hpp"
 
 class Score {
@@ -26,3 +28,5 @@ class Score {
 
         void draw();
 };
+
+#endif
