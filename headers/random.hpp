@@ -2,17 +2,18 @@
 #define RANDOM_H
 
 #include <random>
+#include <SFML/System/Vector2.hpp>
 
 class Random {
     private:
-        std::random_device rd;
+        static std::random_device rd;
     
     public:
         Random();
         ~Random();
 
-        int randomBinaryChoice();
-        float randomHeight(sf::Vector2u windowSize, float ballRadius);
+        static int randomBinaryChoice();
+        static float randomHeight(sf::Vector2u windowSize, float ballRadius);
 };
 
 #endif
