@@ -5,13 +5,8 @@
 
 class Player {
     private:
-        sf::Sprite sprite;
-        sf::Texture texture;
-
         sf::RectangleShape rect;
-        
         sf::RenderWindow &window;
-        // Collision collision;
 
         sf::Vector2f velocity;
         int playerNum;
@@ -19,24 +14,20 @@ class Player {
         float multiplier;
  
     public:
-
-        Player(int playerNum, std::string imgPath, sf::RenderWindow &renderWindow);
         Player(int playerNum, sf::RenderWindow& renderWindow);
-
         ~Player();
 
-        void move(float deltaTime, float multiplier);
         void draw();
-
+        void move(float deltaTime, float multiplier);
         void moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down);
+
+        void setPosition(float x_coord, float y_coord);
+        void setStartingPosition();
+        void setVelocity(sf::Vector2f newVelocity);
 
         sf::FloatRect getBounds();
         sf::RectangleShape getRect();
-        
-        void setPosition(float x_coord, float y_coord);
         sf::Vector2f getPosition();
-        void setStartingPosition();
-
         sf::Vector2f getVelocity();
 
 };

@@ -83,8 +83,8 @@ void Collision::ballCollidingPaddle() {
             // printCoords(sec_pt);
 
             if (distanceBetweenPoints(player->getPosition(), ball->getPosition()) < ball->getBounds().width/2) {
-                ball->resetPosition();
-                ball->reflectOnPaddle();
+                ball->setLastPosition();
+                ball->reverseDirectionHorizontal();
             }
         }
     }
@@ -95,8 +95,8 @@ void Collision::ballHittingTopBottom() {
     for (Ball* ball : balls) {
         ballRect = ball->getBounds();
         if(intersectsBottomWall(ballRect,windowSize.y) || intersectsTopWall(ballRect)) {
-            ball->resetPosition();
-            ball->reflectOnWall();
+            ball->setLastPosition();
+            ball->reverseDirectionVertical();
         } 
     }
 }
@@ -108,12 +108,12 @@ std::vector<sf::Vector2i> Collision::ballsHittingLeftRight() {
     for (Ball* ball : balls) {
         ballRect = ball->getBounds();
         if (ballRect.left < players.at(0)->getBounds().width) {
-            ball->startPosition();
+            ball->setStartingPosition();
             result.x = 1;
         } 
         
         if (ballRect.left + ballRect.width > windowSize.x - players.at(0)->getBounds().width) {
-            ball->startPosition();
+            ball->setStartingPosition();
             result.y = 1;
         }
         results.push_back(result);

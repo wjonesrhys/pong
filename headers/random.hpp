@@ -1,13 +1,13 @@
 #ifndef RANDOM_H
 #define RANDOM_H
 
-#include <random>
 #include <SFML/System/Vector2.hpp>
+#include <random>
 
 class Random {
     private:
         static std::random_device rd;
-    
+
     public:
         Random();
         ~Random();

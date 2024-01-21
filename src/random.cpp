@@ -1,14 +1,13 @@
 #include <random.hpp>
 
-//why is that the reason for sf being ok
-#include <SFML/Main.hpp>
+std::random_device Random::rd;
 
 Random::Random() {
 
 }
 
 Random::~Random() {
-
+    
 }
 
 int Random::randomBinaryChoice() {

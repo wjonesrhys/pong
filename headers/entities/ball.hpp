@@ -21,6 +21,10 @@ class Ball {
 
         void move(float deltaTime, float multiplier);
         void draw();
+
+        void reverseDirectionVertical();
+        void reverseDirectionHorizontal();
+        void bounce();
         
         void setLastPosition();
         void setStartingPosition();

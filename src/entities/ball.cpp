@@ -28,7 +28,7 @@ void Ball::setUp() {
 }
 
 /**
- * GAME LOOP METHODS
+ * GAME LOOP
 */
 
 void Ball::move(float deltaTime, float multiplier) {
@@ -38,6 +38,18 @@ void Ball::move(float deltaTime, float multiplier) {
 
 void Ball::draw() {
     window.draw(this->circle);
+}
+
+void Ball::reverseDirectionVertical() {
+    this->direction.y *= -1;
+}
+
+void Ball::reverseDirectionHorizontal() {
+    this->direction.x *= -1;
+}
+
+void Ball::bounce() {
+    
 }
 
 /**
