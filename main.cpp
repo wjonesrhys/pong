@@ -15,6 +15,7 @@ int main() {
         std::cout << "file didn't load" << std::endl;
     } else {
         window.setIcon(32,32,icon.getPixelsPtr());
+        std::cout << "loaded" << std::endl;
     }
 
     // start the engine

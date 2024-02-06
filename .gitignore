@@ -1,5 +1,5 @@
 # windows
-*.exe
+main.exe
 # linux
 main
 Makefile
