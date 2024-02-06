@@ -3,3 +3,6 @@
 # linux
 main
 Makefile
+
+#both
+build/

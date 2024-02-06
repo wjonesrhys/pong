@@ -11,8 +11,11 @@ int main() {
     window.setFramerateLimit(60);
 
     sf::Image icon;
-    icon.loadFromFile("resources/images/cuppatea.png");
-    window.setIcon(32,32,icon.getPixelsPtr());
+    if (!icon.loadFromFile("resources/images/cuppatea.png")) {
+        std::cout << "file didn't load" << std::endl;
+    } else {
+        window.setIcon(32,32,icon.getPixelsPtr());
+    }
 
     // start the engine
     GameEngine game = GameEngine(window);
