@@ -4,8 +4,6 @@
 #include <gameengine.hpp>
 #include <string>
 
-class GameEngine;
-
 /**
  * A virtual class use for all game states.
 */

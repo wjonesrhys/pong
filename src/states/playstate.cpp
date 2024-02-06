@@ -64,6 +64,7 @@ void PlayState::render() {
 
 void PlayState::pause() {
     paused ? paused = false : paused = true;
+    clock.restart();
 }
 
 void PlayState::resume() {

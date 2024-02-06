@@ -109,11 +109,13 @@ std::vector<sf::Vector2i> Collision::ballsHittingLeftRight() {
         ballRect = ball->getBounds();
         if (ballRect.left < players.at(0)->getBounds().width) {
             ball->setStartingPosition();
+            ball->setRandomDirection();
             result.x = 1;
         } 
         
         if (ballRect.left + ballRect.width > windowSize.x - players.at(0)->getBounds().width) {
             ball->setStartingPosition();
+            ball->setRandomDirection();
             result.y = 1;
         }
         results.push_back(result);

@@ -3,8 +3,7 @@
 
 #include <state.hpp>
 #include <menu.hpp>
-
-class GameEngine;
+#include <gameengine.hpp>
 
 class PauseState : public State {
     private:

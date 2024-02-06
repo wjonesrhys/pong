@@ -9,6 +9,7 @@ TODO:
 - add audio to the game
 - add window options and game settings - framerate, window size, borderless etc, difficulty, power up choices? score, speed, modes etc
 - clean up class separation
+- maybe make a window class, use that in place of reference to window?
 
 FIXME:
 - clean up code

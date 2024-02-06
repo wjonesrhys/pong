@@ -21,6 +21,7 @@ class PlayState : public State {
         float dt;
 
         sf::Font font;
+        
         std::vector<Score*> scores;
         std::vector<Player*> players;
         std::vector<Ball*> balls;

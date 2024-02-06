@@ -2,16 +2,12 @@
 
 std::random_device Random::rd;
 
-Random::Random() {
-
-}
-
-Random::~Random() {
-    
-}
-
 int Random::randomBinaryChoice() {
     return rd() * 2 / RAND_MAX;
+}
+
+int Random::randomLeftOrRight() {
+    return randomBinaryChoice() == 1 ? -1 : 1;
 }
 
 float Random::randomHeight(sf::Vector2u windowSize, float ballRadius) {

@@ -33,6 +33,9 @@ class Ball {
         void setRadius(float size);
         void setSpeed(float speed);
 
+        void setDirection(sf::Vector2f direction);
+        void setRandomDirection();
+
         float getRadius();
         sf::FloatRect getBounds();
         sf::Vector2f getPosition();

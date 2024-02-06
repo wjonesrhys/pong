@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random.hpp>
 #include "ball.hpp"
 
 Ball::Ball(sf::RenderWindow &renderWindow, float radius) : window(renderWindow) {
@@ -25,6 +26,7 @@ void Ball::setUp() {
     sf::Vector2u windowSize = window.getSize();
     this->circle.setOrigin(sf::Vector2f(this->circle.getRadius(), this->circle.getRadius()));
     setStartingPosition();
+    setRandomDirection();
 }
 
 /**
@@ -75,6 +77,15 @@ void Ball::setRadius(float radius) {
 
 void Ball::setSpeed(float speed) {
     this->speed = speed;
+}
+
+void Ball::setDirection(sf::Vector2f direction) {
+    this->direction = direction;
+}
+
+void Ball::setRandomDirection() {
+    sf::Vector2u windowSize = this->window.getSize();
+    this->direction=sf::Vector2f(Random::randomLeftOrRight(), Random::randomHeight(windowSize, circle.getRadius()));
 }
 
 /**
