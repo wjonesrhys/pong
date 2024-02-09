@@ -1,9 +1,7 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include <gameengine.hpp>
 #include <string>
-
 /**
  * A virtual class use for all game states.
 */

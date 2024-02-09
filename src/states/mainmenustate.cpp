@@ -3,7 +3,7 @@
 #include <playstate.hpp>
 #include <aboutstate.hpp>
 
-MainMenuState::MainMenuState(GameEngine* gameEngine) : State("mainmenu"), gameEngine(gameEngine) {    
+MainMenuState::MainMenuState(GameEngine* gameEngine) : gameEngine(gameEngine), State("mainmenu"){    
     menu.addText("Play", sf::Vector2f(300, 250), "option");
     menu.addText("About", sf::Vector2f(300, 350), "option");
     menu.addText("Options", sf::Vector2f(300, 450), "option");

@@ -3,8 +3,7 @@
 
 #include <state.hpp>
 #include <menu.hpp>
-
-class GameEngine;
+#include <gameengine.hpp>
 
 class MainMenuState : public State {
     private:

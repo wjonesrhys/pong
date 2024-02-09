@@ -7,8 +7,7 @@
 #include <ball.hpp>
 #include <score.hpp>
 #include <collision.hpp>
-
-class GameEngine;
+#include <gameengine.hpp>
 
 class PlayState : public State {
     private:
