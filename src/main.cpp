@@ -1,10 +1,9 @@
-#include <gameengine.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <vector>
 #include <iostream>
-
+#include <gameengine.hpp>
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(1280, 720), "Ping Pong");
@@ -16,7 +15,7 @@ int main() {
     } else {
         window.setIcon(32,32,icon.getPixelsPtr());
         std::cout << "loaded" << std::endl;
-    }
+    } 
 
     // start the engine
     GameEngine game = GameEngine(window);

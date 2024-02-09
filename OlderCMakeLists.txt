@@ -1,0 +1,38 @@
+cmake_minimum_required(VERSION 3.16)
+project(sfml_test)
+
+############################################################
+# Include 
+############################################################
+
+include_directories(
+        ${PROJECT_SOURCE_DIR}/headers/entities
+        ${PROJECT_SOURCE_DIR}/headers/states
+        ${PROJECT_SOURCE_DIR}/headers
+)
+
+############################################################
+# Create an executable
+############################################################
+
+file(GLOB all_SRCS
+    "${PROJECT_SOURCE_DIR}/src/entities/*.cpp"
+    "${PROJECT_SOURCE_DIR}/src/states/*.cpp"
+    "${PROJECT_SOURCE_DIR}/src/*.cpp"
+    "${PROJECT_SOURCE_DIR}/*.cpp"
+)
+
+set(EXECUTABLE_OUTPUT_PATH "bin")
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin )
+set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
+set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
+add_executable(main ${all_SRCS})
+
+############################################################
+# Link SFML libraries and sent compile features
+############################################################
+
+target_link_libraries(main PRIVATE sfml-graphics)
+target_link_libraries(main PRIVATE sfml-window)
+target_link_libraries(main PRIVATE sfml-system)
+target_compile_features(main PRIVATE cxx_std_17)
