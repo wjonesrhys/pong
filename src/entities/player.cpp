@@ -1,25 +1,8 @@
 #include <iostream>
-
 #include <player.hpp>
-#include <util.hpp>
-
-Player::Player(int playerNum, std::string imgPath, sf::RenderWindow& renderWindow) : window(renderWindow) {
-    // this->collision = Collision();
-
-    std::cout << "Player created!" << std::endl;
-    this->playerNum = playerNum;
-
-    if (this->texture.loadFromFile(imgPath)){
-        std::cout << "Texture for player " << this->playerNum << " loaded!" << std::endl;
-        this->sprite.setTexture(texture);
-    } else {
-        std::cout << "Texture for player not loaded!" << std::endl;
-    }
-}
 
 Player::Player(int playerNum, sf::RenderWindow& renderWindow) : window(renderWindow) {
-    // this->collision = Collision();
-
+    
     std::cout << "Player created!" << std::endl;
     this->playerNum = playerNum;
 
@@ -32,26 +15,12 @@ Player::~Player() {
     std::cout << "Player destroyed!" << std::endl;
 }
 
+/**
+ * GAME LOOP METHODS
+*/
+
 void Player::draw() {
-    // window.draw(this->sprite);
     window.draw(this->rect);
-}
-
-void Player::setStartingPosition() {
-
-    sf::Vector2f rectSize = this->rect.getSize();
-    this->rect.setOrigin(sf::Vector2f(rectSize.x/2,rectSize.y/2));
-
-    sf::Vector2u windowSize = window.getSize();
-
-    if (this->playerNum==1) {
-        this->rect.setPosition(rectSize.x, windowSize.y/2);
-    }
-
-    if (this->playerNum==2) {
-        this->rect.setPosition(windowSize.x - rectSize.x,windowSize.y/2);
-    }
-
 }
 
 void Player::move(float deltaTime, float multiplier)
@@ -80,9 +49,39 @@ void Player::moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down) {
     }
 }
 
+/**
+ * SETTERS
+*/
+
+
 void Player::setPosition(float x_coord, float y_coord) { 
     this->rect.setPosition(sf::Vector2f(x_coord, y_coord));
 }
+
+void Player::setStartingPosition() {
+
+    sf::Vector2f rectSize = this->rect.getSize();
+    this->rect.setOrigin(sf::Vector2f(rectSize.x/2,rectSize.y/2));
+
+    sf::Vector2u windowSize = window.getSize();
+
+    if (this->playerNum==1) {
+        this->rect.setPosition(rectSize.x, windowSize.y/2);
+    }
+
+    if (this->playerNum==2) {
+        this->rect.setPosition(windowSize.x - rectSize.x,windowSize.y/2);
+    }
+
+}
+
+void Player::setVelocity(sf::Vector2f newVelocity) {
+    this->velocity = newVelocity;
+}
+
+/**
+ * GETTERS
+*/
 
 sf::Vector2f Player::getPosition() {
     return this->rect.getPosition();

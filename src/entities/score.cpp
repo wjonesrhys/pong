@@ -1,8 +1,6 @@
 #include <iostream>
 #include <cmath>
-
 #include <score.hpp>
-#include <util.hpp>
 
 enum digits 
 {   
@@ -32,6 +30,20 @@ Score::~Score() {
 
 }
 
+void Score::loadFont() {
+    if (!this->font.loadFromFile("resources/fonts/arial.ttf")) {
+        std::cout << "Error loading font!" << std::endl;
+    }
+}
+
+/**
+ * GAME LOOP
+*/
+
+void Score::draw() {
+    window.draw(text);
+}
+
 void Score::resetScore() {
     this->score=0;
 }
@@ -47,6 +59,10 @@ void Score::increaseScore() {
     }
 }
 
+/**
+ * SETTERS
+*/
+
 void Score::setOrigin() {
     sf::FloatRect textRect = this->text.getGlobalBounds();
     float xCoord;
@@ -58,14 +74,4 @@ void Score::setPosition() {
     sf::FloatRect textRect = this->text.getGlobalBounds();
     float windowX = window.getSize().x/2;
     playerNum == 1 ? this->text.setPosition(windowX - 20, textRect.height) : this->text.setPosition(windowX + 20,textRect.height);
-}
-
-void Score::draw() {
-    window.draw(text);
-}
-
-void Score::loadFont() {
-    if (!this->font.loadFromFile("resources/fonts/arial.ttf")) {
-        std::cout << "Error loading font!" << std::endl;
-    }
 }

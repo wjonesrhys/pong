@@ -1,7 +1,8 @@
-#pragma once
-#include <iostream>
-#include <util.hpp>
+#ifndef GAMEENGINE_H
+#define GAMEENGINE_H
+
 #include <state.hpp>
+#include <SFML/Graphics.hpp>
 
 class State;
 
@@ -35,3 +36,5 @@ class GameEngine {
         void printStates();
         bool isRunning();
 };
+
+#endif

@@ -1,9 +1,9 @@
+#include <iostream>
 #include <playstate.hpp>
 #include <pausestate.hpp>
-#include <stdlib.h>
 
 PlayState::PlayState(GameEngine* gameEngine) : State("play"), gameEngine(gameEngine) {
-    print("Game state created!");
+    std::cout << "Game state created!" << std::endl;
 
     //framerate independent calculations
     float multiplier = 60.f;
@@ -11,28 +11,27 @@ PlayState::PlayState(GameEngine* gameEngine) : State("play"), gameEngine(gameEng
 
     //set up the entities
     setUpEntities();
-    print("Entities set up");
+    std::cout << "Entities set up" << std::endl;
 
     collision = Collision(gameEngine->window.getSize());
     collision.setBalls(this->balls);
     collision.setPlayers(this->players);
-    print("players and balls linked to collision detection");
+    std::cout << "players and balls linked to collision detection" << std::endl;
 
 }
 
 PlayState::~PlayState() {
-    print("Game state destroyed!");
+    std::cout << "Game state destroyed!" << std::endl;
 }
 
 void PlayState::onEnter() {
-    print("Game state entered!");
+    std::cout << "Game state entered!" << std::endl;
     clock.restart();
 
     State* previousState = gameEngine->getPreviousState();
 
     if (previousState != nullptr) {
         if (previousState->getStateName() == "pause") {
-            print("well it was trying here");
             pause();
         }
     }
@@ -65,6 +64,7 @@ void PlayState::render() {
 
 void PlayState::pause() {
     paused ? paused = false : paused = true;
+    clock.restart();
 }
 
 void PlayState::resume() {
@@ -72,7 +72,7 @@ void PlayState::resume() {
 }
 
 void PlayState::onExit() {
-    print("Game state exited!");
+    std::cout << "Game state exited!" << std::endl;
     destroyEntities();
     this->balls.clear();
     this->players.clear();

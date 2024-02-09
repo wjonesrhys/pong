@@ -1,14 +1,13 @@
-#pragma once
-#include <iostream>
-#include <SFML/Graphics.hpp>
+#ifndef PLAYSTATE_H
+#define PLAYSTATE_H
 
 #include <state.hpp>
-#include <gameengine.hpp>
 #include <menu.hpp>
 #include <player.hpp>
 #include <ball.hpp>
 #include <score.hpp>
 #include <collision.hpp>
+#include <gameengine.hpp>
 
 class PlayState : public State {
     private:
@@ -21,6 +20,7 @@ class PlayState : public State {
         float dt;
 
         sf::Font font;
+        
         std::vector<Score*> scores;
         std::vector<Player*> players;
         std::vector<Ball*> balls;
@@ -50,3 +50,5 @@ class PlayState : public State {
 
         void updateGame(float dt);
 };
+
+#endif

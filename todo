@@ -1,12 +1,15 @@
 TODO:
-- create a gamestate, mainstate, pausestate, state manager - look into book if it's not intuitive
+- fix the fps, ball jitters a bit currently, is that because 60 fps?
 - make sure the game finishes and loops expectedly
+- change the function for score so that it doesnt have the hard coded 20 value and change the size of the text too, similarly all the objects- best to keep the render window reference in for this reason.
+- make sure that every time the person readjust the screen, it changes everything accordingly.
 - fix the collision between paddle and ball - rect and circle collision
 - create Paddle, Player and Enemy Classes using inheritance
 - add enemy ai movement 
 - add audio to the game
 - add window options and game settings - framerate, window size, borderless etc, difficulty, power up choices? score, speed, modes etc
 - clean up class separation
+- maybe make a window class, use that in place of reference to window?
 
 FIXME:
 - clean up code
@@ -22,3 +25,5 @@ called mystery swap
 DONE:
 - add a score class to handle all of the text, updating, drawing, checking the last score and whether its become double digits, if it has, check the size for all 0's so that there's no crossover, and update separately
 - fix the scoreboard so there's a minimum distance between the two scores  
+- create a gamestate, mainstate, pausestate, state manager - look into book if it's not intuitive
+- fix the random direction at ball reset

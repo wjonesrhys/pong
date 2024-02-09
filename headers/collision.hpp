@@ -1,5 +1,5 @@
-#pragma once
-#include "SFML/Graphics.hpp"
+#ifndef COLLISION_H
+#define COLLISION_H
 
 #include <player.hpp>
 #include <ball.hpp>
@@ -37,3 +37,5 @@ class Collision {
 
         float distanceBetweenPoints(sf::Vector2f p1, sf::Vector2f p2);
 };
+
+#endif

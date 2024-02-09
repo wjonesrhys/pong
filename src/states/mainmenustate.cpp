@@ -1,21 +1,22 @@
+#include <iostream>
 #include <mainmenustate.hpp>
 #include <playstate.hpp>
 #include <aboutstate.hpp>
 
-MainMenuState::MainMenuState(GameEngine* gameEngine) : State("mainmenu"), gameEngine(gameEngine) {    
+MainMenuState::MainMenuState(GameEngine* gameEngine) : gameEngine(gameEngine), State("mainmenu"){    
     menu.addText("Play", sf::Vector2f(300, 250), "option");
     menu.addText("About", sf::Vector2f(300, 350), "option");
     menu.addText("Options", sf::Vector2f(300, 450), "option");
     menu.addText("Exit", sf::Vector2f(300, 550), "option");
-    print("Main menu state created!");
+    std::cout << "Main menu state created!" << std::endl;
 }
 
 MainMenuState::~MainMenuState() {
-    print("Main menu destroyed!");
+    std::cout << "Main menu destroyed!" << std::endl;
 }
 
 void MainMenuState::onEnter() {
-    print("Main menu loaded!");
+    std::cout << "Main menu loaded!" << std::endl;
 }
 
 void MainMenuState::handleEvents() {
@@ -47,7 +48,7 @@ void MainMenuState::handleEvents() {
                     gameEngine->close();
                     break;
                 default:
-                    print("nothing happened");
+                    std::cout << "nothing happened" << std::endl;
             }
         }
     }
@@ -72,5 +73,5 @@ void MainMenuState::resume() {
 }
 
 void MainMenuState::onExit() {
-    print("Main menu exited!");
+    std::cout << "Main menu exited!" << std::endl;
 }

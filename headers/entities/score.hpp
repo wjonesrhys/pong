@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SCORE_H
+#define SCORE_H
+
 #include "SFML/Graphics.hpp"
 
 class Score {
@@ -15,14 +17,15 @@ class Score {
         Score(int playerNum, sf::RenderWindow& window);
         ~Score();
 
-        void increaseScore();
-        void resetScore();
-
         void loadFont();
-        void setFont(sf::Font font);
+
+        void draw();
+        void resetScore();
+        void increaseScore();
 
         void setOrigin();
         void setPosition();
 
-        void draw();
 };
+
+#endif

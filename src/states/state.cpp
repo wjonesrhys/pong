@@ -1,40 +1,41 @@
+#include <iostream>
 #include "state.hpp"
 
 State::State(std::string stateName) {
-    print("base constructor called");
+    std::cout << "base constructor called" << std::endl;
     this->stateName = stateName;
 }
 
 State::~State() {
-    print("base destructor called");
+    std::cout << "base destructor called" << std::endl;
 }
 
 void State::onEnter() {
-    print("base on enter called");
+    std::cout << "base on enter called" << std::endl;
 }
 
 void State::handleEvents() {
-    print("base handle events called");
+    std::cout << "base handle events called" << std::endl;
 }
 
 void State::update() {
-    print("base update called");
+    std::cout << "base update called" << std::endl;
 }
 
 void State::render() {
-    print("base render called");
+    std::cout << "base render called" << std::endl;
 }
 
 void State::pause() {
-    print("base pause called");
+    std::cout << "base pause called" << std::endl;
 }
 
 void State::resume() {
-    print("base resume called");
+    std::cout << "base resume called" << std::endl;
 }
 
 void State::onExit() {
-    print("base on exit called");
+    std::cout << "base on exit called" << std::endl;
 }
 
 std::string State::getStateName() {

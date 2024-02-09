@@ -1,6 +1,8 @@
 # windows
-*.exe
+main.exe
 # linux
 main
 
+#both
+build/
 Makefile

@@ -1,6 +1,6 @@
-#pragma once
-#include <iostream>
-#include <SFML/Graphics.hpp>
+#ifndef ABOUTSTATE_H
+#define ABOUTSTATE_H
+
 #include <state.hpp>
 #include <menu.hpp>
 #include <gameengine.hpp>
@@ -26,3 +26,5 @@ class AboutState : public State {
 
         void onExit() override; 
 };
+
+#endif

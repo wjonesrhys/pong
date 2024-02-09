@@ -1,16 +1,22 @@
-#include <iostream>
 #include <gameengine.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/System.hpp>
+#include <vector>
+#include <iostream>
+
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(1280, 720), "Ping Pong");
     window.setFramerateLimit(60);
 
     sf::Image icon;
-    icon.loadFromFile("resources/images/cuppatea.png");
-    window.setIcon(32,32,icon.getPixelsPtr());
-
-    // create a random seed
-    srand(time(nullptr));
+    if (!icon.loadFromFile("resources/images/cuppatea.png")) {
+        std::cout << "file didn't load" << std::endl;
+    } else {
+        window.setIcon(32,32,icon.getPixelsPtr());
+        std::cout << "loaded" << std::endl;
+    }
 
     // start the engine
     GameEngine game = GameEngine(window);

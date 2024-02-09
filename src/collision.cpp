@@ -1,8 +1,6 @@
-#include <iostream>
 #include <cmath>
 
 #include <collision.hpp>
-#include <util.hpp>
 #include <SFML/Graphics.hpp>
 
 Collision::Collision(sf::Vector2u windowSize) {
@@ -51,12 +49,13 @@ void Collision::checkForCollisions() {
 void Collision::ballCollidingBall() {
     std::vector<Ball*> ballsCopy = this->balls;
 
-    // print("start collision analysis");
+    // std::cout << "start collision analysis");#include <stdlib.h>
+
     for (Ball* ball : balls) {
         ballsCopy.erase(ballsCopy.begin());
         for (Ball* otherball : ballsCopy) {
             if (distanceBetweenPoints(ball->getPosition(), otherball->getPosition()) < ball->getRadius()) {
-                // print("colliding");
+                // std::cout << "colliding");
             } else {
                 // print ("not colliding");
             }
@@ -84,8 +83,8 @@ void Collision::ballCollidingPaddle() {
             // printCoords(sec_pt);
 
             if (distanceBetweenPoints(player->getPosition(), ball->getPosition()) < ball->getBounds().width/2) {
-                ball->resetPosition();
-                ball->reflectOnPaddle();
+                ball->setLastPosition();
+                ball->reverseDirectionHorizontal();
             }
         }
     }
@@ -96,8 +95,8 @@ void Collision::ballHittingTopBottom() {
     for (Ball* ball : balls) {
         ballRect = ball->getBounds();
         if(intersectsBottomWall(ballRect,windowSize.y) || intersectsTopWall(ballRect)) {
-            ball->resetPosition();
-            ball->reflectOnWall();
+            ball->setLastPosition();
+            ball->reverseDirectionVertical();
         } 
     }
 }
@@ -109,12 +108,14 @@ std::vector<sf::Vector2i> Collision::ballsHittingLeftRight() {
     for (Ball* ball : balls) {
         ballRect = ball->getBounds();
         if (ballRect.left < players.at(0)->getBounds().width) {
-            ball->startPosition();
+            ball->setStartingPosition();
+            ball->setRandomDirection();
             result.x = 1;
         } 
         
         if (ballRect.left + ballRect.width > windowSize.x - players.at(0)->getBounds().width) {
-            ball->startPosition();
+            ball->setStartingPosition();
+            ball->setRandomDirection();
             result.y = 1;
         }
         results.push_back(result);
