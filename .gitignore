@@ -2,7 +2,7 @@
 main.exe
 # linux
 main
-Makefile
 
 #both
 build/
+Makefile
