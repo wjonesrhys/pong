@@ -3,6 +3,6 @@ main.exe
 # linux
 main
 
-#both
-build/
+# both 
 Makefile
+build/
