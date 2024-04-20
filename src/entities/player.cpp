@@ -1,13 +1,14 @@
 #include <iostream>
 #include <player.hpp>
 
-Player::Player(int playerNum, sf::RenderWindow& renderWindow) : window(renderWindow) {
-    
+Player::Player(int playerNum, sf::Vector2u windowSize) 
+    : windowSize(windowSize),
+      playerNum(playerNum),
+      speed(200)
+{
     std::cout << "Player created!" << std::endl;
-    this->playerNum = playerNum;
-
-    this->rect.setFillColor(sf::Color::Green);
-    this->rect.setSize(sf::Vector2f(20, 50));
+    this->shape.setFillColor(sf::Color::Green);
+    this->shape.setSize(sf::Vector2f(20, 50));
     setStartingPosition();
 }
 
@@ -16,36 +17,33 @@ Player::~Player() {
 }
 
 /**
- * GAME LOOP METHODS
+ * GAME LOOP
 */
 
-void Player::draw() {
-    window.draw(this->rect);
+void Player::draw(sf::RenderWindow& window) {
+    window.draw(this->shape);
 }
 
-void Player::move(float deltaTime, float multiplier)
+void Player::move(float deltaTime)
 {
-    this->deltaTime = deltaTime;
-    this->multiplier = multiplier;
-
     if (this->playerNum==1) {
-        moveVertical(sf::Keyboard::Up, sf::Keyboard::Down);
+        moveVertical(sf::Keyboard::Up, sf::Keyboard::Down, deltaTime);
     }
     if (this->playerNum==2) {
-        moveVertical(sf::Keyboard::W, sf::Keyboard::S);
+        moveVertical(sf::Keyboard::W, sf::Keyboard::S, deltaTime);
     }
 }
 
-void Player::moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down) {
+void Player::moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down, float deltaTime) {
     // --- Vertical Movement --- //
     if (sf::Keyboard::isKeyPressed(up)) {
-        this->velocity=sf::Vector2f(0,-5.f);
-        rect.move(sf::Vector2f(0.f,-5.0f * deltaTime * multiplier));
+        this->velocity=sf::Vector2f(0,-1.f);
+        shape.move(this->velocity*deltaTime*speed);
     }
 
     if (sf::Keyboard::isKeyPressed(down)) {
-        this->velocity=sf::Vector2f(0,5.f);
-        rect.move(sf::Vector2f(0.f,5.0f * deltaTime * multiplier));
+        this->velocity=sf::Vector2f(0,1.f);
+        shape.move(this->velocity*deltaTime*speed);
     }
 }
 
@@ -55,22 +53,20 @@ void Player::moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down) {
 
 
 void Player::setPosition(float x_coord, float y_coord) { 
-    this->rect.setPosition(sf::Vector2f(x_coord, y_coord));
+    this->shape.setPosition(sf::Vector2f(x_coord, y_coord));
 }
 
 void Player::setStartingPosition() {
 
-    sf::Vector2f rectSize = this->rect.getSize();
-    this->rect.setOrigin(sf::Vector2f(rectSize.x/2,rectSize.y/2));
-
-    sf::Vector2u windowSize = window.getSize();
+    sf::Vector2f shapeSize = this->shape.getSize();
+    this->shape.setOrigin(sf::Vector2f(shapeSize.x/2,shapeSize.y/2));
 
     if (this->playerNum==1) {
-        this->rect.setPosition(rectSize.x, windowSize.y/2);
+        this->shape.setPosition(shapeSize.x, windowSize.y/2);
     }
 
     if (this->playerNum==2) {
-        this->rect.setPosition(windowSize.x - rectSize.x,windowSize.y/2);
+        this->shape.setPosition(windowSize.x - shapeSize.x,windowSize.y/2);
     }
 
 }
@@ -84,17 +80,30 @@ void Player::setVelocity(sf::Vector2f newVelocity) {
 */
 
 sf::Vector2f Player::getPosition() {
-    return this->rect.getPosition();
+    return this->shape.getPosition();
 }
 
-sf::FloatRect Player::getBounds(){
-    return this->rect.getGlobalBounds();
+float Player::getLowestPoint() {
+    return shape.getGlobalBounds().top;
 }
 
-sf::RectangleShape Player::getRect(){
-    return this->rect;
+float Player::getHighestPoint() {
+    sf::FloatRect rect = shape.getGlobalBounds();
+    return rect.top + rect.height;
 }
 
 sf::Vector2f Player::getVelocity() {
     return this->velocity;
+}
+
+float Player::getHeight() {
+    return shape.getGlobalBounds().height;
+}
+
+float Player::getWidth() {
+    return shape.getGlobalBounds().width;
+}
+
+int Player::getPlayerNum() {
+    return playerNum;
 }

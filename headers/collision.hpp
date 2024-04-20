@@ -3,37 +3,34 @@
 
 #include <player.hpp>
 #include <ball.hpp>
+#include <score.hpp>
+#include <rectangle.hpp>
 
 class Collision {
     private:
-        std::vector<Player*> players;
-        std::vector<Ball*> balls;
         sf::Vector2u windowSize;
 
     public:
         Collision(sf::Vector2u windowSize);
-        Collision() = default;
         ~Collision();
-
-        void setPlayers(std::vector<Player*> players);
-        void printPlayers();
-
-        void setBalls(std::vector<Ball*> balls);
-        void printBalls();
         
-        void checkForCollisions();
+        void checkForCollisions(std::vector<Ball*>& balls, std::vector<Player*>& players, std::vector<Score*>& scores, std::vector<Rectangle*>& rects);
 
-        void ballCollidingBall();
-        void ballCollidingPaddle();
+        void ballCollidingBall(std::vector<Ball*>& balls);
+        void ballCollidingPaddle(std::vector<Ball*>& balls, std::vector<Player*>& players);
+        void ballCollidingWall(std::vector<Ball*>& balls, std::vector<Score*>& scores);
+        void rectCollidingWall(std::vector<Rectangle*>& rects);
 
-        void ballHittingTopBottom();
-        std::vector<sf::Vector2i> ballsHittingLeftRight();
+        void paddleCollidingWall(std::vector<Player*>& players);
+        
 
-        void paddleCollidingWall();
-        void correctVerticalPosition(Player* player);
+        void checkRectVsPlayer(std::vector<Rectangle*>& rects, std::vector<Player*>& players);
+        void checkBallVsPlayer(std::vector<Ball*>& balls, std::vector<Player*>& players);
 
-        bool intersectsTopWall(sf::FloatRect rect);
-        bool intersectsBottomWall(sf::FloatRect rect, int height);
+        bool AABBCollision(Rectangle* rect, Player* player);
+        bool BallVsRect(Ball* ball, Player* player);
+
+        bool isTopHalf(Rectangle* rect, Player* player);
 
         float distanceBetweenPoints(sf::Vector2f p1, sf::Vector2f p2);
 };

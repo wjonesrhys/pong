@@ -1,6 +1,7 @@
 #include <iostream>
 #include <playstate.hpp>
 #include <pausestate.hpp>
+#include <util.hpp>
 
 PlayState::PlayState(GameEngine* gameEngine) : State("play"), gameEngine(gameEngine) {
     std::cout << "Game state created!" << std::endl;
@@ -9,15 +10,10 @@ PlayState::PlayState(GameEngine* gameEngine) : State("play"), gameEngine(gameEng
     float multiplier = 60.f;
     paused = false;
 
+    Util::print("here");
     //set up the entities
     setUpEntities();
     std::cout << "Entities set up" << std::endl;
-
-    collision = Collision(gameEngine->window.getSize());
-    collision.setBalls(this->balls);
-    collision.setPlayers(this->players);
-    std::cout << "players and balls linked to collision detection" << std::endl;
-
 }
 
 PlayState::~PlayState() {
@@ -75,83 +71,90 @@ void PlayState::onExit() {
     std::cout << "Game state exited!" << std::endl;
     destroyEntities();
     this->balls.clear();
+    this->rectangles.clear();
     this->players.clear();
     this->scores.clear();
 }
 
 void PlayState::setUpEntities() {
-    Score* score1 = new Score(1, gameEngine->window); 
-    Score* score2 = new Score(2, gameEngine->window); 
+    Score* score1 = new Score(1, gameEngine->window.getSize());
+    Score* score2 = new Score(2, gameEngine->window.getSize());
 
     this->scores.push_back(score1);
     this->scores.push_back(score2);
 
-    Player* player1 = new Player(1, gameEngine->window); 
-    Player* player2 = new Player(2, gameEngine->window); 
+    Player* player1 = new Player(1, gameEngine->window.getSize());
+    Player* player2 = new Player(2, gameEngine->window.getSize());
 
     this->players.push_back(player1);
     this->players.push_back(player2);
 
-    Ball* ball = new Ball(gameEngine->window);
+    Ball* ball = new Ball(gameEngine->window.getSize(), 20.0f);
     this->balls.push_back(ball);
+
+    Rectangle* rectangle = new Rectangle(gameEngine->window.getSize());
+    this->rectangles.push_back(rectangle);
 }
 
 void PlayState::destroyEntities() {
-    for (Player *player : this->players) {
-        player->~Player();
+    for (Player* player : players) {
+        delete player;
     }
 
-    for (Ball *ball : this->balls) {
-        ball->~Ball();
+    for (Ball* ball : balls) {
+        delete ball;
     }
 
-    for (Score *score : this->scores) {
-        score->~Score();
+    for (Rectangle* rectangle : rectangles) {
+        delete rectangle;
+    }
+
+    for (Score* score : scores) {
+        delete score;
     }
 }
 
 void PlayState::moveEntities(float dt) {
     //players
     for (Player* player : players) {
-        player->move(dt, 60);
+        player->move(dt);
     }
 
     //balls
     for (Ball* ball : balls) {
-        ball->move(dt, 60);
+        ball->move(dt);
+    }
+
+        //balls
+    for (Rectangle* rectangle : rectangles) {
+        rectangle->move(dt);
     }
 }
 
 void PlayState::drawEntities() {
     //players
     for (Player* player : players) {
-        player->draw();
+        player->draw(gameEngine->window);
     }
 
     //balls
     for (Ball* ball : balls) {
-        ball->draw();
+        ball->draw(gameEngine->window);
+    }
+
+    //balls
+    for (Rectangle* rectangle : rectangles) {
+        rectangle->draw(gameEngine->window);
     }
 
     //scores
     for (Score* score : scores) {
-        score->draw();
-    }
-}
-
-void PlayState::adjustScore(std::vector<sf::Vector2i> results) {
-    for (sf::Vector2i result : results) {
-        if (result.x == 1) {
-            scores.at(0)->increaseScore();
-        }
-        if (result.y == 1) {
-            scores.at(1)->increaseScore();
-        }
+        score->draw(gameEngine->window);
     }
 }
 
 void PlayState::updateGame(float dt) {
+    Collision collision = Collision(gameEngine->window.getSize());
     moveEntities(dt);
-    collision.checkForCollisions();
-    adjustScore(collision.ballsHittingLeftRight());
+    collision.checkForCollisions(balls, players, scores, rectangles);
 }

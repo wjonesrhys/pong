@@ -1,10 +1,6 @@
-# windows
-main.exe
-
-# linux
-main
-
-# both 
 Makefile
+bin/
 build/
-OlderCMakeLists.txt
+.vscode
+.gitignore
+imgui.ini

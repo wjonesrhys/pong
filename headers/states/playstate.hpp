@@ -5,6 +5,7 @@
 #include <menu.hpp>
 #include <player.hpp>
 #include <ball.hpp>
+#include <rectangle.hpp>
 #include <score.hpp>
 #include <collision.hpp>
 #include <gameengine.hpp>
@@ -15,7 +16,6 @@ class PlayState : public State {
         Menu menu;
         bool paused;
 
-        Collision collision;
         sf::Clock clock;
         float dt;
 
@@ -24,6 +24,7 @@ class PlayState : public State {
         std::vector<Score*> scores;
         std::vector<Player*> players;
         std::vector<Ball*> balls;
+        std::vector<Rectangle*> rectangles;
 
     public:
         PlayState(GameEngine* gameEngine);

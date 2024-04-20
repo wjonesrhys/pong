@@ -2,14 +2,9 @@
 #include <random.hpp>
 #include "ball.hpp"
 
-Ball::Ball(sf::RenderWindow &renderWindow, float radius) : window(renderWindow) {
+Ball::Ball(sf::Vector2u windowSize, float radius) : windowSize(windowSize) {
     std::cout << "Ball created!" << std::endl;
     this->circle.setRadius(radius);
-    setUp();
-}
-
-Ball::Ball(sf::RenderWindow &renderWindow) : window(renderWindow) {
-    std::cout << "Ball created!" << std::endl;
     setUp();
 }
 
@@ -18,13 +13,13 @@ Ball::~Ball() {
 }
 
 void Ball::setUp() {
+    this->speed = 200.0f;
+
     this->circle = sf::CircleShape(20.f);
     this->circle.setFillColor(sf::Color(255, 165, 0, 255));
-
-    this->speed = 5.0f;
-
-    sf::Vector2u windowSize = window.getSize();
     this->circle.setOrigin(sf::Vector2f(this->circle.getRadius(), this->circle.getRadius()));
+
+
     setStartingPosition();
     setRandomDirection();
 }
@@ -33,12 +28,12 @@ void Ball::setUp() {
  * GAME LOOP
 */
 
-void Ball::move(float deltaTime, float multiplier) {
+void Ball::move(float deltaTime) {
     this->prevPosition = this->circle.getPosition();
-    this->circle.move(speed*direction.x * deltaTime * multiplier, speed*direction.y * deltaTime * multiplier);
+    this->circle.move(direction*speed*deltaTime);
 }
 
-void Ball::draw() {
+void Ball::draw(sf::RenderWindow& window) {
     window.draw(this->circle);
 }
 
@@ -63,7 +58,6 @@ void Ball::setLastPosition() {
 }
 
 void Ball::setStartingPosition() {
-    sf::Vector2u windowSize = window.getSize();
     this->circle.setPosition(windowSize.x/2, windowSize.y/2);
 }
 
@@ -84,7 +78,6 @@ void Ball::setDirection(sf::Vector2f direction) {
 }
 
 void Ball::setRandomDirection() {
-    sf::Vector2u windowSize = this->window.getSize();
     this->direction=sf::Vector2f(Random::randomLeftOrRight(), Random::randomHeight(windowSize, circle.getRadius()));
 }
 

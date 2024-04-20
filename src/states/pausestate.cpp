@@ -44,6 +44,7 @@ void PauseState::handleEvents() {
                     returnToGame();
                     break;
                 case 1:
+                    // gameEngine->printStates();
                     gameEngine->clear();
                     gameEngine->pushWithoutPop(new MainMenuState(gameEngine));
                     break;

@@ -5,31 +5,35 @@
 
 class Player {
     private:
-        sf::RectangleShape rect;
-        sf::RenderWindow &window;
+        sf::RectangleShape shape;
 
+        sf::Vector2u windowSize;
         sf::Vector2f velocity;
+        float speed;
+
         int playerNum;
-        float deltaTime;
-        float multiplier;
  
     public:
-        Player(int playerNum, sf::RenderWindow& renderWindow);
+        Player(int playerNum, sf::Vector2u windowSize);
         ~Player();
 
-        void draw();
-        void move(float deltaTime, float multiplier);
-        void moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down);
+        void draw(sf::RenderWindow& window);
+        void move(float deltaTime);
+        void moveVertical(sf::Keyboard::Key up, sf::Keyboard::Key down, float deltaTime);
 
         void setPosition(float x_coord, float y_coord);
         void setStartingPosition();
         void setVelocity(sf::Vector2f newVelocity);
 
-        sf::FloatRect getBounds();
-        sf::RectangleShape getRect();
         sf::Vector2f getPosition();
         sf::Vector2f getVelocity();
 
+        float getHighestPoint();
+        float getLowestPoint();
+
+        float getWidth();
+        float getHeight();
+        int getPlayerNum();
 };
 
 #endif

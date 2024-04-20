@@ -9,8 +9,11 @@ enum digits
     thousand = 1000
 };
 
-Score::Score(int playerNum, sf::RenderWindow& window) : window(window) {
+Score::Score(int playerNum, sf::Vector2u window) 
+    : windowSize(window) 
+{
     loadFont();
+    std::cout << "Score object created!" << std::endl;
 
     this->playerNum = playerNum;
     this->score=0;
@@ -27,7 +30,6 @@ Score::Score(int playerNum, sf::RenderWindow& window) : window(window) {
 
 Score::~Score() {
     std::cout << "Score object destroyed!" << std::endl;
-
 }
 
 void Score::loadFont() {
@@ -40,7 +42,7 @@ void Score::loadFont() {
  * GAME LOOP
 */
 
-void Score::draw() {
+void Score::draw(sf::RenderWindow& window) {
     window.draw(text);
 }
 
@@ -72,6 +74,6 @@ void Score::setOrigin() {
 
 void Score::setPosition() {
     sf::FloatRect textRect = this->text.getGlobalBounds();
-    float windowX = window.getSize().x/2;
+    float windowX = windowSize.x/2;
     playerNum == 1 ? this->text.setPosition(windowX - 20, textRect.height) : this->text.setPosition(windowX + 20,textRect.height);
 }

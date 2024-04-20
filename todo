@@ -1,29 +1,39 @@
-TODO:
-- fix the fps, ball jitters a bit currently, is that because 60 fps?
+TODO
 - make sure the game finishes and loops expectedly
-- change the function for score so that it doesnt have the hard coded 20 value and change the size of the text too, similarly all the objects- best to keep the render window reference in for this reason.
-- make sure that every time the person readjust the screen, it changes everything accordingly.
-- fix the collision between paddle and ball - rect and circle collision
-- create Paddle, Player and Enemy Classes using inheritance
-- add enemy ai movement 
-- add audio to the game
-- add window options and game settings - framerate, window size, borderless etc, difficulty, power up choices? score, speed, modes etc
-- clean up class separation
-- maybe make a window class, use that in place of reference to window?
+- add enemy AI movement
+- fix collisions - paddle and ball, ball and ball.
+- rearrange the flow of the main program
+- add a config file to load everything at runtime - entity manager load from file?
+- add a resizing event
+    - change hardcoded values (like 20 in score function) so that it resizes
+- make the collision allow the player to direct the ball 
+    - do this based on where it hits on the paddle
+- recreate the player and enemy classes with ECS, use an entity manager for this
+- add audio
 
-FIXME:
-- clean up code
+- go back to pong
+    - fix the game engine
+    - move the while loop into each state?
 
-OTHER:
-can buy different types of balls that do different things
-or you unlock different wizard dudes
-that have different elemental balls
-and outfits
-and there could be a game mode
-called mystery swap
+FIX
+- ball jittering in fullscreen mode even with fixed timestep
+- look into fixing a state machine (stack or maps) so that there's not so much spaghetti code
+- clean up other code
 
-DONE:
+IDEA
+- add a save file to contain data relevant to the player
+- add power ups, balls splitting, fire ball, opposing player slow etc
+- add window options and game settings - framerate - window size - borderless - audio
+- have screens to test certain parts of the game, collision etc
+- create a shop for cosmetics
+    - create ster only wizard hat
+    - different wizard dudes to buy that have different abilities, have an ability like in ow with a cd?
+    - have currency given to the player by picking up coins or winning a game, difficulty gives more coins
+    - allow to purchase characters, skins, new power ups, stats?
+- add networking -> PvP?
+
+DONE
 - add a score class to handle all of the text, updating, drawing, checking the last score and whether its become double digits, if it has, check the size for all 0's so that there's no crossover, and update separately
 - fix the scoreboard so there's a minimum distance between the two scores  
-- create a gamestate, mainstate, pausestate, state manager - look into book if it's not intuitive
+- create a gamestate, mainstate, pausestate, state manager
 - fix the random direction at ball reset

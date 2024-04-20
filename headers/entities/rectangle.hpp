@@ -1,21 +1,21 @@
-#ifndef BALL_H
-#define BALL_H
+#ifndef RECTANGLE_HPP
+#define RECTANGLE_HPP
 
 #include "SFML/Graphics.hpp"
 
-class Ball {
+class Rectangle {
     private:
         sf::Vector2u windowSize;
 
-        sf::CircleShape circle;  
+        sf::RectangleShape rectangle;
 
         sf::Vector2f direction;
         sf::Vector2f prevPosition;
         float speed;
-        
+
     public:
-        Ball(sf::Vector2u windowSize, float radius);
-        ~Ball();
+        Rectangle(sf::Vector2u windowSize);
+        ~Rectangle();
 
         void setUp();
 
@@ -30,15 +30,15 @@ class Ball {
         void setStartingPosition();
         
         void setPosition(sf::Vector2f position);
-        void setRadius(float size);
         void setSpeed(float speed);
 
         void setDirection(sf::Vector2f direction);
         void setRandomDirection();
 
-        float getRadius();
         sf::FloatRect getBounds();
         sf::Vector2f getPosition();
+        float getWidth();
+        float getHeight();
 };
 
 #endif

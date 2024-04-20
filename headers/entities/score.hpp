@@ -5,7 +5,7 @@
 
 class Score {
     private:
-        sf::RenderWindow& window;
+        sf::Vector2u windowSize;
 
         sf::Text text;
         sf::Font font;
@@ -14,18 +14,18 @@ class Score {
         int playerNum;
 
     public:
-        Score(int playerNum, sf::RenderWindow& window);
+        Score(int playerNum, sf::Vector2u windowSize);
         ~Score();
 
         void loadFont();
 
-        void draw();
+        void draw(sf::RenderWindow& window);
         void resetScore();
         void increaseScore();
 
         void setOrigin();
-        void setPosition();
-
+        void setPosition();        
+        
 };
 
 #endif
